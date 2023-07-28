@@ -1,0 +1,9 @@
+/auth/register
+{
+  password,
+  email,
+  username,
+  position_id
+}
+post royhatdan O`tish>>>>>
+/auth/verify- bunga tushgan kodni qaytarib yuboramiz
