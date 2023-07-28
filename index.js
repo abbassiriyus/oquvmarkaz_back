@@ -11,7 +11,12 @@ app.use(fileUpload())
 app.use(cors())
 app.use(express.static("Images"))
 
+app.get('/doc',()=>{
 
+
+
+
+})
 
 
 app.use("/auth" , user )
