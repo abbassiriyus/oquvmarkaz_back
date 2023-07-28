@@ -1,5 +1,5 @@
 CREATE TABLE "users" (
-    "user_id" serial primary key,
+    "id" serial primary key,
     "password" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "username" TEXT NOT NULL,
