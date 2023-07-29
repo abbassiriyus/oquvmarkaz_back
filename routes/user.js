@@ -211,6 +211,7 @@ router.delete("/users/:id", (req, res) => {
 // login in user_password email username
 router.post('/login', function(req, res) {
     var body=req.body
+    var datatime=new Date()
     pool.query("SELECT * FROM users", (err, result) => {
         if (!err) {
             var token
@@ -218,6 +219,9 @@ router.post('/login', function(req, res) {
         var a=false
         result.rows.map(item=>{
         if(item.password==body.password && (item.email==body.email || item.username==body.username)){
+        pool.query(
+          'UPDATE users SET last_login=$1 WHERE id = $2',
+                [datatime,item.id])
         token = jwt.sign({password:body.password,email:body.email,username:body.username,position:item.position}, 'secret');
             position=item.position
                  a=true}
@@ -233,21 +237,21 @@ router.post('/login', function(req, res) {
 });
 
 // put data 
-// router.put("/users/:id", (req, res) => {
-//     const id = req.params.id
-//     const body = req.body
-//     pool.query(
-//         'UPDATE users SET email = $1, username = $2, user_password=$3, user_img=$4, position=$5  WHERE user_id = $6',
-//         [body.email, body.username, body.user_password, body.user_img,body.position, id],
-//         (err, result) => {
-//             if (err) {
-//                 res.status(400).send(err)
-//             } else {
-//                 res.status(200).send("Updated")
-//             }
-//         }
-//     )
-// })
+router.put("/users/:id", (req, res) => {
+    const id = req.params.id
+    const body = req.body
+    pool.query(
+        'UPDATE users SET email = $1, username = $2, user_password=$3, user_img=$4, position=$5  WHERE user_id = $6',
+        [body.email, body.username, body.user_password, body.user_img,body.position, id],
+        (err, result) => {
+            if (err) {
+                res.status(400).send(err)
+            } else {
+                res.status(200).send("Updated")
+            }
+        }
+    )
+})
 
 module.exports = router;
 
