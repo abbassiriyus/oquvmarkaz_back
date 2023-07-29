@@ -9,7 +9,7 @@ const cours_types=require('./routes/cours_types.js')
 const course=require('./routes/course.js')
 const course_theme_task=require('./routes/course_theme_task.js')
 const course_data_comment=require('./routes/course_data_comment')
-const course_data_comment=require('./routes/course_data_theme')
+const course_data_theme=require('./routes/course_data_theme')
 const fs=require('fs')
 const path = require('path'); 
 app.use(fileUpload())
