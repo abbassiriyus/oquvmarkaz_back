@@ -3,27 +3,9 @@ var express = require('express');
 var router = express.Router();
 var jwt = require('jsonwebtoken');
 const pool = require("../db")
-// var Math=require("Math")
+var {  ensureToken,ensureTokenSuper,ensureTokenTeacher,superTeacher }=require("../token/token.js")
 
-// token success
-function ensureToken(req,res,next){
-    const bearerHeader=req.headers['authorization']
-    if( typeof bearerHeader!== 'undefined'){
-    const bearer=bearerHeader.split(" ")
-    const bearerToken=bearer[1]
-    req.token=bearerToken
-    jwt.verify(bearerToken,'secret',((require1,result1)=>{
-        if(result1==undefined){
-            res.status(502).send("token failed")
-        }else{
-        
-         next()
-        }
-     }))
-    }else{
-        res.status(403)
-    }
-}
+
 
 router.post("/register", (req, res) => {
     const body = req.body
@@ -74,33 +56,33 @@ router.post("/verify",ensureToken, (req, res) => {
 })
 
 // get alluser
-router.get('/users', function(req, res) {
-    pool.query("SELECT * FROM users", (err, result) => {
+router.get('/users',ensureTokenSuper, function(req, res) {
+    const bearerHeader=req.headers['authorization']
+    if( typeof bearerHeader!== 'undefined'){
+    const bearer=bearerHeader.split(" ")
+    const bearerToken=bearer[1]
+    jwt.verify(bearerToken,'secret',((require1,result1)=>{
+        console.log(result1);
+     if(result1){
+       pool.query("SELECT * FROM users", (err, result) => {
         if (!err) {
-         var b=[]
-           a.map(item=>{
-            b.push({
-                id:item.id,
-                email:item.email,
-                username:item.username,
-                first_name:item.first_name,
-                last_name:item.last_name,
-                phone_number:item.phone_number,
-                image:item.image,
-                description:item.description,
-                address:item.address,
-                date_joined:item.date_joined,
-            })
-           })
-            res.status(200).send(b)  
+            res.status(200).send(result.rows)  
         } else {
             res.send(err)
-        }
-    })
+        } 
+    })  
+     }  else{
+        res.status(500).send("unautorization")
+     } 
+   
+
+}))
+    }else{
+        res.status(403)
+    }
 });
-
-
-router.get('/students', function(req, res) {
+router.get('/students',ensureToken, function(req, res) {
+   console.log(req.body);
         pool.query("SELECT * FROM users", (err, result) => {
             if (!err) {
                var a=result.rows.filter(item=>item.position==1)
@@ -125,7 +107,6 @@ router.get('/students', function(req, res) {
             }
         })
 });
- 
 router.get('/teachers',ensureToken, function(req, res) {
     pool.query("SELECT * FROM users", (err, result) => {
         if (!err) {
@@ -151,8 +132,6 @@ router.get('/teachers',ensureToken, function(req, res) {
         }
     })
 });
-
-
 // get user position
 router.get('/users/:id',ensureToken, function(req, res) {
     pool.query("SELECT * FROM users", (err, result) => {
@@ -192,10 +171,6 @@ router.get('/oneuser', ensureToken, function(req, res) {
  }))
 //  res.send("sdds").status(200)
 });
-
-
-
-
 // delete user
 router.delete("/users/:id", (req, res) => {
     const id = req.params.id
@@ -236,8 +211,8 @@ router.post('/login', function(req, res) {
             var position
         var a=false
         result.rows.map(item=>{
-        if(item.user_password==body.user_password && (item.email==body.email || item.username==body.username)){
-                  token = jwt.sign({ user_password:body.user_password,email:body.email,username:body.username}, 'secret');
+        if(item.password==body.password && (item.email==body.email || item.username==body.username)){
+                  token = jwt.sign({password:body.password,email:body.email,username:body.username}, 'secret');
                   position=item.position
                  a=true }
            })

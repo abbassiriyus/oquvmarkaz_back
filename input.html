@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+      p{
+font-size: 12px;    
+      }
+      h1{
+        font-size: 14px;
+        color: red;
+      }
+      span{
+        color: green;
+        border-bottom: 1px solid green;
+      }
+      sup{
+        color: blueviolet;
+      }
+    </style>
+</head>
+<body>
+<h1 style="color: red;">/auth/register</h1>
+<span>{
+  password,
+  email,
+  username
+}</span>  <p>
+    <br>
+    post royhatdan O`tish>>>>> <sup>POST</sup>
+  </p>
+  <hr>
+<h1 style="color: red;">/auth/verify</h1> <p> - bunga tushgan kodni qaytarib yuboramiz <sup>post</sup> <span>{code}</span> </p>
+<hr>
+<h1 style="color: red;">/auth/students</h1>
+<p>talabalarni hammasini o`zini oladi <sup>GET</sup></p><hr>
+<h1 style="color: red;">/auth/teachers</h1>
+<p>o`tituvchilar hammasini o`zini oladi <sup>GET</sup></p><hr>
+<h1 style="color: red;">/auth/users/:id</h1>
+
+<p>id va token bolsa bolgani hammasi keladi <sup>GET</sup></p><hr>
+<h1 style="color: red;">/auth/teachers</h1>
+<p>tokenting bosa hmma malumot keladi <sup>GET</sup></p><hr>
+<h1 style="color: red;">/auth/students</h1>
+<p>tokenting bosa hmma malumot keladi <sup>GET</sup></p><hr>
+<h1 style="color: red;">/auth/oneuser</h1>
+<p>token qaysi yuzerni tokeni bolsa ushani to`liq malumotini qaytaradi <sup>GET</sup>
+</p>
+<hr>
+<h1 style="color: red;">/auth/login</h1>
+<p>login parol qoilib kirish <span> {email, password} </span> yoki <span>{username, password}</span> token beradi <sup>POST</sup></p>
+<hr>
+<h1>auth/users</h1>
+<p>superadmin token bilan hamma userlani to`liq malumotini oladi <sup>GET</sup></p>
+<hr>
+</body>
+</html>
