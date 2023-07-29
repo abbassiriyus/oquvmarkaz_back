@@ -35,6 +35,7 @@ router.post("/verify", (req, res) => {
     pool.query("SELECT * FROM verify", (err, result) => {
         console.log(1);
         if (!err) {
+
         var data2=result.rows.filter(item=>item.code==body.code)
         if(data2.length===1){
             console.log(2);
