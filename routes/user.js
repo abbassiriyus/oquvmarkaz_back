@@ -29,7 +29,7 @@ router.post("/register", (req, res) => {
 })
 
 // verifikatsiya
-router.post("/verify",ensureToken, (req, res) => {
+router.post("/verify", (req, res) => {
     const body = req.body
     var datatime=new Date()
     pool.query("SELECT * FROM verify", (err, result) => {
@@ -186,7 +186,7 @@ router.get('/oneuser', ensureToken, function(req, res) {
 // delete user
 router.delete("/users/:id", (req, res) => {
     const id = req.params.id
-    pool.query('DELETE FROM users WHERE user_id = $1', [id], (err, result) => {
+    pool.query('DELETE FROM users WHERE id = $1', [id], (err, result) => {
         if (err) {
             res.status(400).send(err)
         } else {
@@ -247,8 +247,8 @@ router.put("/users/:id", (req, res) => {
     const id = req.params.id
     const body = req.body
     pool.query(
-        'UPDATE users SET email = $1, username = $2, user_password=$3, user_img=$4, position=$5  WHERE user_id = $6',
-        [body.email, body.username, body.user_password, body.user_img,body.position, id],
+    'UPDATE users SET address = $1,balance = $2,description=$3,email=$4, image=$5, is_superuser=$6,last_name=$7,password,phone_number,username,position WHERE user_id = $',
+        [body.address, body.balance, body.description, body.email,body.image, id],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)
