@@ -60,6 +60,7 @@ create table cours_types(
 	"time_update" timestamp default current_timestamp not null
 )
 create table course_theme_task  (
+    "id" serial primary key,
     "content" VARCHAR (50) NOT NULL,
     "course_theme" integer NOT NULL,
     "image" VARCHAR (50),

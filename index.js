@@ -7,7 +7,7 @@ const pool = require("./db")
 const user=require('./routes/user.js')
 const cours_types=require('./routes/cours_types.js')
 const course=require('./routes/course.js')
-
+const course_theme_task=require('./routes/course_theme_task.js')
 
 const fs=require('fs')
 const path = require('path'); 
@@ -28,7 +28,7 @@ app.get('/', function(req, res) {
  app.use("/auth" , user )
  app.use("/api" , cours_types)
  app.use("/api" , course)
-
+ app.use("/api",course_theme_task)
 
 
 
