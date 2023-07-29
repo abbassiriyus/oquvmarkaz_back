@@ -70,13 +70,6 @@ router.post("/verify", (req, res) => {
 
 // get alluser
 router.get('/users',ensureTokenSuper, function(req, res) {
-    const bearerHeader=req.headers['authorization']
-    if( typeof bearerHeader!== 'undefined'){
-    const bearer=bearerHeader.split(" ")
-    const bearerToken=bearer[1]
-    jwt.verify(bearerToken,'secret',((require1,result1)=>{
-        console.log(result1);
-     if(result1){
        pool.query("SELECT * FROM users", (err, result) => {
         if (!err) {
             res.status(200).send(result.rows)  
@@ -84,15 +77,6 @@ router.get('/users',ensureTokenSuper, function(req, res) {
             res.send(err)
         } 
     })  
-     }  else{
-        res.status(500).send("unautorization")
-     } 
-   
-
-}))
-    }else{
-        res.status(403)
-    }
 });
 router.get('/students',ensureToken, function(req, res) {
    console.log(req.body);
@@ -187,13 +171,24 @@ router.get('/oneuser', ensureToken, function(req, res) {
 // delete user
 router.delete("/users/:id", (req, res) => {
     const id = req.params.id
-    pool.query('DELETE FROM users WHERE id = $1', [id], (err, result) => {
+    pool.query("SELECT * FROM users", (err, result) => {
+        if (!err) {
+            res.status(200).send(result.rows)
+            var a=result.rows.filter(item=>item.id==req.params.id) 
+       
+            pool.query('DELETE FROM users WHERE id = $1', [id], (err, result) => {
         if (err) {
             res.status(400).send(err)
         } else {
             res.status(200).send("Deleted")
         }
-    })
+    }) 
+        } else {
+            res.send(err)
+        } 
+    }) 
+
+  
 })
 
 
