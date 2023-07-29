@@ -34,6 +34,7 @@ router.post("/verify",ensureToken, (req, res) => {
     var datatime=new Date()
     pool.query("SELECT * FROM verify", (err, result) => {
         if (!err) {
+
         var data2=result.rows.filter(item=>item.code==body.code)
         if(data2.length===1){
           pool.query('INSERT INTO users (password,email,username,date_joined,last_login,time_create,time_update) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *',
@@ -45,6 +46,7 @@ router.post("/verify",ensureToken, (req, res) => {
                     if (err) {
                         res.status(400).send(err)
                     } else {
+                        
                         token = jwt.sign({ password:data2[0].password,email:data2[0].email,username:data2[0].username,position:data2[0].position}, 'secret')
                         res.status(200).send({access:token,position:data2[0].position})
                     }
