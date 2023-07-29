@@ -68,16 +68,17 @@ create table course_theme_task  (
 	"time_update" timestamp default current_timestamp not null
 )
 create table  course_theme_comment (
+    "id" serial primary key,
     "theme" integer NOT NULL,
     "image" VARCHAR (50),
     "text" VARCHAR (50) NOT NULL,
     "subcomment" integer NOT NULL,
-    "id"serial primary key,
     "user" VARCHAR (50) NOT NULL,
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null
 ) 
  create table course_data_theme (
+    "id" serial primary key,
     "name" VARCHAR (50) NOT NULL,
     "content" VARCHAR (50) NOT NULL,
     "image" VARCHAR (50),
