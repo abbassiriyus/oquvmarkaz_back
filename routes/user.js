@@ -207,11 +207,11 @@ router.post("/users", (req, res) => {
         });
 });
 
-
+ 
 // login in user_password email username
 router.post('/login', function(req, res) {
     var body=req.body
-    var datatime=new Date()
+    if(body){var datatime=new Date()
     pool.query("SELECT * FROM users", (err, result) => {
         if (!err) {
             var token
@@ -230,7 +230,9 @@ router.post('/login', function(req, res) {
         } else {
             res.status(401).send(err)
         }
-    })
+    })}else{
+        res.status(441).send("post metodida hech qanday data yuborilmadi")
+    }
     
 });
 
