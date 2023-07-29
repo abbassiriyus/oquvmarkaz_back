@@ -37,6 +37,7 @@ router.post("/verify",ensureToken, (req, res) => {
         if (!err) {
         var data2=result.rows.filter(item=>item.code==body.code)
         if(data2.length===1){
+            console.log(2);
           pool.query('INSERT INTO users (password,email,username,date_joined,last_login,time_create,time_update) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *',
         [data2[0].password,data2[0].email,data2[0].username,datatime,datatime,datatime,datatime], (err, result) => {
             if (err) {
@@ -44,9 +45,11 @@ router.post("/verify",ensureToken, (req, res) => {
                 res.status(400).send(err)
             } else {
                 pool.query('DELETE FROM verify WHERE id = $1', [data2[0].id], (err, result) => {
+                    console.log(4);
                     if (err) {
                         res.status(400).send(err)
                     } else {
+                        console.log(6);
                         token = jwt.sign({ password:data2[0].password,email:data2[0].email,username:data2[0].username,position:data2[0].position}, 'secret')
                         res.status(200).send({access:token,position:data2[0].position})
                     }
@@ -54,6 +57,7 @@ router.post("/verify",ensureToken, (req, res) => {
             }
         })   
         }else{
+            console.log(5);
             res.status(501).send("error code")
         }
         } else {
