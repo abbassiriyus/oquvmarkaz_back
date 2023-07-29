@@ -10,14 +10,22 @@ var {  ensureToken,ensureTokenSuper,ensureTokenTeacher,superTeacher }=require(".
 router.post("/register", (req, res) => {
     const body = req.body
     var code =Math.floor(Math.random() * 900000)+100000;
+    if(body.password.length>7 && body.email.includes('@')){
     pool.query('INSERT INTO verify (password,email,username,code) VALUES ($1,$2,$3,$4) RETURNING *',
         [body.password,body.email,body.username,code], (err, result) => {
             if (err) {
-                res.status(400).send(err)
+                res.status(400).send("malumot To`liq emas")
             } else {
                 res.status(201).send("Created"+code)
             }
-        })
+        })}else{
+            if(body.password.length<8){
+            res.status(420).send("parol kam kiritildi")
+            }
+            if(!(body.email.includes('@'))){
+                res.status(421).send("email xato kiritildi")
+             }
+        }
 })
 
 // verifikatsiya
@@ -26,9 +34,7 @@ router.post("/verify",ensureToken, (req, res) => {
     var datatime=new Date()
     pool.query("SELECT * FROM verify", (err, result) => {
         if (!err) {
-        console.log(result.rows,"e");
         var data2=result.rows.filter(item=>item.code==body.code)
-        console.log(data2);
         if(data2.length===1){
           pool.query('INSERT INTO users (password,email,username,date_joined,last_login,time_create,time_update) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *',
         [data2[0].password,data2[0].email,data2[0].username,datatime,datatime,datatime,datatime], (err, result) => {
@@ -185,21 +191,21 @@ router.delete("/users/:id", (req, res) => {
 
 
 // create new user
-router.post("/users", (req, res) => {
-    const body = req.body;
-    const imgFile = req.files.user_img
-    const imgName = Date.now()+imgFile.name
-    pool.query('INSERT INTO users (user_password, email, "surName", "LastName", databirth, "dataRegirter", address_id, position_id, username,user_img) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9,$10) RETURNING *',
-    [ body.user_password,body.email, body.surName, body.LastName, body.databirth, body.dataRegirter, body.address_id, body.position_id, body.username,imgName],
-         (err, result) => {
-            if (err) {
-                res.status(400).send(err);
-            } else {
-                imgFile.mv(`${__dirname}/Images/${imgName}`)
-                res.status(201).send("Created");
-            }
-        });
-});
+// router.post("/users", (req, res) => {
+//     const body = req.body;
+//     const imgFile = req.files.user_img
+//     const imgName = Date.now()+imgFile.name
+//     pool.query('INSERT INTO users (user_password, email, "surName", "LastName", databirth, "dataRegirter", address_id, position_id, username,user_img) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9,$10) RETURNING *',
+//     [ body.user_password,body.email, body.surName, body.LastName, body.databirth, body.dataRegirter, body.address_id, body.position_id, body.username,imgName],
+//          (err, result) => {
+//             if (err) {
+//                 res.status(400).send(err);
+//             } else {
+//                 imgFile.mv(`${__dirname}/Images/${imgName}`)
+//                 res.status(201).send("Created");
+//             }
+//         });
+// });
 
 
 // login in user_password email username
@@ -212,9 +218,9 @@ router.post('/login', function(req, res) {
         var a=false
         result.rows.map(item=>{
         if(item.password==body.password && (item.email==body.email || item.username==body.username)){
-                  token = jwt.sign({password:body.password,email:body.email,username:body.username}, 'secret');
-                  position=item.position
-                 a=true }
+        token = jwt.sign({password:body.password,email:body.email,username:body.username,position:item.position}, 'secret');
+            position=item.position
+                 a=true}
            })
        if(!a){res.status(500).send("Royhatdan o`tmagan") }else{
         res.status(200).send({access:token,position}) 
@@ -227,21 +233,21 @@ router.post('/login', function(req, res) {
 });
 
 // put data 
-router.put("/users/:id", (req, res) => {
-    const id = req.params.id
-    const body = req.body
-    pool.query(
-        'UPDATE users SET email = $1, username = $2, user_password=$3, user_img=$4, position=$5  WHERE user_id = $6',
-        [body.email, body.username, body.user_password, body.user_img,body.position, id],
-        (err, result) => {
-            if (err) {
-                res.status(400).send(err)
-            } else {
-                res.status(200).send("Updated")
-            }
-        }
-    )
-})
+// router.put("/users/:id", (req, res) => {
+//     const id = req.params.id
+//     const body = req.body
+//     pool.query(
+//         'UPDATE users SET email = $1, username = $2, user_password=$3, user_img=$4, position=$5  WHERE user_id = $6',
+//         [body.email, body.username, body.user_password, body.user_img,body.position, id],
+//         (err, result) => {
+//             if (err) {
+//                 res.status(400).send(err)
+//             } else {
+//                 res.status(200).send("Updated")
+//             }
+//         }
+//     )
+// })
 
 module.exports = router;
 
