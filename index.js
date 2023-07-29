@@ -5,6 +5,8 @@ const cors = require("cors")
 const fileUpload = require("express-fileupload")
 const pool = require("./db")
 const user=require('./routes/user.js')
+const cours_types=require('./routes/cours_types.js')
+
 const fs=require('fs')
 const path = require('path'); 
 app.use(fileUpload())
@@ -21,9 +23,8 @@ app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, '/input.html'));
   });
   
-
-
  app.use("/auth" , user )
+ app.use("/api" , cours_types)
 
 
 

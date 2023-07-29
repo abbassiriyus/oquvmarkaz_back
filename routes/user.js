@@ -191,21 +191,21 @@ router.delete("/users/:id", (req, res) => {
 
 
 // create new user
-// router.post("/users", (req, res) => {
-//     const body = req.body;
-//     const imgFile = req.files.user_img
-//     const imgName = Date.now()+imgFile.name
-//     pool.query('INSERT INTO users (user_password, email, "surName", "LastName", databirth, "dataRegirter", address_id, position_id, username,user_img) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9,$10) RETURNING *',
-//     [ body.user_password,body.email, body.surName, body.LastName, body.databirth, body.dataRegirter, body.address_id, body.position_id, body.username,imgName],
-//          (err, result) => {
-//             if (err) {
-//                 res.status(400).send(err);
-//             } else {
-//                 imgFile.mv(`${__dirname}/Images/${imgName}`)
-//                 res.status(201).send("Created");
-//             }
-//         });
-// });
+router.post("/users", (req, res) => {
+    const body = req.body;
+    const imgFile = req.files.image
+    const imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+    pool.query('INSERT INTO users (address, description, email, last_name, password, phone_number, username, position,image) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *',
+    [ body.address,body.description, body.email, body.last_name, body.password, body.phone_number, body.username, body.position,imgName],
+         (err, result) => {
+            if (err) {
+                res.status(400).send(err);
+            } else {
+                imgFile.mv(`${__dirname}/Images/${imgName}`)
+                res.status(201).send("Created");
+            }
+        });
+});
 
 
 // login in user_password email username
@@ -216,13 +216,11 @@ router.post('/login', function(req, res) {
         if (!err) {
             var token
             var position
-        var a=false
+          var a=false
         result.rows.map(item=>{
         if(item.password==body.password && (item.email==body.email || item.username==body.username)){
-        pool.query(
-          'UPDATE users SET last_login=$1 WHERE id = $2',
-                [datatime,item.id])
-        token = jwt.sign({password:body.password,email:body.email,username:body.username,position:item.position}, 'secret');
+        pool.query('UPDATE users SET last_login=$1 WHERE id = $2',[datatime,item.id])
+        token = jwt.sign({"password":item.password,"email":item.email,"username":item.username,"position":item.position}, 'secret');
             position=item.position
                  a=true}
            })
