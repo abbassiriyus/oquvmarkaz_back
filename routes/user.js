@@ -14,15 +14,12 @@ router.post("/register", (req, res) => {
     var a=0
     pool.query("SELECT * FROM users", (err, result) => {
         if (!err) {
-            res.status(200).send(result.rows)  
             var d2=result.rows.filter(item=>{item.email===req.body.email})
             var d3=result.rows.filter(item=>{item.password===req.body.password})
         if(d2.length>0 || d3.length>0){
             a=1
         }
-        } else {
-            res.send(err)
-        } 
+        }
     })
     if(body.password.length>7 && body.email.includes('@') && a!==1){
     pool.query('INSERT INTO verify (password,email,username,code) VALUES ($1,$2,$3,$4) RETURNING *',
@@ -160,7 +157,6 @@ router.get('/users/:id',ensureToken, function(req, res) {
         }
     })
 });
-
 // one token user
 router.get('/oneuser', ensureToken, function(req, res) {
  console.log(req.token);
@@ -210,8 +206,6 @@ router.delete("/users/:id", (req, res) => {
 
   
 })
-
-
 // create new user
 router.post("/users", (req, res) => {
     const body = req.body;
@@ -228,8 +222,6 @@ router.post("/users", (req, res) => {
             }
         });
 });
-
- 
 // login in user_password email username
 router.post('/login', function(req, res) {
     var body=req.body
@@ -259,7 +251,7 @@ router.post('/login', function(req, res) {
 });
 
 // put data 
-router.put("/users/:id", (req, res) => {
+router.put("/userssuperadmin/:id", (req, res) => {
     const id = req.params.id
     const body = req.body
     pool.query(
@@ -274,6 +266,7 @@ router.put("/users/:id", (req, res) => {
         }
     )
 })
+
 
 module.exports = router;
 
