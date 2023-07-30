@@ -11,6 +11,8 @@ const course_theme_task=require('./routes/course_theme_task.js')
 const course_data_comment=require('./routes/course_data_comment')
 const course_data_theme=require('./routes/course_data_theme')
 const base_theme=require('./routes/base_theme')
+const knowladge=require('./routes/knowladge')
+const api_root=require('./routes/api_root')
 const fs=require('fs')
 const bodyParser = require('body-parser');
 const path = require('path'); 
@@ -35,8 +37,8 @@ app.get('/', function(req, res) {
  app.use("/api",course_data_comment)
  app.use("/api",course_data_theme)
  app.use("/api",base_theme)
-
-
+ app.use("/api",knowladge)
+ app.use("/api",api_root)
 
 
 
