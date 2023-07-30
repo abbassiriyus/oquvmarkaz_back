@@ -8,16 +8,20 @@ const user=require('./routes/user.js')
 const cours_types=require('./routes/cours_types.js')
 const course=require('./routes/course.js')
 const course_theme_task=require('./routes/course_theme_task.js')
-const course_data_theme=require('./routes/course_data_theme.js')
-
-const course_data_comment=require('./routes/course_data_comment.js')
 const course_data_sub_category=require('./routes/course_data_sub_category')
+const course_data_comment=require('./routes/course_data_comment')
+const course_data_theme=require('./routes/course_data_theme')
+const base_theme=require('./routes/base_theme')
+const knowladge=require('./routes/knowladge')
+const api_root=require('./routes/api_root')
+
 const fs=require('fs')
+const bodyParser = require('body-parser');
 const path = require('path'); 
 app.use(fileUpload())
 app.use(cors())
 app.use(express.static("Images"))
-
+app.use(bodyParser.json());
 app.get('/doc',(req,res)=>{
     const data = fs.readFileSync('./input.html',
     { encoding: 'utf8', flag: 'r' });
@@ -35,7 +39,9 @@ app.get('/', function(req, res) {
  app.use("/api",course_data_comment)
  app.use("/api",course_data_theme)
  app.use("/api",course_data_sub_category)
-
+ app.use("/api",base_theme)
+ app.use("/api",knowladge)
+ app.use("/api",api_root)
 
 
 

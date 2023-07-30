@@ -37,8 +37,8 @@ CREATE TABLE "verify"(
     "course" integer  NOT NULL,
     "total_mark" integer  NOT NULL,
     "propose_time" timestamp default current_timestamp not null,
-    "completed_themes" VARCHAR (50) NOT NULL,
-    "rating" integer  NOT NULL,
+    "completed_themes" VARCHAR(50) NOT NULL,
+    "rating" integer default 4  NOT NULL,
     "users" VARCHAR (50) NOT NULL,
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null   
@@ -106,11 +106,27 @@ create table  course_data_category(
 	"time_update" timestamp default current_timestamp not null
 )
 
+create table base_theme(
+"id" serial primary key,
+"name" VARCHAR (50) NOT NULL,
+"time_create" timestamp default current_timestamp not null,
+	"time_update" timestamp default current_timestamp not null,
+)
+create table knowladge (
+    "id" serial primary key,
+    "name" VARCHAR (50) NOT NULL,
+    "description" VARCHAR (50) NOT NULL,
+    "image"  VARCHAR (50),
+    "link" VARCHAR NOT NULL,
+    "base_theme" integer NOT NULL,
+    "time_create" timestamp default current_timestamp not null,
+	"time_update" timestamp default current_timestamp not null,
+)
+create table api_root(
+    "id" serial primary key,
+    "questions" VARCHAR (50),
+    "time_create" timestamp default current_timestamp not null,
+	"time_update" timestamp default current_timestamp not null,
+)
 
 
-
-
-
-
-ALTER TABLE users ADD CONSTRAINT uq_passport UNIQUE ( "password" , "email", "username");
-ALTER TABLE users ADD CONSTRAINT  UNIQUE("password");

@@ -3,7 +3,7 @@ var express = require('express');
 var router = express.Router();
 var jwt = require('jsonwebtoken');
 const pool = require("../db")
-var {  ensureToken,ensureTokenSuper,ensureTokenTeacher,superTeacher }=require("../token/token.js")
+var {ensureToken,ensureTokenSuper,ensureTokenTeacher,superTeacher }=require("../token/token.js")
 
 
 // registratsiya
@@ -185,17 +185,19 @@ router.get('/oneuser', ensureToken, function(req, res) {
 //  res.send("sdds").status(200)
 });
 // delete user
-router.delete("/users/:id", (req, res) => {
+router.delete("/users/:id",ensureToken, (req, res) => {
     const id = req.params.id
     pool.query("SELECT * FROM users", (err, result) => {
         if (!err) {
-            res.status(200).send(result.rows)
             var a=result.rows.filter(item=>item.id==req.params.id) 
-       
+            fs.unlink(`./Images/${a[0].image}`,()=>{})
             pool.query('DELETE FROM users WHERE id = $1', [id], (err, result) => {
         if (err) {
             res.status(400).send(err)
         } else {
+            if(a[0].image){
+                fs.unlink(`./Images/${a[0].image}`,(err => {console.log('delete');}))
+            }
             res.status(200).send("Deleted")
         }
     }) 
@@ -206,8 +208,9 @@ router.delete("/users/:id", (req, res) => {
 
   
 })
+
 // create new user
-router.post("/users", (req, res) => {
+router.post("/users",ensureTokenSuper, (req, res) => {
     const body = req.body;
     const imgFile = req.files.image
     const imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
@@ -251,16 +254,47 @@ router.post('/login', function(req, res) {
 });
 
 // put data 
-router.put("/userssuperadmin/:id", (req, res) => {
+router.put("/userssuperadmin/:id",ensureTokenSuper, (req, res) => {
     const id = req.params.id
     const body = req.body
+    const imgFile = req.files.image
+    pool.query("SELECT * FROM users", (err, result) => {
+        if (!err) {
+            var a=result.rows.filter(item=>item.id==req.params.id) 
+            fs.unlink(`./Images/${a[0].image}`,()=>{})}})
+
+    const imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
     pool.query(
     'UPDATE users SET address = $1,balance = $2,description=$3,email=$4, image=$5,last_name=$7,password=$8,phone_number=$9,username=$10,position=$11 WHERE id = $12',
-        [body.address, body.balance, body.description, body.email,body.image,body.last_name,body.password,body.phone_number,body.username,body.position, id],
+        [body.address, body.balance, body.description, body.email,imgName,body.last_name,body.password,body.phone_number,body.username,body.position, id],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)
             } else {
+                imgFile.mv(`${__dirname}/Images/${imgName}`)
+                res.status(200).send("Updated")
+            }
+        }
+    )
+})
+// put user
+router.put("/users/:id",ensureToken, (req, res) => {
+    const id = req.params.id
+    const body = req.body
+    const imgFile = req.files.image
+    const imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+    pool.query("SELECT * FROM users", (err, result) => {
+        if (!err) {
+            var a=result.rows.filter(item=>item.id==req.params.id) 
+            fs.unlink(`./Images/${a[0].image}`,()=>{})}})
+    pool.query(
+    'UPDATE users SET address = $1,description=$2,email=$3, image=$4,last_name=$5,phone_number=$6,username=$7 WHERE id = $8',
+        [body.address, body.description, body.email,imgName,body.last_name,body.phone_number,body.username,body.position, id],
+        (err, result) => {
+            if (err) {
+                res.status(400).send(err)
+            } else {
+                imgFile.mv(`${__dirname}/Images/${imgName}`)
                 res.status(200).send("Updated")
             }
         }
