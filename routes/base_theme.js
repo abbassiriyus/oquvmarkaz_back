@@ -3,7 +3,7 @@ var express = require('express');
 var router = express.Router();
 var jwt = require('jsonwebtoken');
 const pool = require("../db")
-
+var {ensureToken,ensureTokenSuper,ensureTokenTeacher,superTeacher }=require("../token/token.js")
 
 router.get("/base_theme", (req, res) => {   
     pool.query("SELECT * FROM base_theme", (err, result) => {
@@ -29,7 +29,7 @@ router.get('/base_theme/:id', (req, res) => {
 })
 
 
-router.post("/base_theme", (req, res) => {
+router.post("/base_theme",ensureTokenSuper, (req, res) => {
     const body = req.body;
         pool.query('INSERT INTO base_theme (name) VALUES ($1) RETURNING *',
         [body.name],
@@ -42,7 +42,7 @@ router.post("/base_theme", (req, res) => {
         });
 });
 
-router.delete("/base_theme/:id", (req, res) => {
+router.delete("/base_theme/:id",ensureTokenSuper, (req, res) => {
     const id = req.params.id
     pool.query('DELETE FROM base_theme WHERE id = $1', [id], (err, result) => {
         if (err) {
@@ -52,7 +52,7 @@ router.delete("/base_theme/:id", (req, res) => {
         }
     })
 })
-router.put("/base_theme/:id", (req, res) => {
+router.put("/base_theme/:id",ensureTokenSuper, (req, res) => {
     const id = req.params.id
     const body = req.body
     pool.query(

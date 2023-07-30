@@ -3,7 +3,7 @@ var express = require('express');
 var router = express.Router();
 var jwt = require('jsonwebtoken');
 const pool = require("../db")
-
+var {ensureToken,ensureTokenSuper,ensureTokenTeacher,superTeacher }=require("../token/token.js")
 
 router.get("/knowladge", (req, res) => {   
     pool.query("SELECT * FROM knowladge", (err, result) => {
@@ -29,7 +29,7 @@ router.get('/knowladge/:id', (req, res) => {
 })
 
 
-router.post("/knowladge", (req, res) => {
+router.post("/knowladge",ensureTokenSuper, (req, res) => {
     const body = req.body;
     const imgFile = req.files.image
     const imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
@@ -45,7 +45,7 @@ router.post("/knowladge", (req, res) => {
         });
 });
 
-router.delete("/knowladge/:id", (req, res) => {
+router.delete("/knowladge/:id",ensureTokenSuper, (req, res) => {
     const id = req.params.id
     pool.query('DELETE FROM knowladge WHERE id = $1', [id], (err, result) => {
         if (err) {
@@ -55,7 +55,7 @@ router.delete("/knowladge/:id", (req, res) => {
         }
     })
 })
-router.put("/knowladge/:id", (req, res) => {
+router.put("/knowladge/:id",ensureTokenSuper, (req, res) => {
     const id = req.params.id
     const body = req.body
     pool.query(

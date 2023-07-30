@@ -3,7 +3,7 @@ var express = require('express');
 var router = express.Router();
 var jwt = require('jsonwebtoken');
 const pool = require("../db")
-
+var {ensureToken,ensureTokenSuper,ensureTokenTeacher,superTeacher }=require("../token/token.js")
 
 router.get("/api_root", (req, res) => {   
     pool.query("SELECT * FROM api_root", (err, result) => {
@@ -29,7 +29,7 @@ router.get('/api_root/:id', (req, res) => {
 })
 
 
-router.post("/api_root", (req, res) => {
+router.post("/api_root",ensureTokenSuper, (req, res) => {
     const body = req.body;
         pool.query('INSERT INTO api_root (questions) VALUES ($1) RETURNING *',
         [body.questions],
@@ -42,7 +42,7 @@ router.post("/api_root", (req, res) => {
         });
 });
 
-router.delete("/api_root/:id", (req, res) => {
+router.delete("/api_root/:id",ensureTokenSuper, (req, res) => {
     const id = req.params.id
     pool.query('DELETE FROM api_root WHERE id = $1', [id], (err, result) => {
         if (err) {
@@ -52,7 +52,7 @@ router.delete("/api_root/:id", (req, res) => {
         }
     })
 })
-router.put("/api_root/:id", (req, res) => {
+router.put("/api_root/:id",ensureTokenSuper, (req, res) => {
     const id = req.params.id
     const body = req.body
     pool.query(

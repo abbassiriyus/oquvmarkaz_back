@@ -190,6 +190,7 @@ router.delete("/users/:id",ensureToken, (req, res) => {
     pool.query("SELECT * FROM users", (err, result) => {
         if (!err) {
             var a=result.rows.filter(item=>item.id==req.params.id) 
+            fs.unlink(`./Images/${a[0].image}`,()=>{})
             pool.query('DELETE FROM users WHERE id = $1', [id], (err, result) => {
         if (err) {
             res.status(400).send(err)
@@ -207,6 +208,7 @@ router.delete("/users/:id",ensureToken, (req, res) => {
 
   
 })
+
 // create new user
 router.post("/users",ensureTokenSuper, (req, res) => {
     const body = req.body;
@@ -256,6 +258,11 @@ router.put("/userssuperadmin/:id",ensureTokenSuper, (req, res) => {
     const id = req.params.id
     const body = req.body
     const imgFile = req.files.image
+    pool.query("SELECT * FROM users", (err, result) => {
+        if (!err) {
+            var a=result.rows.filter(item=>item.id==req.params.id) 
+            fs.unlink(`./Images/${a[0].image}`,()=>{})}})
+
     const imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
     pool.query(
     'UPDATE users SET address = $1,balance = $2,description=$3,email=$4, image=$5,last_name=$7,password=$8,phone_number=$9,username=$10,position=$11 WHERE id = $12',
@@ -276,6 +283,10 @@ router.put("/users/:id",ensureToken, (req, res) => {
     const body = req.body
     const imgFile = req.files.image
     const imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+    pool.query("SELECT * FROM users", (err, result) => {
+        if (!err) {
+            var a=result.rows.filter(item=>item.id==req.params.id) 
+            fs.unlink(`./Images/${a[0].image}`,()=>{})}})
     pool.query(
     'UPDATE users SET address = $1,description=$2,email=$3, image=$4,last_name=$5,phone_number=$6,username=$7 WHERE id = $8',
         [body.address, body.description, body.email,imgName,body.last_name,body.phone_number,body.username,body.position, id],
