@@ -1,4 +1,3 @@
-
 const express = require("express")
 const app = express()
 const cors = require("cors")
@@ -14,7 +13,6 @@ const course_data_theme=require('./routes/course_data_theme')
 const base_theme=require('./routes/base_theme')
 const knowladge=require('./routes/knowladge')
 const api_root=require('./routes/api_root')
-
 const fs=require('fs')
 const bodyParser = require('body-parser');
 const path = require('path'); 
@@ -25,13 +23,11 @@ app.use(bodyParser.json());
 app.get('/doc',(req,res)=>{
     const data = fs.readFileSync('./input.html',
     { encoding: 'utf8', flag: 'r' });
-
 res.status(200).send(data)
 })
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, '/input.html'));
   });
-  
  app.use("/auth" , user )
  app.use("/api" , cours_types)
  app.use("/api" , course)
@@ -42,15 +38,6 @@ app.get('/', function(req, res) {
  app.use("/api",base_theme)
  app.use("/api",knowladge)
  app.use("/api",api_root)
-
-
-
-
-
-
-
-
-
 app.listen(5000, () => {
     console.log("Localhost is Running");
 })
