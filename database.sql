@@ -35,11 +35,11 @@ CREATE TABLE "verify"(
  create table registerCourse( 
     "id" serial primary key,
     "course" integer  NOT NULL,
-    "total_mark" integer  NOT NULL,
+    "total_mark" integer default 0 NOT NULL,
     "propose_time" timestamp default current_timestamp not null,
-    "completed_themes" VARCHAR(50) NOT NULL,
+    "completed_themes" VARCHAR(50) default 0% NOT NULL,
     "rating" integer default 4  NOT NULL,
-    "users" VARCHAR (50) NOT NULL,
+    "users" integer NOT NULL,
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null   
  )

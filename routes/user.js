@@ -159,15 +159,19 @@ router.get('/users/:id',ensureToken, function(req, res) {
 });
 // one token user
 router.get('/oneuser', ensureToken, function(req, res) {
- console.log(req.token);
- var token=req.token
- jwt.verify(token,'secret',((require1,result1)=>{
-    if(result1==undefined){
-        res.status(502).send("token failed")
-    }else{
-    pool.query("SELECT * FROM users", (err, result) => {
+   var body=req.body
+   var result1
+   const bearerHeader=req.headers['authorization']
+   const bearer=bearerHeader.split(" ")
+   const bearerToken=bearer[1]
+   req.token=bearerToken
+   jwt.verify(bearerToken,'secret',((require1,result)=>{
+       if(result==undefined){
+           res.status(502).send("token failed")
+       }else{
+    result1=result    
+     pool.query("SELECT * FROM users", (err, result) => {
         if (!err) {
-            console.log(result1);
             if(result1.email){
             var a=result.rows.filter(item=>(item.email===result1.email ))
             }else{
@@ -179,11 +183,13 @@ router.get('/oneuser', ensureToken, function(req, res) {
         } else {
             res.send(err)
         }
-    })    
-    }
- }))
-//  res.send("sdds").status(200)
+    }) 
+    }}))
+  
+      
 });
+
+
 // delete user
 router.delete("/users/:id",ensureToken, (req, res) => {
     const id = req.params.id

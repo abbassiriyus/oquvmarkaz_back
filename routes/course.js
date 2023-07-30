@@ -40,7 +40,50 @@ router.post("/course", (req, res) => {
             }
         });
 });
-
+router.post("/course/register/:id", (req, res) => {
+    const body = req.body;
+    const id= req.params.id 
+    var data=[]
+     pool.query("SELECT * FROM course where id=$1", [req.params.id], (err, result) => {
+        if (!err) {
+           data=result.rows.filter(item=>item.id===id)
+        } 
+    })
+    var result1
+    const bearerHeader=req.headers['authorization']
+    const bearer=bearerHeader.split(" ")
+    const bearerToken=bearer[1]
+    req.token=bearerToken
+    jwt.verify(bearerToken,'secret',((require1,result2)=>{
+    if(result2==undefined){
+            res.status(502).send("token failed")
+    }else{
+    router.get('/users',ensureTokenSuper, function(req, res) {
+    pool.query("SELECT * FROM users", (err, result) => {
+                 if (!err) {
+                 result1=result.rows.filter(item=>{item.password==result2.password}) 
+                 }
+             })  
+         })
+if(result1[0].balance>data[0].price) {
+    pool.query(
+        'UPDATE base_theme SET balance=$1  WHERE id = $2',
+        [(require1[0].balance-data[0].price),result1[0].id],
+        (err, result) => {
+           pool.query('INSERT INTO registerCourse(course,users) VALUES ($1,$2) RETURNING *',
+        [data[0].id,require1[0].id],
+         (err, result) => {
+            if (err) {
+                res.status(400).send(err);
+            } else {
+                res.status(201).send("kursni sotib oldingiz");
+            }
+        });  
+        })
+     
+}else{
+    res.status(405).send("mablag yetarli emas")
+}}}))});
 router.delete("/course/:id", (req, res) => {
     const id = req.params.id
     pool.query('DELETE FROM course WHERE id = $1', [id], (err, result) => {
