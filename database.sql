@@ -106,7 +106,19 @@ create table  course_data_category(
 	"time_update" timestamp default current_timestamp not null
 )
 
+create table base_theme(
+"id" serial primary key,
+"name" VARCHAR (50) NOT NULL
+)
+create table knowladge (
+    "id" serial primary key,
+    "name" VARCHAR (50) NOT NULL,
+    "description" VARCHAR (50) NOT NULL,
+    "image"  VARCHAR (50),
+    "link" VARCHAR NOT NULL
+)
+create table api_root(
+    "id" serial primary key,
+    "questions" VARCHAR (50)
+)
 
-
-ALTER TABLE users ADD CONSTRAINT uq_passport UNIQUE ( "password" , "email", "username");
-ALTER TABLE users ADD CONSTRAINT  UNIQUE("password");
