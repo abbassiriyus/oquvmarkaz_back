@@ -6,7 +6,7 @@ const pool = require("../db")
 var {  ensureToken,ensureTokenSuper,ensureTokenTeacher,superTeacher }=require("../token/token.js")
 
 
-
+// registratsiya
 router.post("/register", (req, res) => {
     const body = req.body
     if(body){
@@ -96,6 +96,7 @@ router.get('/users',ensureTokenSuper, function(req, res) {
         } 
     })  
 });
+// get student
 router.get('/students',ensureToken, function(req, res) {
    console.log(req.body);
         pool.query("SELECT * FROM users", (err, result) => {
@@ -122,6 +123,7 @@ router.get('/students',ensureToken, function(req, res) {
             }
         })
 });
+// get teacher 
 router.get('/teachers',ensureToken, function(req, res) {
     pool.query("SELECT * FROM users", (err, result) => {
         if (!err) {
@@ -261,8 +263,8 @@ router.put("/users/:id", (req, res) => {
     const id = req.params.id
     const body = req.body
     pool.query(
-    'UPDATE users SET address = $1,balance = $2,description=$3,email=$4, image=$5,last_name=$7,password,phone_number,username,position WHERE user_id = $',
-        [body.address, body.balance, body.description, body.email,body.image, id],
+    'UPDATE users SET address = $1,balance = $2,description=$3,email=$4, image=$5,last_name=$7,password=$8,phone_number,username,position WHERE user_id = $',
+        [body.address, body.balance, body.description, body.email,body.image,body.last_name, id],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)
