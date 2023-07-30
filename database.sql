@@ -27,6 +27,8 @@ CREATE TABLE "verify"(
     "email" TEXT NOT NULL,
     "username" TEXT NOT NULL,
     "code" integer,
+     UNIQUE("email"),
+     UNIQUE("password"),
     "position" integer default 1 not null
 );
 

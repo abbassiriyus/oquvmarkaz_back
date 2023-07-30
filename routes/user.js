@@ -9,8 +9,22 @@ var {  ensureToken,ensureTokenSuper,ensureTokenTeacher,superTeacher }=require(".
 
 router.post("/register", (req, res) => {
     const body = req.body
+    if(body){
     var code =Math.floor(Math.random() * 900000)+100000;
-    if(body.password.length>7 && body.email.includes('@')){
+    var a=0
+    pool.query("SELECT * FROM users", (err, result) => {
+        if (!err) {
+            res.status(200).send(result.rows)  
+            var d2=result.rows.filter(item=>{item.email===req.body.email})
+            var d3=result.rows.filter(item=>{item.password===req.body.password})
+        if(d2.length>0 || d3.length>0){
+            a=1
+        }
+        } else {
+            res.send(err)
+        } 
+    })
+    if(body.password.length>7 && body.email.includes('@') && a!==1){
     pool.query('INSERT INTO verify (password,email,username,code) VALUES ($1,$2,$3,$4) RETURNING *',
         [body.password,body.email,body.username,code], (err, result) => {
             if (err) {
@@ -24,8 +38,12 @@ router.post("/register", (req, res) => {
             }
             if(!(body.email.includes('@'))){
                 res.status(421).send("email xato kiritildi")
-             }
-        }
+            }}
+            if(a==1){
+                res.status(422).send("siz kiritgan malumotlar bizni bazamizda oldindan saqlangan")  
+            }}else{
+                res.status(441).send("malumotni yubormadingiz")
+            }
 })
 
 // verifikatsiya
@@ -243,7 +261,7 @@ router.put("/users/:id", (req, res) => {
     const id = req.params.id
     const body = req.body
     pool.query(
-    'UPDATE users SET address = $1,balance = $2,description=$3,email=$4, image=$5, is_superuser=$6,last_name=$7,password,phone_number,username,position WHERE user_id = $',
+    'UPDATE users SET address = $1,balance = $2,description=$3,email=$4, image=$5,last_name=$7,password,phone_number,username,position WHERE user_id = $',
         [body.address, body.balance, body.description, body.email,body.image, id],
         (err, result) => {
             if (err) {
