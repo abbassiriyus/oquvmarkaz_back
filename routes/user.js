@@ -3,7 +3,7 @@ var express = require('express');
 var router = express.Router();
 var jwt = require('jsonwebtoken');
 const pool = require("../db")
-var {  ensureToken,ensureTokenSuper,ensureTokenTeacher,superTeacher }=require("../token/token.js")
+var {ensureToken,ensureTokenSuper,ensureTokenTeacher,superTeacher }=require("../token/token.js")
 
 
 // registratsiya
@@ -185,7 +185,7 @@ router.get('/oneuser', ensureToken, function(req, res) {
 //  res.send("sdds").status(200)
 });
 // delete user
-router.delete("/users/:id", (req, res) => {
+router.delete("/users/:id",ensureToken, (req, res) => {
     const id = req.params.id
     pool.query("SELECT * FROM users", (err, result) => {
         if (!err) {
@@ -208,7 +208,7 @@ router.delete("/users/:id", (req, res) => {
   
 })
 // create new user
-router.post("/users", (req, res) => {
+router.post("/users",ensureTokenSuper, (req, res) => {
     const body = req.body;
     const imgFile = req.files.image
     const imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
@@ -270,6 +270,7 @@ router.put("/userssuperadmin/:id",ensureTokenSuper, (req, res) => {
         }
     )
 })
+// put user
 router.put("/users/:id",ensureToken, (req, res) => {
     const id = req.params.id
     const body = req.body
