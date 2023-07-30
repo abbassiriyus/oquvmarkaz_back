@@ -108,5 +108,9 @@ create table  course_data_category(
 
 
 
+
+
+
+
 ALTER TABLE users ADD CONSTRAINT uq_passport UNIQUE ( "password" , "email", "username");
 ALTER TABLE users ADD CONSTRAINT  UNIQUE("password");

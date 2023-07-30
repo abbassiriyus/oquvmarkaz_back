@@ -8,8 +8,10 @@ const user=require('./routes/user.js')
 const cours_types=require('./routes/cours_types.js')
 const course=require('./routes/course.js')
 const course_theme_task=require('./routes/course_theme_task.js')
-const course_data_comment=require('./routes/course_data_comment')
-const course_data_theme=require('./routes/course_data_theme')
+const course_data_theme=require('./routes/course_data_theme.js')
+
+const course_data_comment=require('./routes/course_data_comment.js')
+const course_data_sub_category=require('./routes/course_data_sub_category')
 const fs=require('fs')
 const path = require('path'); 
 app.use(fileUpload())
@@ -32,6 +34,7 @@ app.get('/', function(req, res) {
  app.use("/api",course_theme_task)
  app.use("/api",course_data_comment)
  app.use("/api",course_data_theme)
+ app.use("/api",course_data_sub_category)
 
 
 

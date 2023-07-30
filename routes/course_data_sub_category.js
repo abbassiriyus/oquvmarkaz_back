@@ -5,8 +5,8 @@ var jwt = require('jsonwebtoken');
 const pool = require("../db")
 
 
-router.get("/course_theme_task", (req, res) => {   
-    pool.query("SELECT * FROM course_theme_task", (err, result) => {
+router.get("/course_data_sub_category", (req, res) => {   
+    pool.query("SELECT * FROM course_data_sub_category where id=$1 name=$2 category=$3", (err, result) => {
         if (!err) {
 
             res.status(200).send(result.rows)
@@ -17,8 +17,9 @@ router.get("/course_theme_task", (req, res) => {
     })
 })
 
-router.get('/course_theme_task/:id', (req, res) => { 
-    pool.query("SELECT * FROM course_theme_task where id=$1", [req.params.id], (err, result) => {
+router.get('/course_data_sub_category/:id', (req, res) => {
+    
+    pool.query("SELECT * FROM course_data_sub_category where id=$1 name=$2 category=$3 ", [req.id.name.cotegory], (err, result) => {
         if (!err) {
             res.status(200).send(result.rows)
         } else {
@@ -28,10 +29,10 @@ router.get('/course_theme_task/:id', (req, res) => {
 })
 
 
-router.post("/course_theme_task", (req, res) => {
+router.post("/course_data_sub_category/:id", (req, res) => {
     const body = req.body;
-        pool.query('INSERT INTO course_theme_task (id,name,category) VALUES ($1,$2,$3) RETURNING *',
-        [body.id,body.name,body.cotegory],
+        pool.query('INSERT INTO course_data_sub_category (name,id,category) VALUES ($1, $2, $3) RETURNING *',
+        [body.id.body.name,body.cotegory],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
@@ -41,9 +42,9 @@ router.post("/course_theme_task", (req, res) => {
         });
 });
 
-router.delete("/course_theme_task/:id", (req, res) => {
+router.delete("/course_data_sub_category/:id", (req, res) => {
     const id = req.params.id
-    pool.query('DELETE FROM course_theme_task WHERE id = $1 name= $2 category=$3 ', [id], (err, result) => {
+    pool.query('DELETE FROM course_data_sub_category WHERE id = $1  name=$2 category=$3 ', [id], (err, result) => {
         if (err) {
             res.status(400).send(err)
         } else {
@@ -51,15 +52,12 @@ router.delete("/course_theme_task/:id", (req, res) => {
         }
     })
 })
-
-
-    //   ishlash kerak
-router.put("/course_theme_task/:id", (req, res) => {
+router.put("/course_data_sub_category/:id", (req, res) => {
     const id = req.params.id
     const body = req.body
     pool.query(
-        'UPDATE course_theme_task SET name=$1, category=$2  WHERE id = $3 image=$4  '   ,
-        [body.content,body.id,body.course_theme,body.imge, ],
+        'UPDATE course_data_sub_category SET name=$1  WHERE id = $2 category=$3',
+        [body.name,body.id,body.cotegory ],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)
