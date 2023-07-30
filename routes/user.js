@@ -263,8 +263,8 @@ router.put("/users/:id", (req, res) => {
     const id = req.params.id
     const body = req.body
     pool.query(
-    'UPDATE users SET address = $1,balance = $2,description=$3,email=$4, image=$5,last_name=$7,password=$8,phone_number,username,position WHERE user_id = $',
-        [body.address, body.balance, body.description, body.email,body.image,body.last_name, id],
+    'UPDATE users SET address = $1,balance = $2,description=$3,email=$4, image=$5,last_name=$7,password=$8,phone_number=$9,username=$10,position=$11 WHERE id = $12',
+        [body.address, body.balance, body.description, body.email,body.image,body.last_name,body.password,body.phone_number,body.username,body.position, id],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)
