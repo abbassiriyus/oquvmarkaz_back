@@ -189,13 +189,14 @@ router.delete("/users/:id", (req, res) => {
     const id = req.params.id
     pool.query("SELECT * FROM users", (err, result) => {
         if (!err) {
-            res.status(200).send(result.rows)
             var a=result.rows.filter(item=>item.id==req.params.id) 
-       
             pool.query('DELETE FROM users WHERE id = $1', [id], (err, result) => {
         if (err) {
             res.status(400).send(err)
         } else {
+            if(a[0].image){
+                fs.unlink(`./Images/${a[0].image}`,(err => {console.log('delete');}))
+            }
             res.status(200).send("Deleted")
         }
     }) 
@@ -251,7 +252,7 @@ router.post('/login', function(req, res) {
 });
 
 // put data 
-router.put("/userssuperadmin/:id", (req, res) => {
+router.put("/userssuperadmin/:id",ensureTokenSuper, (req, res) => {
     const id = req.params.id
     const body = req.body
     pool.query(
@@ -266,6 +267,7 @@ router.put("/userssuperadmin/:id", (req, res) => {
         }
     )
 })
+
 
 
 module.exports = router;

@@ -11,11 +11,12 @@ const course_theme_task=require('./routes/course_theme_task.js')
 const course_data_comment=require('./routes/course_data_comment')
 const course_data_theme=require('./routes/course_data_theme')
 const fs=require('fs')
+const bodyParser = require('body-parser');
 const path = require('path'); 
 app.use(fileUpload())
 app.use(cors())
 app.use(express.static("Images"))
-
+app.use(bodyParser.json());
 app.get('/doc',(req,res)=>{
     const data = fs.readFileSync('./input.html',
     { encoding: 'utf8', flag: 'r' });
