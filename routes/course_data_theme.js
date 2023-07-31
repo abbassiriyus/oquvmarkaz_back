@@ -27,13 +27,13 @@ router.get('/course_data_theme/:id', (req, res) => {
     })
 })
  
-//    ishlash kerak
+
 router.post("/course_data_theme", (req, res) => {
     const body = req.body;
     const imgFile = req.files.image
     const imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
-        pool.query('INSERT INTO course_data_theme (id,name,content,image,video,links,extra_data,subcadegory) VALUES ($1,$2,$3,$4,$5 $6 $7 $8) RETURNING *',
-        [body.id,body.name,body.content,body.image,body.video,body.links,body.extra_data,body.subcategory],
+        pool.query('INSERT INTO course_data_theme (name,content,image,video,extra_data,cadegory) VALUES ($1,$2,$3,$4,$5, $6) RETURNING *',
+        [body.name,body.content,body.image,body.video,body.extra_data,body.category],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
@@ -57,8 +57,8 @@ router.put("/course_data_theme/:id", (req, res) => {
     const id = req.params.id
     const body = req.body
     pool.query(
-        'UPDATE course_data_theme SET name=$1    WHERE id = $2',
-        [body.name,id ],
+        'UPDATE course_data_theme SET name=$1,content=$2,image=$3,video=$4,extra_data=5,category=$6 WHERE id = $7',
+        [body.name,body.content,body.image,body.video,body.extra_data,body.category,id ],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)

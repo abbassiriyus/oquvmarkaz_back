@@ -85,19 +85,11 @@ CREATE TABLE course_data_theme (
     "content" VARCHAR (50) NOT NULL,
     "image" TEXT,
     "video" VARCHAR (50),
-    "links" VARCHAR (50) NOT NULL,
-    "extra_data" VARCHAR (50)NOT NULL,
-    "subcategory" integer NOT NULL,
-    "time_create" timestamp default current_timestamp not null,
-	"time_update" timestamp default current_timestamp not null
- )
-CREATE TABLE course_data_sub_category(
-    "id" serial primary key,
-    "name" VARCHAR (50) NOT NULL,
+    "extra_data" VARCHAR (50) NOT NULL,
     "category" integer NOT NULL,
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null
-)
+ )
 CREATE TABLE  course_data_category(
     "id" serial primary key,
     "name" VARCHAR (50) NOT NULL,
