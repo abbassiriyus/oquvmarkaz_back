@@ -50,7 +50,7 @@ CREATE TABLE course (
     "price" integer NOT NULL,
     "planned_time" integer NOT NULL,
     "course_type" integer NOT NULL,
-    "author" VARCHAR(50) NOT NULL,
+    "author" integer NOT NULL,
     "image" VARCHAR (50),
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null

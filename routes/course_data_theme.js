@@ -30,8 +30,10 @@ router.get('/course_data_theme/:id', (req, res) => {
 //    ishlash kerak
 router.post("/course_data_theme", (req, res) => {
     const body = req.body;
-        pool.query('INSERT INTO course_data_theme (id,name,content,image,vidio,links,extra_data,subcadegory) VALUES ($1,$2,$3,$4,$5 $6 $7 $8) RETURNING *',
-        [body.id,body.name,body.content,body.image,body.vidio,body.links,body.extra_data,body.subcategory],
+    const imgFile = req.files.image
+    const imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+        pool.query('INSERT INTO course_data_theme (id,name,content,image,video,links,extra_data,subcadegory) VALUES ($1,$2,$3,$4,$5 $6 $7 $8) RETURNING *',
+        [body.id,body.name,body.content,body.image,body.video,body.links,body.extra_data,body.subcategory],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);

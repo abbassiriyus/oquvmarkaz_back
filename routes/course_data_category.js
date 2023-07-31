@@ -8,9 +8,7 @@ var {ensureToken,ensureTokenSuper,ensureTokenTeacher,superTeacher }=require("../
 router.get("/course_data_category", (req, res) => {   
     pool.query("SELECT * FROM course_data_category", (err, result) => {
         if (!err) {
-
-            res.status(200).send(result.rows)
-
+        res.status(200).send(result.rows)
         } else {
             res.send(err)
         }

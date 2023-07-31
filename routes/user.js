@@ -282,6 +282,7 @@ router.put("/userssuperadmin/:id",ensureTokenSuper, (req, res) => {
             }
         }
     )
+
 })
 // put user
 router.put("/oneuser/:id",ensureToken, (req, res) => {
@@ -292,10 +293,10 @@ router.put("/oneuser/:id",ensureToken, (req, res) => {
     pool.query("SELECT * FROM users", (err, result) => {
         if (!err) {
             var a=result.rows.filter(item=>item.id==req.params.id) 
-            fs.unlink(`./Images/${a[0].image}`,()=>{})}})
+            fs.unlink(`./Images/${a[0].image}`,()=>{})
     pool.query(
     'UPDATE users SET address = $1,description=$2,email=$3, image=$4,last_name=$5,phone_number=$6,username=$7 WHERE id = $8',
-        [body.address, body.description, body.email,imgName,body.last_name,body.phone_number,body.username,body.position, id],
+        [body.address, body.description, body.email,imgName,body.last_name,body.phone_number,body.username,id],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)
@@ -304,7 +305,9 @@ router.put("/oneuser/:id",ensureToken, (req, res) => {
                 res.status(200).send("Updated")
             }
         }
-    )
+    )}
+        })
+   
 })
 
 

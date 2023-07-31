@@ -28,12 +28,15 @@ router.get('/course/:id', (req, res) => {
 })
 router.post("/course", (req, res) => {
     const body = req.body;
+    const imgFile = req.files.image
+    const imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
         pool.query('INSERT INTO course (name,description,price,planned_time,course_type,author,image) VALUES ($1,$2,$3,$4 ,$5,$6 ,$7 ) RETURNING *',
-        [body.name,body.description,body.price,body.planned_time,body.course_type,body.author,body.image],
+        [body.name,body.description,body.price,body.planned_time,body.course_type,body.author,imgName],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
             } else {
+                imgFile.mv(`${__dirname}/Images/${imgName}`)
                 res.status(201).send("Created");
             }
         });
@@ -84,24 +87,39 @@ router.post("/course/register/:id", (req, res) => {
    }}}))});
 router.delete("/course/:id", (req, res) => {
     const id = req.params.id
+    pool.query("SELECT * FROM course", (err, result) => {
+        if (!err) {
+            var a=result.rows.filter(item=>item.id==req.params.id) 
+            fs.unlink(`./Images/${a[0].image}`,()=>{})
     pool.query('DELETE FROM course WHERE id = $1', [id], (err, result) => {
         if (err) {
             res.status(400).send(err)
         } else {
             res.status(200).send("Deleted")
         }
-    })
+    })   } else {
+        res.send(err)
+    } 
+}) 
 })
 router.put("/course/:id", (req, res) => {
     const id = req.params.id
     const body = req.body
+    const imgFile = req.files.image
+    pool.query("SELECT * FROM course", (err, result) => {
+        if (!err) {
+            var a=result.rows.filter(item=>item.id==req.params.id) 
+            fs.unlink(`./Images/${a[0].image}`,()=>{})}})
+
+    const imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
     pool.query(
-        'UPDATE course SET name=$1    WHERE id = $2',
-        [body.name,id ],
+        'UPDATE course SET name=$1,description=$2,price=$3,planned_time=$4,course_type=$5,author=$6,image=$7 WHERE id = $8',
+        [body.name, body.description,body.price,body.planned_time,body.course_type,body.author,imgName,id ],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)
             } else {
+                imgFile.mv(`${__dirname}/Images/${imgName}`)
                 res.status(200).send("Updated")
             }
         }
