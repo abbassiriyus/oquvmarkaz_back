@@ -30,12 +30,37 @@ router.get('/course_data_theme/:id', (req, res) => {
 
 router.post("/course_data_theme", (req, res) => {
     const body = req.body;
-    const imgFile = req.files.image
-    const imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+    var videoFile="" 
+    var videoName=""
+    var imgFile=""
+    var imgName=""
+if(req.files && req.files.video){
+    videoFile = req.files.video 
+     videoName = Date.now()+videoFile.name.slice(imgFile.name.lastIndexOf('.'))   
+}else{
+if(body.video){
+    videoName=body.video.replice("https://www.youtube.com/watch?v=","https://www.youtube.com/embed/")
+    videoName=body.video.replice("https://youtu.be/","https://www.youtube.com/embed/")
+}else{
+    videoName=null
+}
+}
+if(req.files && req.files.image){
+     imgFile = req.files.image
+     imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+ }else{
+    imgName=body.image   
+ }
         pool.query('INSERT INTO course_data_theme (name,content,image,video,extra_data,cadegory) VALUES ($1,$2,$3,$4,$5, $6) RETURNING *',
-        [body.name,body.content,body.image,body.video,body.extra_data,body.category],
+        [body.name,body.content,imgName,videoName,body.extra_data,body.category],
          (err, result) => {
             if (err) {
+             if(req.files && req.files.video){
+                videoFile.mv(`${__dirname}/Images/${imgName}`)
+             }   
+             if(req.files && req.files.image){
+                imgFile.mv(`${__dirname}/Images/${imgName}`)
+             } 
                 res.status(400).send(err);
             } else {
                 res.status(201).send("Created");
