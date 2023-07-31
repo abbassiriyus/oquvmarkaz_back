@@ -5,7 +5,7 @@ var jwt = require('jsonwebtoken');
 const pool = require("../db")
 var {ensureToken,ensureTokenSuper,ensureTokenTeacher,superTeacher }=require("../token/token.js")
 
-router.get("/course_data_category", (req, res) => {   
+router.get("/course_data_category",ensureToken, (req, res) => {   
     pool.query("SELECT * FROM course_data_category", (err, result) => {
         if (!err) {
         res.status(200).send(result.rows)
@@ -14,7 +14,7 @@ router.get("/course_data_category", (req, res) => {
         }
     })
 })
-router.get("/course_data_category/course/:id", (req, res) => {   
+router.get("/course_data_category/course/:id",ensureToken, (req, res) => {   
     pool.query("SELECT * FROM course_data_category", (err, result) => {
         if (!err) {
      var category=result.rows.filter(item=>item.course==req.params.id)
@@ -42,7 +42,7 @@ router.get("/course_data_category/course/:id", (req, res) => {
         }
     })
 })
-router.get('/course_data_category/:id', (req, res) => {
+router.get('/course_data_category/:id',ensureToken, (req, res) => {
     
     pool.query("SELECT * FROM course_data_category where id=$1", [req.params.id], (err, result) => {
         if (!err) {
