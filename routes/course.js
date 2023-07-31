@@ -65,7 +65,7 @@ router.post("/course/register/:id", (req, res) => {
                  }
              })  
          })
-if(result1[0].balance>data[0].price) {
+    if(result1[0].balance>data[0].price) {
     pool.query(
         'UPDATE base_theme SET balance=$1  WHERE id = $2',
         [(require1[0].balance-data[0].price),result1[0].id],
@@ -81,9 +81,9 @@ if(result1[0].balance>data[0].price) {
         });  
         })
      
-}else{
+   }else{
     res.status(405).send("mablag yetarli emas")
-}}}))});
+   }}}))});
 router.delete("/course/:id", (req, res) => {
     const id = req.params.id
     pool.query('DELETE FROM course WHERE id = $1', [id], (err, result) => {

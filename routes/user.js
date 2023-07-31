@@ -284,7 +284,7 @@ router.put("/userssuperadmin/:id",ensureTokenSuper, (req, res) => {
     )
 })
 // put user
-router.put("/users/:id",ensureToken, (req, res) => {
+router.put("/oneuser/:id",ensureToken, (req, res) => {
     const id = req.params.id
     const body = req.body
     const imgFile = req.files.image

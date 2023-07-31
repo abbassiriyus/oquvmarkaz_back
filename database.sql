@@ -1,4 +1,4 @@
-create table users (
+CREATE TABLE users (
 	"id" serial primary key,
 	"address" VARCHAR(50),
 	"balance" integer default 0 not null,
@@ -32,7 +32,7 @@ CREATE TABLE "verify"(
     "position" integer default 1 not null
 );
 
- create table registerCourse( 
+ CREATE TABLE registerCourse( 
     "id" serial primary key,
     "course" integer  NOT NULL,
     "total_mark" integer default 0 NOT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE "verify"(
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null   
  )
-create table course (
+CREATE TABLE course (
     "id" serial primary key,
     "name" VARCHAR (50) NOT NULL,
     "description" VARCHAR (50) NOT NULL,
@@ -55,13 +55,13 @@ create table course (
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null
 )
-create table cours_types(
+CREATE TABLE cours_types(
     "id" serial primary key,
     "name" VARCHAR(50) NOT NULL,
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null
 )
-create table course_theme_task  (
+CREATE TABLE course_theme_task  (
     "id" serial primary key,
     "content" VARCHAR (50) NOT NULL,
     "course_theme" integer NOT NULL,
@@ -69,7 +69,7 @@ create table course_theme_task  (
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null
 )
-create table  course_theme_comment (
+CREATE TABLE  course_theme_comment (
     "id" serial primary key,
     "theme" integer NOT NULL,
     "image" VARCHAR (50),
@@ -79,7 +79,7 @@ create table  course_theme_comment (
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null
 ) 
- create table course_data_theme (
+CREATE TABLE course_data_theme (
     "id" serial primary key,
     "name" VARCHAR (50) NOT NULL,
     "content" VARCHAR (50) NOT NULL,
@@ -91,14 +91,14 @@ create table  course_theme_comment (
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null
  )
-create table course_data_sub_category(
+CREATE TABLE course_data_sub_category(
     "id" serial primary key,
     "name" VARCHAR (50) NOT NULL,
     "category" integer NOT NULL,
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null
 )
-create table  course_data_category(
+CREATE TABLE  course_data_category(
     "id" serial primary key,
     "name" VARCHAR (50) NOT NULL,
     "course" integer NOT NULL,
@@ -106,13 +106,13 @@ create table  course_data_category(
 	"time_update" timestamp default current_timestamp not null
 )
 
-create table base_theme(
-"id" serial primary key,
-"name" VARCHAR (50) NOT NULL,
-"time_create" timestamp default current_timestamp not null,
+CREATE TABLE base_theme(
+ "id" serial primary key,
+ "name" VARCHAR (50) NOT NULL,
+ "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null,
 )
-create table knowladge (
+CREATE TABLE knowladge (
     "id" serial primary key,
     "name" VARCHAR (50) NOT NULL,
     "description" VARCHAR (50) NOT NULL,
@@ -122,7 +122,7 @@ create table knowladge (
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null,
 )
-create table api_root(
+CREATE TABLE api_root(
     "id" serial primary key,
     "questions" VARCHAR (50),
     "time_create" timestamp default current_timestamp not null,
