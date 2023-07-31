@@ -289,9 +289,11 @@ router.put("/userssuperadmin/:id",ensureTokenSuper, (req, res) => {
 router.put("/oneuser/:id",ensureToken, (req, res) => {
     const id = req.params.id
     const body = req.body
-    const imgFile = req.files.image
-    const imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
-    pool.query("SELECT * FROM users", (err, result) => {
+    
+    if(req.files){
+   const imgFile = req.files.image
+   const imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+ pool.query("SELECT * FROM users", (err, result) => {
         if (!err) {
             var a=result.rows.filter(item=>item.id==req.params.id) 
             fs.unlink(`./Images/${a[0].image}`,()=>{})
@@ -308,6 +310,27 @@ router.put("/oneuser/:id",ensureToken, (req, res) => {
         }
     )}
         })
+    }else{
+      pool.query("SELECT * FROM users", (err, result) => {
+             if (!err) {
+                 var a=result.rows.filter(item=>item.id==req.params.id) 
+                 fs.unlink(`./Images/${a[0].image}`,()=>{})
+         pool.query(
+         'UPDATE users SET address = $1,description=$2,email=$3, image=$4,last_name=$5,phone_number=$6,username=$7 WHERE id = $8',
+             [body.address, body.description, body.email,body.image,body.last_name,body.phone_number,body.username,id],
+             (err, result) => {
+                 if (err) {
+                     res.status(400).send(err)
+                 } else {
+                     imgFile.mv(`${__dirname}/Images/${imgName}`)
+                     res.status(200).send("Updated")
+                 }
+             }
+         )}
+             })
+    }
+    
+   
    
 })
 

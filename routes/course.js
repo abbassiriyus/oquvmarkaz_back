@@ -28,15 +28,22 @@ router.get('/course/:id', (req, res) => {
 })
 router.post("/course", (req, res) => {
     const body = req.body;
+    const imgName=""
+  if(req.files){
     const imgFile = req.files.image
-    const imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+     imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+  }else{
+     imgName=req.body.image
+  }
         pool.query('INSERT INTO course (name,description,price,planned_time,course_type,author,image) VALUES ($1,$2,$3,$4 ,$5,$6 ,$7 ) RETURNING *',
         [body.name,body.description,body.price,body.planned_time,body.course_type,body.author,imgName],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
             } else {
-                imgFile.mv(`${__dirname}/Images/${imgName}`)
+                if(req.files){
+                    imgFile.mv(`${__dirname}/Images/${imgName}`)
+                  }
                 res.status(201).send("Created");
             }
         });
