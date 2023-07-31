@@ -5,7 +5,7 @@ CREATE TABLE users (
 	"date_joined" timestamp default current_timestamp not null,
 	"description" VARCHAR(50),
 	"email" VARCHAR(50) NOT NULL,
-	"image" VARCHAR(50),
+	"image" TEXT,
 	"is_active"  boolean default true not null,
 	"is_staff"  boolean default false not null,
 	"last_login" timestamp default current_timestamp not null,
@@ -51,7 +51,7 @@ CREATE TABLE course (
     "planned_time" integer NOT NULL,
     "course_type" integer NOT NULL,
     "author" integer NOT NULL,
-    "image" VARCHAR (50),
+    "image" TEXT,
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null
 )
@@ -65,14 +65,14 @@ CREATE TABLE course_theme_task  (
     "id" serial primary key,
     "content" VARCHAR (50) NOT NULL,
     "course_theme" integer NOT NULL,
-    "image" VARCHAR (50),
+    "image" TEXT,
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null
 )
 CREATE TABLE  course_theme_comment (
     "id" serial primary key,
     "theme" integer NOT NULL,
-    "image" VARCHAR (50),
+    "image" TEXT,
     "text" VARCHAR (50) NOT NULL,
     "subcomment" integer NOT NULL,
     "user" VARCHAR(50) NOT NULL,
@@ -83,7 +83,7 @@ CREATE TABLE course_data_theme (
     "id" serial primary key,
     "name" VARCHAR (50) NOT NULL,
     "content" VARCHAR (50) NOT NULL,
-    "image" VARCHAR (50),
+    "image" TEXT,
     "video" VARCHAR (50),
     "links" VARCHAR (50) NOT NULL,
     "extra_data" VARCHAR (50)NOT NULL,
@@ -116,7 +116,7 @@ CREATE TABLE knowladge (
     "id" serial primary key,
     "name" VARCHAR (50) NOT NULL,
     "description" VARCHAR (50) NOT NULL,
-    "image"  VARCHAR (50),
+    "image"  TEXT,
     "link" VARCHAR NOT NULL,
     "base_theme" integer NOT NULL,
     "time_create" timestamp default current_timestamp not null,
