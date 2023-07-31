@@ -26,8 +26,6 @@ router.get('/course/:id', (req, res) => {
         }
     })
 })
-
-
 router.post("/course", (req, res) => {
     const body = req.body;
         pool.query('INSERT INTO course (name,description,price,planned_time,course_type,author,image) VALUES ($1,$2,$3,$4 ,$5,$6 ,$7 ) RETURNING *',
