@@ -3,9 +3,9 @@ var express = require('express');
 var router = express.Router();
 var jwt = require('jsonwebtoken');
 const pool = require("../db")
+var {ensureToken,ensureTokenSuper,ensureTokenTeacher,superTeacher }=require("../token/token.js")
 
-
-router.get("/course", (req, res) => {   
+router.get("/course",ensureToken, (req, res) => {   
     pool.query("SELECT * FROM course", (err, result) => {
         if (!err) {
 
@@ -16,8 +16,7 @@ router.get("/course", (req, res) => {
         }
     })
 })
-
-router.get('/course/:id', (req, res) => { 
+router.get('/course/:id',ensureToken, (req, res) => { 
     pool.query("SELECT * FROM course where id=$1", [req.params.id], (err, result) => {
         if (!err) {
             res.status(200).send(result.rows)
@@ -26,7 +25,7 @@ router.get('/course/:id', (req, res) => {
         }
     })
 })
-router.post("/course", (req, res) => {
+router.post("/course",superTeacher, (req, res) => {
     const body = req.body;
     const imgName=""
   if(req.files){
@@ -48,7 +47,7 @@ router.post("/course", (req, res) => {
             }
         });
 });
-router.post("/course/register/:id", (req, res) => {
+router.post("/course/register/:id",ensureToken, (req, res) => {
     const body = req.body;
     const id= req.params.id 
     var data=[]
@@ -92,7 +91,7 @@ router.post("/course/register/:id", (req, res) => {
    }else{
     res.status(405).send("mablag yetarli emas")
    }}}))});
-router.delete("/course/:id", (req, res) => {
+router.delete("/course/:id",superTeacher, (req, res) => {
     const id = req.params.id
     pool.query("SELECT * FROM course", (err, result) => {
         if (!err) {
@@ -109,7 +108,7 @@ router.delete("/course/:id", (req, res) => {
     } 
 }) 
 })
-router.put("/course/:id", (req, res) => {
+router.put("/course/:id",superTeacher, (req, res) => {
     const id = req.params.id
     const body = req.body
     const imgFile = req.files.image
