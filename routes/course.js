@@ -67,7 +67,7 @@ router.post("/course/register/:id", (req, res) => {
          })
     if(result1[0].balance>data[0].price) {
     pool.query(
-        'UPDATE base_theme SET balance=$1  WHERE id = $2',
+        'UPDATE users SET balance=$1  WHERE id = $2',
         [(require1[0].balance-data[0].price),result1[0].id],
         (err, result) => {
            pool.query('INSERT INTO registerCourse(course,users) VALUES ($1,$2) RETURNING *',

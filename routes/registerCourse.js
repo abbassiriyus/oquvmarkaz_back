@@ -97,18 +97,26 @@ router.put("/rating/registerCourse/:id",ensureToken, (req, res) => {
         }
     )
 })
-router.get("/super/registerCourse", (req, res) => {   
-    pool.query("SELECT * FROM registerCourse", (err, result) => {
+router.get("/super/registerCourse",ensureToken, (req,res)=>{   
+     pool.query("SELECT * FROM registerCourse", (err, result) => {
         if (!err) {
-
             res.status(200).send(result.rows)
-
         } else {
             res.send(err)
         }
     })
 })
 
+router.get('/mycourse/:id',ensureToken,(req,res)=>{
+    pool.query("SELECT * FROM registerCourse", (err, result) => {
+        if (!err) {
+     var a=result.rows.filter(item=>req.params.id==item.id)
+            res.status(200).send(a)
+        } else {
+            res.send(err)
+        }
+    })
+})
 
 
 module.exports = router;
