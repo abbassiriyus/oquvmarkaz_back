@@ -14,7 +14,34 @@ router.get("/course_data_category", (req, res) => {
         }
     })
 })
+router.get("/course_data_category/course/:id", (req, res) => {   
+    pool.query("SELECT * FROM course_data_category", (err, result) => {
+        if (!err) {
+     var category=result.rows.filter(item=>item.course==req.params.id)
 
+     pool.query("SELECT * FROM course_data_theme", (err, result) => {
+        if (!err) {
+       for (let i = 0; i < category.length; i++) {
+       category[i].theme=result.rows.filter(item=>item.category==category[i].id)}
+       var a=null
+       if(category[0]){
+      if(category[0].theme[0]){
+       a=category[0].theme[0]
+       }
+       }
+       res.status(200).send({all:category,one:a})
+        } else {
+            res.status(400).send(err)
+        }
+    })
+
+
+
+        } else {
+            res.send(err)
+        }
+    })
+})
 router.get('/course_data_category/:id', (req, res) => {
     
     pool.query("SELECT * FROM course_data_category where id=$1", [req.params.id], (err, result) => {
