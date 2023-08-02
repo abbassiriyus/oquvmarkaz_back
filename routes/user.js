@@ -51,7 +51,7 @@ router.post("/register", (req, res) => {
                  
                     }
                  });
-                res.status(201).send("Created"+code)
+                res.status(201).send("send message your email")
             }
         })}else{
             if(body.password.length<8){
