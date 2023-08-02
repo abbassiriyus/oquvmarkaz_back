@@ -39,7 +39,7 @@ app.get('/', function(req, res) {
  app.use("/api",base_theme)
  app.use("/api",knowladge)
  app.use("/api",api_root)
- app.use("/",socket)
+ app.use("/message",socket)
 app.listen(5000, () => {
     console.log("Localhost is Running");
 })
