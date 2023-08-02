@@ -21,7 +21,7 @@ const bodyParser = require('body-parser');
 const path = require('path'); 
 app.use(fileUpload())
 app.use(cors())
-app.use(express.static("Images"))
+app.use(express.static('./routes/Images'))
 app.use(bodyParser.json());
 app.get('/doc',(req,res)=>{
     const data = fs.readFileSync('./input.html',

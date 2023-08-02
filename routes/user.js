@@ -341,7 +341,7 @@ router.put("/oneuser/:id",ensureToken, (req, res) => {
     const body = req.body
     if(req.files){
    const imgFile = req.files.image
-   const imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+   var imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
  pool.query("SELECT * FROM users", (err, result) => {
         if (!err) {
             var a=result.rows.filter(item=>item.id==req.params.id) 
