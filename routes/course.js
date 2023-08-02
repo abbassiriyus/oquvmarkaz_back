@@ -48,50 +48,38 @@ router.post("/course",superTeacher, (req, res) => {
             }
         });
 });
-router.post("/course/register/:id",ensureToken, (req, res) => {
-    var body = req.body;
-    var id= req.params.id 
-    var data=[]
-     pool.query("SELECT * FROM course where id=$1", [req.params.id], (err, result) => {
-        if (!err) {
-           data=result.rows.filter(item=>item.id===id)
-        } 
-    })
-    var result1
-    var bearerHeader=req.headers['authorization']
-    var bearer=bearerHeader.split(" ")
-    var bearerToken=bearer[1]
-    req.token=bearerToken
-    jwt.verify(bearerToken,'secret',((require1,result2)=>{
-    if(result2==undefined){
-            res.status(502).send("token failed")
-    }else{
-    router.get('/users',ensureTokenSuper, function(req, res) {
-    pool.query("SELECT * FROM users", (err, result) => {
-                 if (!err) {
-                 result1=result.rows.filter(item=>{item.password==result2.password}) 
-                 }
-             })  
-         })
-    if(result1[0].balance>data[0].price) {
-    pool.query(
-        'UPDATE users SET balance=$1  WHERE id = $2',
-        [(require1[0].balance-data[0].price),result1[0].id],
-        (err, result) => {
-           pool.query('INSERT INTO registerCourse(course,users) VALUES ($1,$2) RETURNING *',
-        [data[0].id,require1[0].id],
-         (err, result) => {
-            if (err) {
-                res.status(400).send(err);
-            } else {
-                res.status(201).send("kursni sotib oldingiz");
-            }
-        });  
-        })
-     
-   }else{
-    res.status(405).send("mablag yetarli emas")
-   }}}))});
+router.post("/course/:courseid/register/:userid",ensureToken, (req, res) => {
+    var body=req.body
+   var userid=req.params.userid
+   var courseid=req.params.courseid
+   pool.query("SELECT * FROM users where id=$1", [userid], (err, result2) => {
+    if (!err && result2.rows.length>0) {
+        pool.query("SELECT * FROM course where id=$1", [courseid], (err, result3) => {
+       if(!err && result3.rows.length>0 && result2.rows.length>0 && result2.rows[0].balance>result3.rows[0].price){    
+        pool.query('INSERT INTO registerCourse (course,users) VALUES ($1,$2) RETURNING *',
+   [courseid,userid],
+    (err, result) => {
+       if (err) {
+           res.status(400).send(err);
+       } else {
+        pool.query(
+            'UPDATE users SET balance=$1 WHERE id = $2',
+            [(result2.rows[0].balance-result3.rows[0].price),userid],
+            (err, result) => {})
+           res.status(201).send("Created");
+       }
+   })} else{
+    res.status(445).send('mablag yetarli emas, yokida kurs yoki user aniqlanmadi')
+   }
+   
+})
+
+  } else {
+        res.send
+        (err)
+    }
+})
+});
 router.delete("/course/:id",superTeacher, (req, res) => {
     var id = req.params.id
     pool.query("SELECT * FROM course", (err, result) => {
