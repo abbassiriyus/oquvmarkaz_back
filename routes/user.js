@@ -5,6 +5,15 @@ var jwt = require('jsonwebtoken');
 const pool = require("../db")
 const fs =require("fs")
 var {ensureToken,ensureTokenSuper,ensureTokenTeacher,superTeacher }=require("../token/token.js")
+const nodemailer =require("nodemailer")
+const transporter = nodemailer.createTransport({
+   service: "gmail",
+   auth: {
+      user: "webabbas9@gmail.com",
+      pass: "hftxvfnsdklodkwh"
+   }
+});
+
 
 
 // registratsiya
@@ -28,6 +37,20 @@ router.post("/register", (req, res) => {
             if (err) {
                 res.status(400).send("malumot To`liq emas")
             } else {
+                var mailOptions = {
+                    from: "webabbas9@gmail.com",
+                    to: body.email,
+                    subject: "Nodemailer Test",
+                    html: "Test <button>sending</button> Gmail using Node JS"
+                 };
+                transporter.sendMail(mailOptions, function(error, info){
+                    if(error){
+                       console.log(error,"error");
+                    }else{
+                       console.log("your code: " + code);
+                 
+                    }
+                 });
                 res.status(201).send("Created"+code)
             }
         })}else{
