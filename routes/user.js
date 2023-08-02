@@ -40,14 +40,14 @@ router.post("/register", (req, res) => {
                 var mailOptions = {
                     from: "webabbas9@gmail.com",
                     to: body.email,
-                    subject: "Nodemailer Test",
-                    html: "Test <button>sending</button> Gmail using Node JS"
+                    subject: "Verification Code",
+                    html: `Your activation code:${code}`
                  };
                 transporter.sendMail(mailOptions, function(error, info){
                     if(error){
                        console.log(error,"error");
                     }else{
-                       console.log("your code: " + code);
+                       console.log("your code: "+code);
                  
                     }
                  });
