@@ -132,7 +132,6 @@ router.get('/teachers',ensureToken, function(req, res) {
                 id:item.id,
                 email:item.email,
                 username:item.username,
-                first_name:item.first_name,
                 last_name:item.last_name,
                 phone_number:item.phone_number,
                 image:item.image,
@@ -147,12 +146,27 @@ router.get('/teachers',ensureToken, function(req, res) {
         }
     })
 });
+
 // get user position
-router.get('/users/:id',ensureToken, function(req, res) {
+router.get('/users/:id',ensureTokenSuper, function(req, res) {
     pool.query("SELECT * FROM users", (err, result) => {
         if (!err) {
-           var a=result.rows.filter(item=>item.position*1===req.params.id*1)
-            res.status(200).send(result.rows)
+            var a=result.rows.filter(item=>item.id==req.params.id)
+            res.status(200).send(a)
+        } else {
+            res.send(err)
+        }
+    })
+});
+router.get('/teacher/:id',ensureToken, function(req, res) {
+    pool.query("SELECT id , address , description,email,image,username,last_name,phone_number FROM users", (err, result) => {
+        if (!err) {
+            var course=null
+            pool.query("SELECT * FROM course", (err, result2) => {
+           course=result2.rows.filter(item=>item.author==req.params.id)
+           var a=result.rows.filter(item=>item.id*1===req.params.id*1) 
+           a[0].course=course
+            res.status(200).send(a)})
         } else {
             res.send(err)
         }
