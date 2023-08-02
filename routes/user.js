@@ -235,7 +235,7 @@ router.post("/users",ensureTokenSuper, (req, res) => {
     const body = req.body;
     var imgName=""
     if(req.files && req.files.image){
-        const imgFile = req.files.image
+         const imgFile = req.files.image
          imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
     }else{
         imgName=req.body.image
@@ -247,6 +247,7 @@ router.post("/users",ensureTokenSuper, (req, res) => {
                 res.status(400).send(err);
             } else {
                if(req.files && req.files.image){
+                const imgFile = req.files.image
                 imgFile.mv(`${__dirname}/Images/${imgName}`)
                }
                 res.status(201).send("Created");
@@ -297,7 +298,6 @@ if(req.files){
 }else{
      imgName = req.body.image
 }
-    
     pool.query('UPDATE users SET address = $1,balance=$2,description=$3,email=$4, image=$5,last_name=$6,password=$7,phone_number=$8,username=$9,position=$10 WHERE id = $11',
         [body.address, body.balance, body.description, body.email,imgName,body.last_name,body.password,body.phone_number,body.username,body.position, id],
         (err, result) => {
@@ -305,7 +305,7 @@ if(req.files){
                 console.log("oddiy xato");
                 res.status(400).send(err)
             } else {
-                if(req.files){ imgFile.mv(`${__dirname}/Images/${imgName}`)}
+                if(req.files){imgFile.mv(`${__dirname}/Images/${imgName}`)}
                 res.status(200).send("Updated")
             }
         }
@@ -316,7 +316,6 @@ if(req.files){
 router.put("/oneuser/:id",ensureToken, (req, res) => {
     const id = req.params.id
     const body = req.body
-    
     if(req.files){
    const imgFile = req.files.image
    const imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
