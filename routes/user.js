@@ -266,8 +266,8 @@ router.put("/userssuperadmin/:id",ensureTokenSuper, (req, res) => {
     const body = req.body
     var imgName=""
 
-    pool.query("SELECT * FROM users", (err, result) => {
-        if (!err) {
+   pool.query("SELECT * FROM users", (err, result) => { 
+    if (!err) {
             var a=result.rows.filter(item=>item.id==req.params.id) 
             fs.unlink(`./Images/${a[0].image}`,()=>{})}})
 if(req.files){
@@ -277,11 +277,11 @@ if(req.files){
      imgName = req.body.image
 }
     
-    pool.query(
-    'UPDATE users SET address = $1,balance = $2,description=$3,email=$4, image=$5,last_name=$7,password=$8,phone_number=$9,username=$10,position=$11 WHERE id = $12',
+    pool.query('UPDATE users SET address = $1,balance=$2,description=$3,email=$4, image=$5,last_name=$6,password=$7,phone_number=$8,username=$9,position=$10 WHERE id = $11',
         [body.address, body.balance, body.description, body.email,imgName,body.last_name,body.password,body.phone_number,body.username,body.position, id],
         (err, result) => {
             if (err) {
+                console.log("oddiy xato");
                 res.status(400).send(err)
             } else {
                 if(req.files){ imgFile.mv(`${__dirname}/Images/${imgName}`)}
