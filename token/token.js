@@ -7,10 +7,10 @@ const pool = require("../db")
 
 
 function ensureToken(req,res,next){
-    const bearerHeader=req.headers['authorization']
+    var bearerHeader=req.headers['authorization']
     if( typeof bearerHeader!== 'undefined'){
-    const bearer=bearerHeader.split(" ")
-    const bearerToken=bearer[1]
+    var bearer=bearerHeader.split(" ")
+    var bearerToken=bearer[1]
     req.token=bearerToken
     jwt.verify(bearerToken,'secret',((require1,result1)=>{
         if(result1==undefined){
@@ -63,10 +63,10 @@ function ensureTokenTeacher(req,res,next){
 }
 
 function superTeacher(req,res,next){
-    const bearerHeader=req.headers['authorization']
-    if( typeof bearerHeader!== 'undefined'){
-    const bearer=bearerHeader.split(" ")
-    const bearerToken=bearer[1]
+    var bearerHeader=req.headers['authorization']
+    if( typeof bearerHeader!= 'undefined'){
+    var bearer=bearerHeader.split(" ")
+    var bearerToken=bearer[1]
     req.token=bearerToken
     jwt.verify(bearerToken,'secret',((require1,result1)=>{
         if(result1==undefined || result1.position<2 ){
@@ -76,7 +76,7 @@ function superTeacher(req,res,next){
         }
      }))
     }else{
-        res.status(403)
+        res.status(403).send('not token')
     }
 }
 

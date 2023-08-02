@@ -2,8 +2,8 @@
 var express = require('express');
 var router = express.Router();
 var jwt = require('jsonwebtoken');
-const pool = require("../db")
-const fs =require("fs")
+var pool = require("../db")
+var fs =require("fs")
 var {ensureToken,ensureTokenSuper,ensureTokenTeacher,superTeacher }=require("../token/token.js")
 
 router.get("/course",ensureToken, (req, res) => {   
@@ -26,15 +26,16 @@ router.get('/course/:id',ensureToken, (req, res) => {
     })
 })
 router.post("/course",superTeacher, (req, res) => {
-    const body = req.body;
-    const imgName=""
+    var body = req.body;
+    var imgName=""
   if(req.files){
-    const imgFile = req.files.image
+    var imgFile = req.files.image
      imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
-  }else{
-     imgName=req.body.image
-  }
-        pool.query('INSERT INTO course (name,description,price,planned_time,course_type,author,image) VALUES ($1,$2,$3,$4 ,$5,$6 ,$7 ) RETURNING *',
+    }else{
+        imgName=req.body.image
+    }
+    console.log("sdds");
+    pool.query('INSERT INTO course (name,description,price,planned_time,course_type,author,image) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *',
         [body.name,body.description,body.price,body.planned_time,body.course_type,body.author,imgName],
          (err, result) => {
             if (err) {
@@ -48,8 +49,8 @@ router.post("/course",superTeacher, (req, res) => {
         });
 });
 router.post("/course/register/:id",ensureToken, (req, res) => {
-    const body = req.body;
-    const id= req.params.id 
+    var body = req.body;
+    var id= req.params.id 
     var data=[]
      pool.query("SELECT * FROM course where id=$1", [req.params.id], (err, result) => {
         if (!err) {
@@ -57,9 +58,9 @@ router.post("/course/register/:id",ensureToken, (req, res) => {
         } 
     })
     var result1
-    const bearerHeader=req.headers['authorization']
-    const bearer=bearerHeader.split(" ")
-    const bearerToken=bearer[1]
+    var bearerHeader=req.headers['authorization']
+    var bearer=bearerHeader.split(" ")
+    var bearerToken=bearer[1]
     req.token=bearerToken
     jwt.verify(bearerToken,'secret',((require1,result2)=>{
     if(result2==undefined){
@@ -92,7 +93,7 @@ router.post("/course/register/:id",ensureToken, (req, res) => {
     res.status(405).send("mablag yetarli emas")
    }}}))});
 router.delete("/course/:id",superTeacher, (req, res) => {
-    const id = req.params.id
+    var id = req.params.id
     pool.query("SELECT * FROM course", (err, result) => {
         if (!err) {
             var a=result.rows.filter(item=>item.id==req.params.id) 
@@ -109,15 +110,15 @@ router.delete("/course/:id",superTeacher, (req, res) => {
 }) 
 })
 router.put("/course/:id",superTeacher, (req, res) => {
-    const id = req.params.id
-    const body = req.body
-    const imgFile = req.files.image
+    var id = req.params.id
+    var body = req.body
+    var imgFile = req.files.image
     pool.query("SELECT * FROM course", (err, result) => {
         if (!err) {
             var a=result.rows.filter(item=>item.id==req.params.id) 
             fs.unlink(`./Images/${a[0].image}`,()=>{})}})
 
-    const imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+    var imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
     pool.query(
         'UPDATE course SET name=$1,description=$2,price=$3,planned_time=$4,course_type=$5,author=$6,image=$7 WHERE id = $8',
         [body.name, body.description,body.price,body.planned_time,body.course_type,body.author,imgName,id ],
