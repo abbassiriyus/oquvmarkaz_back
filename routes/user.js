@@ -264,13 +264,19 @@ router.post('/login', function(req, res) {
 router.put("/userssuperadmin/:id",ensureTokenSuper, (req, res) => {
     const id = req.params.id
     const body = req.body
-    const imgFile = req.files.image
+    var imgName=""
+
     pool.query("SELECT * FROM users", (err, result) => {
         if (!err) {
             var a=result.rows.filter(item=>item.id==req.params.id) 
             fs.unlink(`./Images/${a[0].image}`,()=>{})}})
-
-    const imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+if(req.files){
+    const imgFile = req.files.image
+     imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+}else{
+     imgName = req.body.image
+}
+    
     pool.query(
     'UPDATE users SET address = $1,balance = $2,description=$3,email=$4, image=$5,last_name=$7,password=$8,phone_number=$9,username=$10,position=$11 WHERE id = $12',
         [body.address, body.balance, body.description, body.email,imgName,body.last_name,body.password,body.phone_number,body.username,body.position, id],
@@ -278,7 +284,7 @@ router.put("/userssuperadmin/:id",ensureTokenSuper, (req, res) => {
             if (err) {
                 res.status(400).send(err)
             } else {
-                imgFile.mv(`${__dirname}/Images/${imgName}`)
+                if(req.files){ imgFile.mv(`${__dirname}/Images/${imgName}`)}
                 res.status(200).send("Updated")
             }
         }
@@ -308,7 +314,7 @@ router.put("/oneuser/:id",ensureToken, (req, res) => {
                 res.status(200).send("Updated")
             }
         }
-    )}
+    )} 
         })
     }else{
       pool.query("SELECT * FROM users", (err, result) => {
