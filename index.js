@@ -14,6 +14,7 @@ const base_theme=require('./routes/base_theme')
 const knowladge=require('./routes/knowladge')
 const api_root=require('./routes/api_root')
 const fs=require('fs')
+const socket=require("./routes/socket.js")
 const bodyParser = require('body-parser');
 const path = require('path'); 
 app.use(fileUpload())
@@ -38,6 +39,7 @@ app.get('/', function(req, res) {
  app.use("/api",base_theme)
  app.use("/api",knowladge)
  app.use("/api",api_root)
+ app.use("/",socket)
 app.listen(5000, () => {
     console.log("Localhost is Running");
 })

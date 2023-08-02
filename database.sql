@@ -18,9 +18,16 @@ CREATE TABLE users (
 	"username" VARCHAR(50) NOT NULL,
      UNIQUE("email"),
      UNIQUE("password"),
-    "position" integer default 1 not null
+    "position" integer default 1 not null,
+    "rooms" TEXT[] NOT NULL default '{}'
 );
-
+CREATE TABLE  messages (
+  "id" SERIAL PRIMARY KEY,
+  "room" TEXT NOT NULL,
+  "author" TEXT NOT NULL,
+  "message" TEXT NOT NULL,
+  "time" TEXT NOT NULL
+);
 CREATE TABLE "verify"(
     "id" serial primary key,
     "password" TEXT NOT NULL,
@@ -121,4 +128,9 @@ CREATE TABLE api_root(
 	"time_update" timestamp default current_timestamp not null,
 )
 
-
+CREATE TABLE message(
+    "id" serial primary key,
+    "questions" VARCHAR (50),
+    "time_create" timestamp default current_timestamp not null,
+	"time_update" timestamp default current_timestamp not null,
+)
