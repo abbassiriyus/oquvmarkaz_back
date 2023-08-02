@@ -46,7 +46,7 @@ function ensureTokenSuper(req,res,next){
 }
 function ensureTokenTeacher(req,res,next){
     const bearerHeader=req.headers['authorization']
-    if( typeof bearerHeader!== 'undefined'){
+    if( typeof bearerHeader!=undefined){
     const bearer=bearerHeader.split(" ")
     const bearerToken=bearer[1]
     req.token=bearerToken
@@ -58,13 +58,13 @@ function ensureTokenTeacher(req,res,next){
         }
      }))
     }else{
-        res.status(403)
+        res.status(403).send("not token")
     }
 }
 
 function superTeacher(req,res,next){
     var bearerHeader=req.headers['authorization']
-    if( typeof bearerHeader!= 'undefined'){
+    if( typeof bearerHeader!=undefined){
     var bearer=bearerHeader.split(" ")
     var bearerToken=bearer[1]
     req.token=bearerToken
