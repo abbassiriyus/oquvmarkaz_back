@@ -219,15 +219,22 @@ router.delete("/users/:id",ensureToken, (req, res) => {
 // create new user
 router.post("/users",ensureTokenSuper, (req, res) => {
     const body = req.body;
-    const imgFile = req.files.image
-    const imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+    var imgName=""
+    if(req.files && req.files.image){
+        const imgFile = req.files.image
+         imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+    }else{
+        imgName=req.body.image
+    }
     pool.query('INSERT INTO users (address, description, email, last_name, password, phone_number, username, position,image) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *',
     [ body.address,body.description, body.email, body.last_name, body.password, body.phone_number, body.username, body.position,imgName],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
             } else {
+               if(req.files && req.files.image){
                 imgFile.mv(`${__dirname}/Images/${imgName}`)
+               }
                 res.status(201).send("Created");
             }
         });
