@@ -49,18 +49,18 @@ router.post("/course",superTeacher, (req, res) => {
         });
 });
 router.post("/course/:courseid/register/:userid",ensureToken, (req, res) => {
-    var body=req.body
+var body=req.body
    var userid=req.params.userid
    var courseid=req.params.courseid
    pool.query("SELECT * FROM users where id=$1", [userid], (err, result2) => {
     if (!err && result2.rows.length>0) {
         pool.query("SELECT * FROM course where id=$1", [courseid], (err, result3) => {
-       if(!err && result3.rows.length>0 && result2.rows.length>0 && result2.rows[0].balance>result3.rows[0].price){    
+    if(!err && result3.rows.length>0 && result2.rows.length>0 && result2.rows[0].balance>result3.rows[0].price){    
         pool.query('INSERT INTO registerCourse (course,users) VALUES ($1,$2) RETURNING *',
    [courseid,userid],
     (err, result) => {
        if (err) {
-           res.status(400).send(err);
+           res.status(400).send("course va users ni idlarini yuboring");
        } else {
         pool.query(
             'UPDATE users SET balance=$1 WHERE id = $2',
