@@ -33,7 +33,8 @@ router.post("/help",ensureTokenSuper, (req, res) => {
     const body = req.body;
     var imgName="";
     if(req.files){
-        const imgFile = req.files.image
+        const imgFile = req.files. 
+        image
          imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
     }else{
         imgName=req.body.image
