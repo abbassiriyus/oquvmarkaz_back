@@ -140,7 +140,13 @@ CREATE TABLE help(
 	"time_update" timestamp default current_timestamp not null,
 );
 
-
+CREATE TABLE follow(
+    "id" serial primary key,
+    "topuser" integer NOT NULL,
+    "minuser" integer NOT NULL,
+    "time_create" timestamp default current_timestamp not null,
+	"time_update" timestamp default current_timestamp not null,
+)
 
 
 
@@ -159,7 +165,7 @@ CREATE TABLE group_students(
   "group_id"  VARCHAR() NOT NULL,
   "time_create" timestamp default current_timestamp not null,
   "time_update" timestamp default current_timestamp not null,
-)
+)   
 
 
 

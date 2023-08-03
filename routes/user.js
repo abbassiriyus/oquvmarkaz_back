@@ -387,5 +387,21 @@ router.put("/oneuser/:id",ensureToken, (req, res) => {
 })
 
 
+router.put("/ban/:id", (req, res) => {
+    const id = req.params.id
+    const body = req.body
+    pool.query(
+        'UPDATE user SET is_active=$1    WHERE id = $2',
+        [body.is_active,id],
+        (err, result) => {
+            if (err) {
+                res.status(400).send(err)
+            } else {
+                res.status(200).send("Updated")
+            }
+        }
+    )
+})
+
 module.exports = router;
 
