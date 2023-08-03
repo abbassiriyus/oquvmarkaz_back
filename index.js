@@ -19,7 +19,7 @@ const course_data_theme=require('./routes/course_data_theme')
 const course_data_category=require('./routes/course_data_category')
 const base_theme=require('./routes/base_theme')
 const knowladge=require('./routes/knowladge')
-const api_root=require('./routes/api_root')
+const api_root=require('./routes/help')
 const registerCourse=require('./routes/registerCourse')
 
 

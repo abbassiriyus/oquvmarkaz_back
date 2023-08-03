@@ -5,8 +5,8 @@ var jwt = require('jsonwebtoken');
 const pool = require("../db")
 var {ensureToken,ensureTokenSuper,ensureTokenTeacher,superTeacher }=require("../token/token.js")
 
-router.get("/api_root", (req, res) => {   
-    pool.query("SELECT * FROM api_root", (err, result) => {
+router.get("/help", (req, res) => {   
+    pool.query("SELECT * FROM help", (err, result) => {
         if (!err) {
 
             res.status(200).send(result.rows)
@@ -17,9 +17,9 @@ router.get("/api_root", (req, res) => {
     })
 })
 
-router.get('/api_root/:id', (req, res) => {
+router.get('/help/:id', (req, res) => {
     
-    pool.query("SELECT * FROM api_root where id=$1", [req.params.id], (err, result) => {
+    pool.query("SELECT * FROM help where id=$1", [req.params.id], (err, result) => {
         if (!err) {
             res.status(200).send(result.rows)
         } else {
@@ -29,10 +29,17 @@ router.get('/api_root/:id', (req, res) => {
 })
 
 
-router.post("/api_root",ensureTokenSuper, (req, res) => {
+router.post("/help",ensureTokenSuper, (req, res) => {
     const body = req.body;
-        pool.query('INSERT INTO api_root (questions) VALUES ($1) RETURNING *',
-        [body.questions],
+    var imgName="";
+    if(req.files){
+        const imgFile = req.files.image
+         imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+    }else{
+        imgName=req.body.image
+    }
+        pool.query('INSERT INTO help (name,image) VALUES ($1) RETURNING *',
+        [body.name,imgName],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
@@ -42,15 +49,26 @@ router.post("/api_root",ensureTokenSuper, (req, res) => {
         });
 });
 
-router.delete("/api_root/:id",ensureTokenSuper, (req, res) => {
+router.delete("/help/:id",ensureTokenSuper, (req, res) => {
     const id = req.params.id
-    pool.query('DELETE FROM api_root WHERE id = $1', [id], (err, result) => {
-        if (err) {
-            res.status(400).send(err)
+    pool.query("SELECT * FROM help where id=$1", [req.params.id], (err, result1) => {
+        if (!err) {
+
+            pool.query('DELETE FROM help WHERE id = $1', [id], (err, result) => {
+                if (err) {
+                    res.status(400).send(err)
+                } else {
+                    res.status(200).send("Deleted")
+                }
+            })
         } else {
-            res.status(200).send("Deleted")
+            res.status(400).send(err)
         }
     })
+
+   
+
+
 })
 router.put("/api_root/:id",ensureTokenSuper, (req, res) => {
     const id = req.params.id

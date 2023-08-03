@@ -31,15 +31,23 @@ router.get('/knowladge/:id', (req, res) => {
 
 router.post("/knowladge",ensureTokenSuper, (req, res) => {
     const body = req.body;
+    var imgName="";
+    if(req.files){
     const imgFile = req.files.image
-    const imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+     imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+     }else{
+      imgName=req.body.image
+     }
         pool.query('INSERT INTO knowladge (name,description,image,link) VALUES ($1,$2,$3,$4) RETURNING *',
         [body.name,body.description,imgName,body.link,],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
             } else {
-                imgFile.mv(`${__dirname}/Images/${imgName}`)
+           if(req.files){
+            const imgFile = req.files.image
+           imgFile.mv(`${__dirname}/Images/${imgName}`)
+            }
                 res.status(201).send("Created");
             }
         });
