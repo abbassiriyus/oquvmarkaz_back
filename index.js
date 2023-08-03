@@ -5,7 +5,8 @@ const fileUpload = require("express-fileupload")
 const bodyParser = require('body-parser');
 const path = require('path'); 
 const fs=require('fs')
-
+const http = require("http");
+const { Server } = require("socket.io");
 
 
 const pool = require("./db")
@@ -27,6 +28,8 @@ app.use(fileUpload())
 app.use(cors())
 app.use(express.static('./routes/Images'))
 app.use(bodyParser.json());
+
+
 
 
 
@@ -54,12 +57,134 @@ app.get('/', function(req, res) {
  app.use("/api",knowladge)
  app.use("/api",api_root)
 
+const server = http.createServer(app);
+
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"],
+  },
+});
 
 
+ const usersSockets = {};
 
+ io.on("connection", (socket) => {
+   console.log(`User Connected: ${socket.id}`);
+ 
+   // новый обработчик событий для аутентификации пользователя и сохранения его socket.id
+   socket.on("authenticate", (data) => {
+     usersSockets[data.email] = socket.id;
+   });
+ 
+   // новый обработчик событий для создания приватной комнаты с другим пользователем
+   socket.on("create_private_room", async (data) => {
+     const { email1, email2 } = data;
+   
+     // check if a private room between the two users already exists
+     const user1Res = await pool.query(
+       "SELECT rooms FROM users WHERE email = $1",
+       [email1]
+     );
+     const user2Res = await pool.query(
+       "SELECT rooms FROM users WHERE email = $1",
+       [email2]
+     );
+     if (
+       user1Res.rowCount === 0 ||
+       user2Res.rowCount === 0 ||
+       !user1Res.rows[0].rooms ||
+       !user2Res.rows[0].rooms
+     ) {
+       return socket.emit("error", "One or both users do not exist");
+     }
+     const user1Rooms = user1Res.rows[0].rooms;
+     const user2Rooms = user2Res.rows[0].rooms;
+     const commonRooms = user1Rooms.filter((room) => user2Rooms.includes(room));
+     if (commonRooms.length > 0) {
+       // a private room between the two users already exists
+       return socket.emit("error", "A private room between the two users already exists");
+     }
+   
+     // create a unique room name by concatenating both emails
+     const roomName = `${email1}_${email2}`;
+   
+     // add the room to both users' rooms array
+     await pool.query(
+       "UPDATE users SET rooms = array_append(rooms, $1) WHERE email IN ($2, $3)",
+       [roomName, email1, email2]
+     );
+   
+     // join the room and send a success message
+     socket.join(roomName);
+     socket.emit("private_room_created", { roomName });
+   
+     // send a notification to the other user
+     if (usersSockets[email2]) {
+       io.to(usersSockets[email2]).emit("new_private_room", { roomName });
+     }
+   });
+   
+ 
+   socket.on("join_room", async (data) => {
+     socket.join(data.room);
+     console.log(`User with ID: ${socket.id} joined room: ${data.room}`);
+   
+     const res = await pool.query("SELECT * FROM messages WHERE room = $1", [
+       data.room,
+     ]);
+     socket.emit("load_messages", res.rows);
+   
+     // check if the room is already in the user's rooms array
+     const userRes = await pool.query(
+       "SELECT rooms FROM users WHERE email = $1",
+       [data.email]
+     );
+     const userRooms = userRes.rows[0].rooms;
+     if (!userRooms.includes(data.room)) {
+       // add the room to the user's rooms array if it's not already there
+       await pool.query(
+         "UPDATE users SET rooms = array_append(rooms, $1) WHERE email = $2",
+         [data.room, data.email]
+       );
+     }
+   });
+   
+ 
+   socket.on("send_message", async (data) => {
+     await pool.query(
+       "INSERT INTO messages (room, author, message, time) VALUES ($1, $2, $3, $4)",
+       [data.room, data.author, data.message, data.time]
+     );
+     socket.to(data.room).emit("receive_message", data);
+   });
+ 
+   socket.on("get_users", async () => {
+     const res = await pool.query("SELECT * FROM users");
+     socket.emit("load_users", res.rows);
+   });
+   socket.on("get_rooms", async (data) => {
+     const res = await pool.query(
+       "SELECT rooms FROM users WHERE email = $1",
+       [data.email]
+     );
+     socket.emit("load_rooms", res.rows[0].rooms);
+   });
+ 
+   socket.on("disconnect", () => {
+     console.log("User Disconnected", socket.id);
+ 
+     // удаляем socket.id пользователя из объекта usersSockets при отключении
+     Object.keys(usersSockets).forEach((email) => {
+       if (usersSockets[email] === socket.id) {
+         delete usersSockets[email];
+       }
+     });
+   });
+ });
 
 //  app.use("/message",socket)
-app.listen(5000, () => {
+server.listen(5000, () => {
     console.log("Localhost is Running");
 })
 
