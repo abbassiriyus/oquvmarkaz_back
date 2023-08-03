@@ -234,7 +234,9 @@ router.delete("/users/:id",ensureToken, (req, res) => {
     pool.query("SELECT * FROM users", (err, result) => {
         if (!err) {
             var a=result.rows.filter(item=>item.id==req.params.id) 
-            fs.unlink(`./Images/${a[0].image}`,()=>{})
+            if(a[0].image){
+                fs.unlink(`./Images/${a[0].image}`,()=>{})
+            }
             pool.query('DELETE FROM users WHERE id = $1', [id], (err, result) => {
         if (err) {
             res.status(400).send(err)
