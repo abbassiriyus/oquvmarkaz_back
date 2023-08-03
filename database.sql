@@ -97,7 +97,7 @@ CREATE TABLE course_data_theme (
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null
  )
-CREATE TABLE  course_data_category(
+CREATE TABLE course_data_category(
     "id" serial primary key,
     "name" VARCHAR (50) NOT NULL,
     "course" integer NOT NULL,
@@ -120,7 +120,7 @@ CREATE TABLE knowladge (
     "base_theme" integer NOT NULL,
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null,
-)
+);
 
 
 CREATE TABLE help_category(
@@ -129,7 +129,7 @@ CREATE TABLE help_category(
     "image" TEXT,
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null,
-)
+);
 
 CREATE TABLE help(
     "id" serial primary key,
@@ -138,4 +138,4 @@ CREATE TABLE help(
     "image" TEXT,
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null,
-)
+);
