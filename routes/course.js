@@ -4,7 +4,7 @@ var router = express.Router();
 var jwt = require('jsonwebtoken');
 var pool = require("../db")
 var fs =require("fs")
-var {ensureToken,ensureTokenSuper,ensureTokenTeacher,superTeacher }=require("../token/token.js")
+var {ensureToken,superTeacher }=require("../token/token.js")
 
 router.get("/course",ensureToken, (req, res) => {   
     pool.query("SELECT * FROM course", (err, result) => {
@@ -42,6 +42,8 @@ router.post("/course",superTeacher, (req, res) => {
                 res.status(400).send(err);
             } else {
                 if(req.files){
+                    var imgFile = req.files.image
+                    imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
                     imgFile.mv(`${__dirname}/Images/${imgName}`)
                   }
                 res.status(201).send("Created");

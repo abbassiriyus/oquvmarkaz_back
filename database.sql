@@ -139,3 +139,27 @@ CREATE TABLE help(
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null,
 );
+
+
+
+
+
+-- group
+CREATE TABLE group(
+  "id" serial primary key,
+  "teacher_id" integer not Null,
+  "group_name"  VARCHAR() NOT NULL,
+  "time_create" timestamp default current_timestamp not null,
+  "time_update" timestamp default current_timestamp not null,
+)
+
+CREATE TABLE group_students(
+  "id" serial primary key,
+  "student_id" integer not NULL,
+  "group_id"  VARCHAR() NOT NULL,
+  "time_create" timestamp default current_timestamp not null,
+  "time_update" timestamp default current_timestamp not null,
+)
+
+
+
