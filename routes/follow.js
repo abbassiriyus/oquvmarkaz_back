@@ -8,15 +8,15 @@ const pool = require("../db")
 // });
 
 router.get('/follow', async (req, res) => {
-  try {
-    const client = await pool.connect();
-    const result = await client.query('SELECT * FROM follow');
-    const follows = result.rows;
-    client.release();
-    res.json(follows);
-  } catch (err) {
-    res.status(500).json({ message: 'Error retrieving follow records', error: err.message });
-  }
+  pool.query("SELECT * FROM follow", (err, result) => {
+    if (!err) {
+
+        res.status(200).send(result.rows)
+
+    } else {
+        res.send(err)
+    }
+ })
 });
 
 router.post('/follow', async (req, res) => {
