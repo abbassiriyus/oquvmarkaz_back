@@ -16,6 +16,7 @@ CREATE TABLE users (
 	"time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null,
 	"username" VARCHAR(50) NOT NULL,
+
      UNIQUE("email"),
      UNIQUE("password"),
     "position" integer default 1 not null,
@@ -169,34 +170,68 @@ CREATE TABLE call_me(
 )
 
 -- group
-CREATE TABLE group (
+CREATE TABLE education(
     'id' serial PRIMARY KEY,
-    'group_name' varchar(255),
+    'education_name' varchar(255),
     'description' text,
-    'created_date' timestamp default current_timestamp not null
-);
-CREATE TABLE lesson_school (
-    'id' SERIAL PRIMARY KEY,
-    'lesson_name' VARCHAR(255) NOT NULL,
-    'school_id' INT NOT NULL,
-    'teacher_id' INT NOT NULL,
     'start_date' DATE,
     'end_date' DATE,
-    CONSTRAINT 'fk_school'
-        FOREIGN KEY ('school_id')
-        REFERENCES 'school' ('school_id'),
-    CONSTRAINT 'fk_teacher'
-        FOREIGN KEY ('teacher_id')
-        REFERENCES 'teacher' ('teacher_id')
+    'created_date' timestamp default current_timestamp not null
+);
+CREATE TABLE schedule(
+    'id' SERIAL PRIMARY KEY,
+    'lesson_name' VARCHAR(255) NOT NULL,
+    'education_id' INT NOT NULL,
+    'start_time' time,
+    "day" date not null,
+    'end_time' time,
+    "teacher_id" integer not null
 );
 
-CREATE TABLE group_students(
+CREATE TABLE group_student(
   "id" serial primary key,
   "student_id" integer not NULL,
-  "group_id"  VARCHAR() NOT NULL,
+  "education_id" integer NOT NULL,
   "time_create" timestamp default current_timestamp not null,
   "time_update" timestamp default current_timestamp not null,
 )   
+CREATE TABLE attendance_lesson(
+  "id" serial primary key,
+  "lesson_id" integer not NULL,
+  "group_id" integer NOT NULL,
+  "mark" integer,
+  "came" boolean default false NOT null,
+  "time_create" timestamp default current_timestamp not null,
+  "time_update" timestamp default current_timestamp not null
+)   
+ 
+--test
+CREATE TABLE test(
+    'id' SERIAL PRIMARY KEY,
+    'education_id' INT NOT NULL,
+    'start_time' time,
+    "day" date not null,
+    "deadline" text not null,  
+    'end_time' time,
+    "teacher_id" integer not null
+);
+CREATE TABLE variand(
+    'id' SERIAL PRIMARY KEY,
+    
+    "teacher_id" integer not null
+);
+
+
+CREATE TABLE attendance_test(
+  "id" serial primary key,
+  "test_id" integer not NULL,
+  "group_id" integer NOT NULL,
+  "mark" integer,
+  "came" boolean default false NOT null,
+  "time_create" timestamp default current_timestamp not null,
+  "time_update" timestamp default current_timestamp not null
+)   
+
 
 CREATE TABLE schedule (
     "id" SERIAL PRIMARY KEY,

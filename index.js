@@ -88,10 +88,15 @@ const io = new Server(server, {
        "SELECT rooms FROM users WHERE email = $1",
        [email1]
      );
+    
      const user2Res = await pool.query(
        "SELECT rooms FROM users WHERE email = $1",
        [email2]
      );
+      console.log(user1Res,"user1Res");
+      console.log(email1,"email1");
+      console.log(user2Res,"user2Res");
+      console.log(email2,"email2");
      if (
        user1Res.rowCount === 0 ||
        user2Res.rowCount === 0 ||
