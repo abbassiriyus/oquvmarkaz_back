@@ -51,7 +51,7 @@ if(req.files && req.files.image){
  }else{
     imgName=body.image   
  }
-        pool.query('INSERT INTO course_data_theme (name,content,image,video,extra_data,cadegory) VALUES ($1,$2,$3,$4,$5, $6) RETURNING *',
+        pool.query('INSERT INTO course_data_theme (name,content,image,video,extra_data,category) VALUES ($1,$2,$3,$4,$5, $6) RETURNING *',
         [body.name,body.content,imgName,videoName,body.extra_data,body.category],
          (err, result) => {
             if (err) {
