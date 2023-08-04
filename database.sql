@@ -148,7 +148,14 @@ CREATE TABLE follow(
 	"time_update" timestamp default current_timestamp not null
 )
 
-
+CREATE TABLE call_me(
+ "id" serial primary key,
+ "fullname" VARCHAR(120) NOT NULL,
+ "email" VARCHAR(50),
+ "message" TEXT,
+ "read" boolean default false not null,
+ "time_create" timestamp default current_timestamp not null
+)
 
 -- group
 CREATE TABLE group (
