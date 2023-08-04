@@ -82,7 +82,7 @@ const io = new Server(server, {
    // новый обработчик событий для создания приватной комнаты с другим пользователем
    socket.on("create_private_room", async (data) => {
      const { email1, email2 } = data;
-   
+    console.log(email1,"email1");console.log(email2,"email2");
      // check if a private room between the two users already exists
      const user1Res = await pool.query(
        "SELECT rooms FROM users WHERE email = $1",
@@ -94,9 +94,9 @@ const io = new Server(server, {
        [email2]
      );
       console.log(user1Res,"user1Res");
-      console.log(email1,"email1");
+     
       console.log(user2Res,"user2Res");
-      console.log(email2,"email2");
+      
      if (
        user1Res.rowCount === 0 ||
        user2Res.rowCount === 0 ||
