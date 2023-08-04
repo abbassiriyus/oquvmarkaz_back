@@ -29,17 +29,16 @@ router.get('/course_theme_comment/:id', (req, res) => {
 })
 
 
-router.post("/course_theme_comment",ensureToken, (req, res) => {
+router.post("/course_theme_comment", (req, res) => {
     const body = req.body;
     var imgName="";
     if(req.files){
-        const imgFile = req.files. 
-        image
+        const imgFile = req.files.image
          imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
     }else{
         imgName=req.body.image
     }
-        pool.query('INSERT INTO course_theme_comment (theme,text,image,subcomment,user) VALUES ($1,$2,$3,$4,$5) RETURNING *',
+    pool.query('INSERT INTO course_theme_comment (theme,text,image,subcomment,user) VALUES ($1 ,$2 ,$3 ,$4 ,$5 ) RETURNING *',
         [body.theme,body.text,imgName,body.subcomment,body.user],
          (err, result) => {
             if (err) {
