@@ -93,9 +93,7 @@ const io = new Server(server, {
       "SELECT rooms FROM users WHERE email = $1",
       [email2]
     );
-      console.log(user1Res,"user1Res");
     
-      console.log(user2Res,"user2Res");
       
      if (
        user1Res.rowCount === 0 ||
