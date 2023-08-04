@@ -1,62 +1,71 @@
-const express = require('express');
-const router = express.Router();
+
+var express = require('express');
+var router = express.Router();
+var jwt = require('jsonwebtoken');
 const pool = require("../db")
+var {ensureToken,ensureTokenSuper,ensureTokenTeacher,superTeacher }=require("../token/token.js")
 
-// Create a PostgreSQL connection pool
-// const pool = new Pool({
-//   connectionString: 'your_postgres_connection_string',
-// });
+router.get("/follow", (req, res) => {   
+    pool.query("SELECT * FROM follow", (err, result) => {
+        if (!err) {
 
-router.get('/follow', async (req, res) => {
-  pool.query("SELECT * FROM follow", (err, result) => {
-    if (!err) {
+            res.status(200).send(result.rows)
 
-        res.status(200).send(result.rows)
+        } else {
+            res.send(err)
+        }
+    })
+})
 
-    } else {
-        res.send(err)
-    }
- })
+router.get('/follow/:id', (req, res) => {
+    
+    pool.query("SELECT * FROM follow where id=$1", [req.params.id], (err, result) => {
+        if (!err) {
+            res.status(200).send(result.rows)
+        } else {
+            res.status(400).send(err)
+        }
+    })
+})
+
+
+router.post("/follow",ensureTokenSuper, (req, res) => {
+    const body = req.body;
+        pool.query('INSERT INTO follow (topuser,minuser) VALUES ($1,$2) RETURNING *',
+        [body.topuser,body.minuser],
+         (err, result) => {
+            if (err) {
+                res.status(400).send(err);
+            } else {
+                res.status(201).send("Created");
+            }
+        });
 });
 
-router.post('/follow', async (req, res) => {
-  const { topuser, minuser } = req.body;
-  try {
-    const client = await pool.connect();
-    const result = await client.query('INSERT INTO follow (topuser, minuser) VALUES ($1, $2) RETURNING *', [topuser, minuser]);
-    const follow = result.rows[0];
-    client.release();
-    res.status(201).json(follow);
-  } catch (err) {
-    res.status(500).json({ message: 'Error creating follow record', error: err.message });
-  }
-});
-
-router.put('/follow/:id', async (req, res) => {
-  const { id } = req.params;
-  const { topuser, minuser } = req.body;
-  try {
-    const client = await pool.connect();
-    const result = await client.query('UPDATE follow SET topuser = $1, minuser = $2, time_update = current_timestamp WHERE id = $3 RETURNING *', [topuser, minuser, id]);
-    const follow = result.rows[0];
-    client.release();
-    res.json(follow);
-  } catch (err) {
-    res.status(500).json({ message: 'Error updating follow record', error: err.message });
-  }
-});
-
-router.delete('/follow/:id', async (req, res) => {
-  const { id } = req.params;
-  try {
-    const client = await pool.connect();
-    const result = await client.query('DELETE FROM follow WHERE id = $1 RETURNING *', [id]);
-    const follow = result.rows[0];
-    client.release();
-    res.json(follow);
-  } catch (err) {
-    res.status(500).json({ message: 'Error deleting follow record', error: err.message });
-  }
-});
+router.delete("/follow/:id",ensureTokenSuper, (req, res) => {
+    const id = req.params.id
+    pool.query('DELETE FROM follow WHERE id = $1', [id], (err, result) => {
+        if (err) {
+            res.status(400).send(err)
+        } else {
+            res.status(200).send("Deleted")
+        }
+    })
+})
+router.put("/follow/:id",ensureTokenSuper, (req, res) => {
+    const id = req.params.id
+    const body = req.body
+    pool.query(
+        'UPDATE follow SET topuser=$1,minuser=$2    WHERE id = $3',
+        [body.topuser,body.minuser,id ],
+        (err, result) => {
+            if (err) {
+                res.status(400).send(err)
+            } else {
+                res.status(200).send("Updated")
+            }
+        }
+    )
+})
 
 module.exports = router;
