@@ -11,6 +11,7 @@ const { Server } = require("socket.io");
 
 const pool = require("./db")
 const user=require('./routes/user.js')
+const follow=require('./routes/follow.js')
 const cours_types=require('./routes/cours_types.js')
 const course=require('./routes/course.js')
 const course_theme_task=require('./routes/course_theme_task.js')
@@ -40,10 +41,7 @@ res.status(200).send(data)
 })
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, '/input.html'));
-  });
-
-
-
+});
 
  app.use("/api", registerCourse )
  app.use("/auth", user )
@@ -56,6 +54,7 @@ app.get('/', function(req, res) {
  app.use("/api",base_theme)
  app.use("/api",knowladge)
  app.use("/api",api_root)
+ app.use("/api",follow)
 
 const server = http.createServer(app);
 

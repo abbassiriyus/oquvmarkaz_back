@@ -169,7 +169,31 @@ router.get('/teachers',ensureToken, function(req, res) {
         }
     })
 });
+router.get('/users/follow/:id', (req, res) => { 
+    pool.query("SELECT address,description,email,image,id,username,is_active FROM users", (err, result1) => {
+    if (!err) {
+        pool.query("SELECT * FROM follow", (err, result2) => {
+            if (!err) {
+            var userall=result1.rows
+            var allcourse=result2.rows
+            console.log(allcourse);
+            var oneuser=userall.filter(item=>item.id==req.params.id)
+            var i_follow=allcourse.filter(item=>item.topuser==req.params.id)
+            console.log(i_follow);
+             var me_follow=allcourse.filter(item=>item.minuser==req.params.id)
+             console.log(me_follow);
+            oneuser[0].i_follow=i_follow
+             oneuser[0].me_follow=me_follow
 
+
+            res.status(200).send(oneuser)
+                }
+            })
+        } else {
+            res.status(400).send({"err":err,"message":"user topilmadi"})
+        }
+    })
+})
 // get user position
 router.get('/users/:id',ensureTokenSuper, function(req, res) {
     pool.query("SELECT * FROM users", (err, result) => {

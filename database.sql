@@ -145,19 +145,32 @@ CREATE TABLE follow(
     "topuser" integer NOT NULL,
     "minuser" integer NOT NULL,
     "time_create" timestamp default current_timestamp not null,
-	"time_update" timestamp default current_timestamp not null,
+	"time_update" timestamp default current_timestamp not null
 )
 
 
 
 -- group
-CREATE TABLE group(
-  "id" serial primary key,
-  "teacher_id" integer not Null,
-  "group_name"  VARCHAR() NOT NULL,
-  "time_create" timestamp default current_timestamp not null,
-  "time_update" timestamp default current_timestamp not null,
-)
+CREATE TABLE group (
+    'id' serial PRIMARY KEY,
+    'group_name' varchar(255),
+    'description' text,
+    'created_date' timestamp default current_timestamp not null
+);
+CREATE TABLE lesson_school (
+    'id' SERIAL PRIMARY KEY,
+    'lesson_name' VARCHAR(255) NOT NULL,
+    'school_id' INT NOT NULL,
+    'teacher_id' INT NOT NULL,
+    'start_date' DATE,
+    'end_date' DATE,
+    CONSTRAINT 'fk_school'
+        FOREIGN KEY ('school_id')
+        REFERENCES 'school' ('school_id'),
+    CONSTRAINT 'fk_teacher'
+        FOREIGN KEY ('teacher_id')
+        REFERENCES 'teacher' ('teacher_id')
+);
 
 CREATE TABLE group_students(
   "id" serial primary key,
@@ -167,5 +180,13 @@ CREATE TABLE group_students(
   "time_update" timestamp default current_timestamp not null,
 )   
 
+CREATE TABLE schedule (
+    "id" SERIAL PRIMARY KEY,
+    "event_name" VARCHAR(100) NOT NULL,
+    "start_time" TIMESTAMP NOT NULL,
+    "end_time" TIMESTAMP NOT NULL,
+    "location" VARCHAR(100),
+    "description" TEXT
+);
 
 
