@@ -213,13 +213,11 @@ CREATE TABLE test(
     "day" date not null,
     "deadline" text not null,  
     'end_time' time,
+    "level_start" text,
+    "level_end" text,
     "teacher_id" integer not null
 );
-CREATE TABLE variand(
-    'id' SERIAL PRIMARY KEY,
-    
-    "teacher_id" integer not null
-);
+
 
 
 CREATE TABLE attendance_test(

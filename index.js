@@ -84,15 +84,16 @@ const io = new Server(server, {
      const { email1, email2 } = data;
     console.log(email1,"email1");console.log(email2,"email2");
      // check if a private room between the two users already exists
-     const user1Res = await pool.query(
-       "SELECT rooms FROM users WHERE email = $1",
-       [email1]
-     );
-    
-     const user2Res = await pool.query(
-       "SELECT rooms FROM users WHERE email = $1",
-       [email2]
-     );
+
+    const user1Res = await pool.query(
+      "SELECT rooms FROM users WHERE email = $1",
+      [email1]
+    );
+   
+    const user2Res = await pool.query(
+      "SELECT rooms FROM users WHERE email = $1",
+      [email2]
+    );
       console.log(user1Res,"user1Res");
      
       console.log(user2Res,"user2Res");
