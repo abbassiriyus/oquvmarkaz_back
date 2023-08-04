@@ -93,7 +93,7 @@ CREATE TABLE  course_theme_comment (
     "image" TEXT,
     "text" VARCHAR (50) NOT NULL,
     "subcomment" integer,
-    "user" VARCHAR(50) NOT NULL,
+    "user_id" VARCHAR(50) NOT NULL,
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null
 ) 

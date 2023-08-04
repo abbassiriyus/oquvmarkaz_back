@@ -16,12 +16,14 @@ const follow=require('./routes/follow.js')
 const cours_types=require('./routes/cours_types.js')
 const course=require('./routes/course.js')
 const course_theme_task=require('./routes/course_theme_task.js')
-const course_data_comment=require('./routes/course_data_comment')
+const course_theme_comment=require('./routes/course_theme_comment')
 const course_data_theme=require('./routes/course_data_theme')
 const course_data_category=require('./routes/course_data_category')
 const base_theme=require('./routes/base_theme')
 const knowladge=require('./routes/knowladge')
-const api_root=require('./routes/help')
+const help=require('./routes/help')
+
+
 const registerCourse=require('./routes/registerCourse')
 
 
@@ -50,11 +52,11 @@ app.get('/', function(req, res) {
  app.use("/api" ,course)
  app.use("/api",course_theme_task)
  app.use("/api",course_data_category)
- app.use("/api",course_data_comment)
+ app.use("/api",course_theme_comment)
  app.use("/api",course_data_theme)
  app.use("/api",base_theme)
  app.use("/api",knowladge)
- app.use("/api",api_root)
+ app.use("/api",help)
  app.use("/api",follow)
  app.use("/api",call_me)
 

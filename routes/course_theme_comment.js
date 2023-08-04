@@ -30,6 +30,7 @@ router.get('/course_theme_comment/:id', (req, res) => {
 
 
 router.post("/course_theme_comment", (req, res) => {
+    console.log("hello");
     const body = req.body;
     var imgName="";
     if(req.files){
@@ -38,12 +39,13 @@ router.post("/course_theme_comment", (req, res) => {
     }else{
         imgName=req.body.image
     }
-    pool.query('INSERT INTO course_theme_comment (theme,text,image,subcomment,user) VALUES ($1 ,$2 ,$3 ,$4 ,$5 ) RETURNING *',
-        [body.theme,body.text,imgName,body.subcomment,body.user],
+    pool.query('INSERT INTO course_theme_comment (theme,text,image,subcomment,user_id) VALUES ($1 ,$2 ,$3 ,$4 ,$5 ) RETURNING *',
+        [body.theme,body.text,imgName,body.subcomment,body.user_id],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
             } else {
+                console.log("hello");
                 if(req.files){
                     const imgFile = req.files.image
                     imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
