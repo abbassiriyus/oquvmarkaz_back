@@ -76,12 +76,22 @@ CREATE TABLE course_theme_task  (
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null
 )
+CREATE TABLE course_theme_task_student(
+    "id" serial primary key,
+    "content" VARCHAR (50) NOT NULL,
+    "course_theme" integer NOT NULL,
+    "image" TEXT,
+    "feedback"  TEXT,
+    "mark" integer,
+    "time_create" timestamp default current_timestamp not null,
+	"time_update" timestamp default current_timestamp not null
+)
 CREATE TABLE  course_theme_comment (
     "id" serial primary key,
     "theme" integer NOT NULL,
     "image" TEXT,
     "text" VARCHAR (50) NOT NULL,
-    "subcomment" integer NOT NULL,
+    "subcomment" integer,
     "user" VARCHAR(50) NOT NULL,
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null
@@ -153,6 +163,7 @@ CREATE TABLE call_me(
  "fullname" VARCHAR(120) NOT NULL,
  "email" VARCHAR(50),
  "message" TEXT,
+ "purchase" TEXT,
  "read" boolean default false not null,
  "time_create" timestamp default current_timestamp not null
 )
