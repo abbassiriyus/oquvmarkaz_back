@@ -20,7 +20,7 @@ CREATE TABLE users (
      UNIQUE("email"),
      UNIQUE("password"),
     "position" integer default 1 not null,
-    "rooms" TEXT[] NOT NULL default '{}'
+    "rooms" TEXT[] NOT NULL default "{}"
 );
 CREATE TABLE  messages (
   "id" SERIAL PRIMARY KEY,
@@ -171,20 +171,20 @@ CREATE TABLE call_me(
 
 -- group
 CREATE TABLE education(
-    'id' serial PRIMARY KEY,
-    'education_name' varchar(255),
-    'description' text,
-    'start_date' DATE,
-    'end_date' DATE,
-    'created_date' timestamp default current_timestamp not null
+    "id" serial PRIMARY KEY,
+    "education_name" varchar(255),
+    "description" text,
+    "start_date" DATE,
+    "end_date" DATE,
+    "created_date" timestamp default current_timestamp not null
 );
 CREATE TABLE schedule(
-    'id' SERIAL PRIMARY KEY,
-    'lesson_name' VARCHAR(255) NOT NULL,
-    'education_id' INT NOT NULL,
-    'start_time' time,
+    "id" SERIAL PRIMARY KEY,
+    "lesson_name" VARCHAR(255) NOT NULL,
+    "education_id" INT NOT NULL,
+    "start_time" time,
     "day" date not null,
-    'end_time' time,
+    "end_time" time,
     "teacher_id" integer not null
 );
 
@@ -193,8 +193,8 @@ CREATE TABLE group_student(
   "student_id" integer not NULL,
   "education_id" integer NOT NULL,
   "time_create" timestamp default current_timestamp not null,
-  "time_update" timestamp default current_timestamp not null,
-)   
+  "time_update" timestamp default current_timestamp not null
+);   
 CREATE TABLE attendance_lesson(
   "id" serial primary key,
   "lesson_id" integer not NULL,
@@ -203,22 +203,20 @@ CREATE TABLE attendance_lesson(
   "came" boolean default false NOT null,
   "time_create" timestamp default current_timestamp not null,
   "time_update" timestamp default current_timestamp not null
-)   
+);   
  
 --test
 CREATE TABLE test(
-    'id' SERIAL PRIMARY KEY,
-    'education_id' INT NOT NULL,
-    'start_time' time,
+    "id" SERIAL PRIMARY KEY,
+    "education_id" INT NOT NULL,
+    "start_time" time,
     "day" date not null,
     "deadline" text not null,  
-    'end_time' time,
+    "end_time" time,
     "level_start" text,
     "level_end" text,
     "teacher_id" integer not null
 );
-
-
 
 CREATE TABLE attendance_test(
   "id" serial primary key,
@@ -228,16 +226,8 @@ CREATE TABLE attendance_test(
   "came" boolean default false NOT null,
   "time_create" timestamp default current_timestamp not null,
   "time_update" timestamp default current_timestamp not null
-)   
+);   
 
 
-CREATE TABLE schedule (
-    "id" SERIAL PRIMARY KEY,
-    "event_name" VARCHAR(100) NOT NULL,
-    "start_time" TIMESTAMP NOT NULL,
-    "end_time" TIMESTAMP NOT NULL,
-    "location" VARCHAR(100),
-    "description" TEXT
-);
 
 

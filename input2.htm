@@ -9,15 +9,14 @@
           font-size: 40px;
         }
         p{
-  font-size: 12px;    
+      font-size: 12px;    
         }
         h1{
           font-size: 14px;
           color: red;
         }
-        span{
+        pre{
           color: green;
-          border-bottom: 1px solid green;
         }
         sup{
           color: blueviolet;
@@ -25,7 +24,61 @@
       </style>
 </head>
 <body>
-    <h1></h1>
-    <p>  <span> </span><sup> </sup></p>
+  <h2><a href="/">documentatisya</a></h2>
+    <h1>/edu/education</h1>
+    <p>kurs yaratadi bu guruhlaga biriktirish uchun ishlatiladi darsla agar buki tanlasa talabala chiqishi kerak shunga tegishli  <pre>  "education_name" varchar(255),
+      "description" text,
+      "start_date" DATE,
+      "end_date" DATE,</pre><sup>GET,GET(id),post,PUT(id),DELETE(id) </sup></p>
+      <hr>
+      <h1>/edu/schedule</h1>
+      <p>dars qoyiladi shu vaqt shu soat shu soatdan shu nsoatgacha deb <pre>
+    "lesson_name" VARCHAR(255) NOT NULL,
+    "education_id" INT NOT NULL,
+    "start_time" time,
+    "day" date not null,
+    "end_time" time,
+    "teacher_id" integer not null
+      </pre><sup>GET,GET(id),post,PUT(id),DELETE(id)</sup></p>
+      <hr>
+      <h1>/edu/group_student</h1>
+      <p>talabani guruhga biriktiradi <pre>
+        "student_id" integer not NULL,
+        "education_id" integer NOT NULL
+      </pre><sup>GET,GET(id),post,PUT(id),DELETE(id)</sup></p>
+      <hr>
+      <h1>edu/attendance_lesson/</h1>
+      <p>talabani bir kunlik baxosi<pre>
+        "lesson_id" integer not NULL,
+        "group_id" integer NOT NULL,
+        "mark" integer,
+        "came" boolean default false NOT null,
+      </pre><sup>GET,GET(id),post,PUT(id),DELETE(id)</sup></p>
+      <hr>
+      <h1>/edu/test</h1>
+      <p> test bajarish uchun vaqt yaratadi <pre>
+        "education_id" INT NOT NULL,
+        "start_time" time,
+        "day" date not null,
+        "deadline" text not null,  
+        "end_time" time,
+        "level_start" text,
+        "level_end" text,
+        "teacher_id" integer not null
+      </pre><sup>GET,GET(id),post,PUT(id),DELETE(id)</sup></p>
+      <hr>
+      <h1>/edu/attendance_test</h1>
+      <p>testni talaba va uni baxosiga biriktiradi<pre>
+        "test_id" integer not NULL,
+        "group_id" integer NOT NULL,
+        "mark" integer,
+        "came" boolean default false NOT null,
+      </pre><sup>GET,GET(id),post,PUT(id),DELETE(id)</sup></p>
+      <hr>
+      <h1></h1>
+      <p> <pre>
+
+      </pre><sup>GET,GET(id),post,PUT(id),DELETE(id)</sup></p>
+      <hr>
 </body>
 </html>

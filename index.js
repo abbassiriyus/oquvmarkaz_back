@@ -22,15 +22,22 @@ const course_data_category=require('./routes/course_data_category')
 const base_theme=require('./routes/base_theme')
 const knowladge=require('./routes/knowladge')
 const help=require('./routes/help')
-
-
 const registerCourse=require('./routes/registerCourse')
 
+// edu
+const education=require('./lesson/education')
+const schedule=require('./lesson/schedule')
+const group_student=require('./lesson/group_student')
+const attendance_lesson=require('./lesson/attendance_lesson')
+const test=require('./lesson/test')
+const attendance_test=require('./lesson/attendance_test')
 
 
 app.use(fileUpload())
 app.use(cors())
+app.use(express.static('./lesson/Images'))
 app.use(express.static('./routes/Images'))
+
 app.use(bodyParser.json());
 
 
@@ -38,7 +45,7 @@ app.use(bodyParser.json());
 
 
 app.get('/doc',(req,res)=>{
-    const data = fs.readFileSync('./input.html',
+    const data = fs.readFileSync('./input2.htm',
     { encoding: 'utf8', flag: 'r' });
 res.status(200).send(data)
 })
@@ -63,6 +70,12 @@ app.get('/', function(req, res) {
 
 // api endu
 
+app.use("/edu",education)
+app.use("/edu",schedule)
+app.use("/edu",group_student)
+app.use("/edu",attendance_lesson)
+app.use("/edu",test)
+app.use("/edu",attendance_test)
 
 
 
