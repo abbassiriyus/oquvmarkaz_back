@@ -11,6 +11,7 @@ const { Server } = require("socket.io");
 
 const pool = require("./db")
 const user=require('./routes/user.js')
+const call_me=require('./routes/call_me.js')
 const follow=require('./routes/follow.js')
 const cours_types=require('./routes/cours_types.js')
 const course=require('./routes/course.js')
@@ -55,6 +56,8 @@ app.get('/', function(req, res) {
  app.use("/api",knowladge)
  app.use("/api",api_root)
  app.use("/api",follow)
+ app.use("/api",call_me)
+
 
 const server = http.createServer(app);
 
