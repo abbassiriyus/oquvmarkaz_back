@@ -18,7 +18,6 @@ router.get("/help", (req, res) => {
 })
 
 router.get('/help/:id', (req, res) => {
-    
     pool.query("SELECT * FROM help where id=$1", [req.params.id], (err, result) => {
         if (!err) {
             res.status(200).send(result.rows)
@@ -78,13 +77,13 @@ router.delete("/help/:id",ensureTokenSuper, (req, res) => {
 
 
 })
-router.put("/api_root/:id",ensureTokenSuper, (req, res) => {
+router.put("/help/:id",ensureTokenSuper, (req, res) => {
     const id = req.params.id
     const body = req.body
     pool.query("SELECT * FROM help where id=$1", [req.params.id], (err, result1) => {
         if (!err) {
-            if(result1[0].image){
-                fs.unlink(`./Images/${result1[0].image}`,()=>{})   
+            if(result1.rows[0].image){
+                fs.unlink(`./Images/${result1.rows[0].image}`,()=>{})   
               }
               if(req.files){
                 const imgFile = req.files.image
@@ -93,7 +92,7 @@ router.put("/api_root/:id",ensureTokenSuper, (req, res) => {
                 imgName=req.body.image
             }
     pool.query(
-        'UPDATE api_root SET title=$1,description=$2,image=$3 WHERE id = $4',
+        'UPDATE help SET title=$1,description=$2,image=$3 WHERE id = $4',
         [body.title,body.description,imgName,id ],
         (err, result) => {
             if (err) {

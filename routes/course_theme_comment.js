@@ -25,15 +25,12 @@ router.get('/course_theme_comment/:id', (req, res) => {
         if (!err) {
            var a=result1.rows
            var b=result.rows
-           console.log(a,"a");
-           console.log(b,"b");
                for(let i = 0; i < a.length; i++) {
                 for (let j = 0; j < b.length; j++) {
                 if(a[i].user_id==b[j].id){
                     a[i].oneuser=b[j]
                  }
                 }}
-                console.log(a);
                 res.status(200).send(a)
                     }
                  })
