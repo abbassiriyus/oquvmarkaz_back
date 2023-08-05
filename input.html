@@ -78,13 +78,13 @@ font-size: 12px;
 <p>yangiliklarni turini aniqlab beradi <span>{name}</span> <sup>GET,GET(id),POST,PUT(id),DELETE(id)</sup></p>
 <hr>
 <h1>/api/knowladge</h1>
-<p>yangilik uchun to`liq yangilik oynasi<span>  
+<p>yangilik uchun to`liq yangilik oynasi<pre>  
   "name" VARCHAR (50) NOT NULL,
   "description" VARCHAR (50) NOT NULL,
   "image"  TEXT,
   "link" VARCHAR NOT NULL,
   "base_theme" integer NOT NULL
-</span> <sup>GET,GET(id),POST,PUT(id),DELETE(id)</sup></p>
+</pre> <sup>GET,GET(id),POST,PUT(id),DELETE(id)</sup></p>
 <hr>
 <h1>/api/api_root</h1>
 <p>table bor lekin nimagaligini bilmadim<span>{questions}</span> <sup>GET,GET(id),POST,PUT(id),DELETE(id)</sup></p>
@@ -107,10 +107,10 @@ font-size: 12px;
 <h1>/api/course_data_category/course/:courseid</h1>
 <p>res.data.all barcha malumot, res.data.one bitinchi darsni toliq malumoti<sup>GET</sup></p><hr>
 <h1>api/help/</h1>
-<p>help text <span>{name,image}</span><sup>GET,GET(id),POST,PUT(id),DELETE(id)</sup></p>
+<p>help text <span>{title,description,image}</span><sup>GET,GET(id),POST,PUT(id),DELETE(id)</sup></p>
 <hr>
 <h1>api/help_category/</h1>
-<p>help text ni kategoriyalari <span>{title,description,image}</span><sup>GET,GET(id),POST,PUT(id),DELETE(id)</sup></p>
+<p>help text ni kategoriyalari <span>{name,image}</span><sup>GET,GET(id),POST,PUT(id),DELETE(id)</sup></p>
 <hr>
 <h1>/api/follow/</h1>
 <p>obuna bo`lish top kimga min kim obuna bolayapgani users/follow get id da follows da massiv korinishida keladi followstop kimga obuna bolgani followmin kimla unga obuna bo`lgani <span>{topuser, minuser}</span><sup>GET,GET(id),POST,PUT(id),DELETE(id)</sup></p>
