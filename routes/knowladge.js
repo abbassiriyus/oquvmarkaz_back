@@ -4,7 +4,7 @@ var router = express.Router();
 var jwt = require('jsonwebtoken');
 const pool = require("../db")
 var {ensureTokenSuper}=require("../token/token.js")
-
+var fs =require("fs")
 router.get("/knowladge", (req, res) => {   
     pool.query("SELECT * FROM knowladge", (err, result) => {
         if (!err) {

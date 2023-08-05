@@ -134,11 +134,11 @@ CREATE TABLE knowladge (
 );
 CREATE TABLE notification (
     "id" serial primary key,
-    "name" VARCHAR (50) NOT NULL,
+    "title" VARCHAR (50),
     "description" VARCHAR (50) NOT NULL,
     "user_id" integer NOT NULL,
     "to_user_id" integer NOT NULL,
-    "read" boolean not null,
+    "read" boolean default false not null,
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null,
 );
