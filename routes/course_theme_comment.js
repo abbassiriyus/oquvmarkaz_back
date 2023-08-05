@@ -7,11 +7,9 @@ const pool = require("../db")
 var {ensureToken,ensureToken,ensureTokenTeacher,superTeacher }=require("../token/token.js")
 
  router.get("/course_theme_comment", (req, res) => {   
-     pool.query("SELECT * FROM course_theme_comment", (err, result) => {
+     pool.query("SELECT * FROM course_theme_comment", (err, result1) => {
         if (!err) {
-
-            res.status(200).send(result.rows)
-
+         res.status(200).send(result.rows)
         } else {
             res.send(err)
         }
@@ -20,12 +18,28 @@ var {ensureToken,ensureToken,ensureTokenTeacher,superTeacher }=require("../token
 
 router.get('/course_theme_comment/:id', (req, res) => {
     
-    pool.query("SELECT * FROM course_theme_comment where theme=$1", [req.params.id], (err, result) => {
+    pool.query("SELECT * FROM course_theme_comment where theme=$1", [req.params.id], (err, result1) => {
         if (!err) {
-            res.status(200).send(result.rows)
-        } else {
+            
+    pool.query("SELECT id,image,username FROM users", (err, result) => {
+        if (!err) {
+           var a=result1.rows
+           var b=result.rows
+           console.log(a,"a");
+           console.log(b,"b");
+               for(let i = 0; i < a.length; i++) {
+                for (let j = 0; j < b.length; j++) {
+                if(a[i].user_id==b[j].id){
+                    a[i].oneuser=b[j]
+                 }
+                }}
+                console.log(a);
+                res.status(200).send(a)
+                    }
+                 })
+          } else {
             res.status(400).send(err)
-        }
+          }
     })
 })
 
