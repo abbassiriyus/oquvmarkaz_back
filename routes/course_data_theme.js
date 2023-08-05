@@ -37,7 +37,6 @@ router.post("/course_data_theme", (req, res) => {
     var imgName=""
 if(req.files && req.files.video){
     videoFile = req.files.video 
-    console.log(videoFile);
     videoName = Date.now()+videoFile.name.slice(videoFile.name.lastIndexOf('.'))   
 }else{
 if(body.video){
