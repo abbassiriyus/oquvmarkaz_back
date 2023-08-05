@@ -29,6 +29,7 @@ router.get('/course_data_theme/:id', (req, res) => {
  
 
 router.post("/course_data_theme", (req, res) => {
+    console.log("sas");
     const body = req.body;
     var videoFile="" 
     var videoName=""
@@ -36,7 +37,8 @@ router.post("/course_data_theme", (req, res) => {
     var imgName=""
 if(req.files && req.files.video){
     videoFile = req.files.video 
-     videoName = Date.now()+videoFile.name.slice(imgFile.name.lastIndexOf('.'))   
+    console.log(videoFile);
+    videoName = Date.now()+videoFile.name.slice(videoFile.name.lastIndexOf('.'))   
 }else{
 if(body.video){
     videoName=body.video.replice("https://www.youtube.com/watch?v=","https://www.youtube.com/embed/")

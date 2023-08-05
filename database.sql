@@ -227,7 +227,19 @@ CREATE TABLE attendance_test(
   "time_create" timestamp default current_timestamp not null,
   "time_update" timestamp default current_timestamp not null
 );   
-
+CREATE TABLE quations(
+    "id" serial primary key, 
+    "question" TEXT NOT NULL,
+    "variant1" varchar(100) not null,
+    "variant2" varchar(100) not null,
+    "variant3" varchar(100) not null,
+    "variant4" varchar(100) not null,
+    "answer" integer NOT null,
+    "image" TEXT,
+    "test_id" integer NOT null,
+    "time_create" timestamp default current_timestamp not null,
+  "time_update" timestamp default current_timestamp not null
+)
 
 
 
