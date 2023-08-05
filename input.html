@@ -78,7 +78,12 @@ font-size: 12px;
 <p>yangiliklarni turini aniqlab beradi <span>{name}</span> <sup>GET,GET(id),POST,PUT(id),DELETE(id)</sup></p>
 <hr>
 <h1>/api/knowladge</h1>
-<p>yangilik uchun to`liq yangilik oynasi<span>{questions}</span> <sup>GET,GET(id),POST,PUT(id),DELETE(id)</sup></p>
+<p>yangilik uchun to`liq yangilik oynasi<span>  
+  "name" VARCHAR (50) NOT NULL,
+  "description" VARCHAR (50) NOT NULL,
+  "image"  TEXT,
+  "link" VARCHAR NOT NULL,
+  "base_theme" integer NOT NULL,</span> <sup>GET,GET(id),POST,PUT(id),DELETE(id)</sup></p>
 <hr>
 <h1>/api/api_root</h1>
 <p>table bor lekin nimagaligini bilmadim<span>{questions}</span> <sup>GET,GET(id),POST,PUT(id),DELETE(id)</sup></p>

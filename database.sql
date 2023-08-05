@@ -120,7 +120,7 @@ CREATE TABLE base_theme(
  "id" serial primary key,
  "name" VARCHAR (50) NOT NULL,
  "time_create" timestamp default current_timestamp not null,
-	"time_update" timestamp default current_timestamp not null,
+"time_update" timestamp default current_timestamp not null,
 )
 CREATE TABLE knowladge (
     "id" serial primary key,

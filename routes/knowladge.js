@@ -38,8 +38,8 @@ router.post("/knowladge",ensureTokenSuper, (req, res) => {
      }else{
       imgName=req.body.image
      }
-        pool.query('INSERT INTO knowladge (name,description,image,link) VALUES ($1,$2,$3,$4) RETURNING *',
-        [body.name,body.description,imgName,body.link,],
+        pool.query('INSERT INTO knowladge (name,description,image,link,base_theme) VALUES ($1,$2,$3,$4,$5) RETURNING *',
+        [body.name,body.description,imgName,body.link,body.base_theme],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
@@ -67,8 +67,8 @@ router.put("/knowladge/:id",ensureTokenSuper, (req, res) => {
     const id = req.params.id
     const body = req.body
     pool.query(
-        'UPDATE knowladge SET name=$1,description=$2,image=$3,link=$4    WHERE id = $5',
-        [body.name,body.description,body.image,body.link,id ],
+        'UPDATE knowladge SET name=$1,description=$2,image=$3,link=$4,base_theme=$5   WHERE id = $6',
+        [body.name,body.description,body.image,body.link,body.base_theme,id ],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)
