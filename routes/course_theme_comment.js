@@ -2,6 +2,7 @@
 var express = require('express');
 var router = express.Router();
 var jwt = require('jsonwebtoken');
+var fs =require("fs")
 const pool = require("../db")
 var {ensureToken,ensureToken,ensureTokenTeacher,superTeacher }=require("../token/token.js")
 
@@ -56,16 +57,19 @@ router.post("/course_theme_comment", (req, res) => {
         });
 });
 
-router.delete("/course_theme_comment/:id",ensureToken, (req, res) => {
+router.delete("/course_theme_comment/:id", (req, res) => {
     const id = req.params.id
     pool.query("SELECT * FROM course_theme_comment where id=$1", [req.params.id], (err, result1) => {
-        if (!err) {
-            if(result1[0] && result1[0].image){
-              fs.unlink(`./Images/${result1[0].image}`,()=>{})   
+        console.log(result1.rows);
+     if (!err && result1.rows.length>0) {
+            if(result1.rows[0] && result1.rows[0].image){
+              fs.unlink(`./Images/${result1.rows[0].image}`,()=>{})   
             }
             pool.query('DELETE FROM course_theme_comment WHERE id = $1', [id], (err, result) => {
                 if (err) {
-                    res.status(400).send(err)
+                    res.status(400).send(
+                        {err:err,message:"course_theme_comment id topilmadi "}
+                    )
                 } else {
                     res.status(200).send("Deleted")
                 }
