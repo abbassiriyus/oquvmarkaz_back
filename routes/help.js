@@ -58,8 +58,8 @@ router.delete("/help/:id",ensureTokenSuper, (req, res) => {
     const id = req.params.id
     pool.query("SELECT * FROM help where id=$1", [req.params.id], (err, result1) => {
         if (!err) {
-            if(result1[0].image){
-              fs.unlink(`./Images/${result1[0].image}`,()=>{})   
+            if(result1.rows[0].image){
+              fs.unlink(`./Images/${result1.rows[0].image}`,()=>{})   
             }
             pool.query('DELETE FROM help WHERE id = $1', [id], (err, result) => {
                 if (err) {
