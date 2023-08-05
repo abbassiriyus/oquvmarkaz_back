@@ -60,7 +60,7 @@ router.delete("/course_theme_comment/:id",ensureToken, (req, res) => {
     const id = req.params.id
     pool.query("SELECT * FROM course_theme_comment where id=$1", [req.params.id], (err, result1) => {
         if (!err) {
-            if(result1[0].image){
+            if(result1[0] && result1[0].image){
               fs.unlink(`./Images/${result1[0].image}`,()=>{})   
             }
             pool.query('DELETE FROM course_theme_comment WHERE id = $1', [id], (err, result) => {
