@@ -4,7 +4,7 @@ var router = express.Router();
 var jwt = require('jsonwebtoken');
 const pool = require("../db")
 var {ensureToken,ensureTokenSuper,ensureTokenTeacher,superTeacher }=require("../token/token.js")
-
+var fs =require("fs")
 router.get("/help", (req, res) => {   
     pool.query("SELECT * FROM help", (err, result) => {
         if (!err) {
