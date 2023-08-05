@@ -55,14 +55,16 @@ if(req.files && req.files.image){
         [body.name,body.content,imgName,videoName,body.extra_data,body.category],
          (err, result) => {
             if (err) {
-             if(req.files && req.files.video){
-                videoFile.mv(`${__dirname}/Images/${imgName}`)
+                res.status(400).send(err);
+            } else {  
+                 if(req.files && req.files.video){
+                    videoFile = req.files.video 
+                videoFile.mv(`${__dirname}/Images/${videoName}`)
              }   
              if(req.files && req.files.image){
+                imgFile = req.files.image
                 imgFile.mv(`${__dirname}/Images/${imgName}`)
              } 
-                res.status(400).send(err);
-            } else {
                 res.status(201).send("Created");
             }
         });
@@ -81,13 +83,42 @@ router.delete("/course_data_theme/:id", (req, res) => {
 router.put("/course_data_theme/:id", (req, res) => {
     const id = req.params.id
     const body = req.body
+    var videoFile="" 
+    var videoName=""
+    var imgFile=""
+    var imgName=""
+if(req.files && req.files.video){
+    videoFile = req.files.video 
+    videoName = Date.now()+videoFile.name.slice(videoFile.name.lastIndexOf('.'))   
+}else{
+if(body.video){
+    videoName=body.video.replice("https://www.youtube.com/watch?v=","https://www.youtube.com/embed/")
+    videoName=body.video.replice("https://youtu.be/","https://www.youtube.com/embed/")
+}else{
+    videoName=null
+}
+}
+if(req.files && req.files.image){
+     imgFile = req.files.image
+     imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+ }else{
+    imgName=body.image   
+ }
     pool.query(
         'UPDATE course_data_theme SET name=$1,content=$2,image=$3,video=$4,extra_data=5,category=$6 WHERE id = $7',
-        [body.name,body.content,body.image,body.video,body.extra_data,body.category,id ],
+        [body.name,body.content,imgName,videoName,body.extra_data,body.category,id ],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)
             } else {
+                if(req.files && req.files.video){
+                    videoFile = req.files.video 
+                videoFile.mv(`${__dirname}/Images/${videoName}`)
+             }   
+             if(req.files && req.files.image){
+                imgFile = req.files.image
+                imgFile.mv(`${__dirname}/Images/${imgName}`)
+             } 
                 res.status(200).send("Updated")
             }
         }
