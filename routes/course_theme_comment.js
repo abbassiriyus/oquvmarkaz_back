@@ -94,8 +94,8 @@ router.put("/api_root/:id",ensureToken, (req, res) => {
                 imgName=req.body.image
             }
     pool.query(
-        'UPDATE api_root SET theme=$1,text=$2,image=$3,subcomment=$4,user=$5, WHERE id = $6',
-        [body.theme,body.text,imgName,body.subcomment,body.user,id ],
+        'UPDATE api_root SET theme=$1,text=$2,image=$3,subcomment=$4,user_id=$5, WHERE id = $6',
+        [body.theme,body.text,imgName,body.subcomment,body.user_id,id ],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)

@@ -29,7 +29,6 @@ router.get('/course_data_theme/:id', (req, res) => {
  
 
 router.post("/course_data_theme", (req, res) => {
-    console.log("sas");
     const body = req.body;
     var videoFile="" 
     var videoName=""
