@@ -144,6 +144,32 @@ router.get('/students',ensureToken, function(req, res) {
             }
         })
 });
+router.get('/allusers',ensureToken, function(req, res) {
+    console.log(req.body);
+         pool.query("SELECT * FROM users", (err, result) => {
+             if (!err) {
+                var a=result.rows.filter(item=>(item.position==1 || item.position==2))
+              var b=[]
+                a.map(item=>{
+                 b.push({
+                     id:item.id,
+                     email:item.email,
+                     username:item.username,
+                     first_name:item.first_name,
+                     last_name:item.last_name,
+                     phone_number:item.phone_number,
+                     image:item.image,
+                     description:item.description,
+                     address:item.address,
+                     date_joined:item.date_joined,
+                 })
+                })
+                 res.status(200).send(b)  
+             } else {
+                 res.send(err)
+             }
+         })
+ });
 // get teacher 
 router.get('/teachers',ensureToken, function(req, res) {
     pool.query("SELECT * FROM users", (err, result) => {
