@@ -148,7 +148,7 @@ router.get('/allusers',ensureToken, function(req, res) {
     console.log(req.body);
          pool.query("SELECT * FROM users", (err, result) => {
              if (!err) {
-                var a=result.rows.filter(item=>(item.position==1 || item.position==2))
+                var a=result.rows
               var b=[]
                 a.map(item=>{
                  b.push({
