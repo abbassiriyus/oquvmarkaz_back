@@ -82,8 +82,8 @@ router.put("/help_category/:id",ensureTokenSuper, (req, res) => {
     const body = req.body
     pool.query("SELECT * FROM help_category where id=$1", [req.params.id], (err, result1) => {
         if (!err) {
-            if(result1[0].image){
-                fs.unlink(`./Images/${result1[0].image}`,()=>{})   
+            if(result1.rows[0].image){
+                fs.unlink(`./Images/${result1.rows[0].image}`,()=>{})   
               }
               if(req.files){
                 const imgFile = req.files.image
