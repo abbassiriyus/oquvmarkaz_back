@@ -29,7 +29,7 @@ router.get('/help_category/:id', (req, res) => {
 })
 
 
-router.post("/help_category",ensureTokenSuper, (req, res) => {
+router.post("/help_category", (req, res) => {
     const body = req.body;
     var imgName="";
     if(req.files){
@@ -39,7 +39,7 @@ router.post("/help_category",ensureTokenSuper, (req, res) => {
         imgName=req.body.image
     }
         pool.query('INSERT INTO help_category (name,image) VALUES ($1,$2) RETURNING *',
-        [body.title,imgName],
+        [body.name,imgName],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);

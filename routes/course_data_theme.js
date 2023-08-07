@@ -87,12 +87,13 @@ router.put("/course_data_theme/:id", (req, res) => {
     var videoName=""
     var imgFile=""
     var imgName=""
+
 if(req.files && req.files.video){
     videoFile = req.files.video 
     videoName = Date.now()+videoFile.name.slice(videoFile.name.lastIndexOf('.'))   
 }else{
 if(body.video){
-    videoName=body.video.replice("https://www.youtube.com/watch?v=","https://www.youtube.com/embed/")
+videoName=body.video.replice("https://www.youtube.com/watch?v=","https://www.youtube.com/embed/")
     videoName=body.video.replice("https://youtu.be/","https://www.youtube.com/embed/")
 }else{
     videoName=null
@@ -111,7 +112,7 @@ if(req.files && req.files.image){
             if (err) {
                 res.status(400).send(err)
             } else {
-                if(req.files && req.files.video){
+            if(req.files && req.files.video){
                     videoFile = req.files.video 
                     videoFile.mv(`${__dirname}/Images/${videoName}`)
              }   

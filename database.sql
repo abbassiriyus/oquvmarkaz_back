@@ -100,14 +100,14 @@ CREATE TABLE  course_theme_comment (
 CREATE TABLE course_data_theme (
     "id" serial primary key,
     "name" VARCHAR (50) NOT NULL,
-    "content" VARCHAR (50) NOT NULL,
+    "content" TEXT,
     "image" TEXT,
-    "video" VARCHAR (50),
-    "extra_data" VARCHAR (50) NOT NULL,
+    "video" TEXT,
+    "extra_data" VARCHAR(50) NOT NULL,
     "category" integer NOT NULL,
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null
- )
+)
 CREATE TABLE course_data_category(
     "id" serial primary key,
     "name" VARCHAR (50) NOT NULL,
