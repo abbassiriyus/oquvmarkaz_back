@@ -4,7 +4,7 @@ var router = express.Router();
 var jwt = require('jsonwebtoken');
 const pool = require("../db")
 var {ensureToken,ensureTokenSuper,ensureTokenTeacher,superTeacher }=require("../token/token.js")
-
+const fs=require("fs")
 router.get("/help_category", (req, res) => {   
     pool.query("SELECT * FROM help_category", (err, result) => {
         if (!err) {
@@ -54,12 +54,12 @@ router.post("/help_category", (req, res) => {
         });
 });
 
-router.delete("/help_category/:id",ensureTokenSuper, (req, res) => {
+router.delete("/help_category/:id", (req, res) => {
     const id = req.params.id
     pool.query("SELECT * FROM help_category where id=$1", [req.params.id], (err, result1) => {
         if (!err) {
-            if(result1[0].image){
-              fs.unlink(`./Images/${result1[0].image}`,()=>{})   
+            if(result1.rows[0].image){
+              fs.unlink(`./Images/${result1.rows[0].image}`,()=>{})   
             }
             pool.query('DELETE FROM help_category WHERE id = $1', [id], (err, result) => {
                 if (err) {
