@@ -23,6 +23,7 @@ const base_theme=require('./routes/base_theme')
 const knowladge=require('./routes/knowladge')
 const help=require('./routes/help')
 const registerCourse=require('./routes/registerCourse')
+const help_category=require('./routes/help_category')
 
 // edu
 const education=require('./lesson/education')
@@ -66,6 +67,8 @@ app.get('/', function(req, res) {
  app.use("/api",help)
  app.use("/api",follow)
  app.use("/api",call_me)
+ app.use("/api",help_category)
+
 
 
 // api endu

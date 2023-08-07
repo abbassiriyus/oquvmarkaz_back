@@ -34,10 +34,10 @@ router.post("/course_data_theme", (req, res) => {
     var videoName=""
     var imgFile=""
     var imgName=""
-if(req.files && req.files.video){
+   if(req.files && req.files.video){
     videoFile = req.files.video 
     videoName = Date.now()+videoFile.name.slice(videoFile.name.lastIndexOf('.'))   
-}else{
+   }else{
 if(body.video){
     videoName=body.video.replice("https://www.youtube.com/watch?v=","https://www.youtube.com/embed/")
     videoName=body.video.replice("https://youtu.be/","https://www.youtube.com/embed/")
