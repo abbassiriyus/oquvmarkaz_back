@@ -105,8 +105,10 @@ if(req.files && req.files.image){
  }else{
     imgName=body.image   
  }
+ console.log(imgName);
+ console.log(videoName);
     pool.query(
-        'UPDATE course_data_theme SET name=$1,content=$2,image=$3,video=$4,extra_data=5,category=$6 WHERE id = $7',
+        'UPDATE course_data_theme SET name=$1,content=$2,image=$3,video=$4,extra_data=$5,category=$6 WHERE id = $7',
         [body.name,body.content,imgName,videoName,body.extra_data,body.category,id ],
         (err, result) => {
             if (err) {
