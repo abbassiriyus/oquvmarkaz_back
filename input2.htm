@@ -11,7 +11,8 @@
         p{
       font-size: 12px;    
         }
-        h1{
+        a{
+          text-decoration: none;
           font-size: 14px;
           color: red;
         }
@@ -25,14 +26,15 @@
 </head>
 <body>
   <h2><a href="/">documentatisya</a></h2>
-    <h1>/edu/education</h1>
+    <a href="/edu/education">/edu/education</a>
     <p>kurs yaratadi bu guruhlaga biriktirish uchun ishlatiladi darsla agar buki tanlasa talabala chiqishi kerak shunga tegishli  <pre>
       "education_name" varchar(255),
       "description" text,
       "start_date" DATE,
+      "sertificat_id" integer NOT NULL,
       "end_date" DATE,</pre><sup>GET,GET(id),post,PUT(id),DELETE(id) </sup></p>
       <hr>
-      <h1>/edu/schedule</h1>
+      <a href="/edu/schedule" >/edu/schedule</a>
       <p>dars qoyiladi shu vaqt shu soat shu soatdan shu nsoatgacha deb <pre>
     "lesson_name" VARCHAR(255) NOT NULL,
     "education_id" INT NOT NULL,
@@ -42,13 +44,13 @@
     "teacher_id" integer not null
       </pre><sup>GET,GET(id),post,PUT(id),DELETE(id)</sup></p>
       <hr>
-      <h1>/edu/group_student</h1>
+      <a href="/edu/group_student">/edu/group_student</a>
       <p>talabani guruhga biriktiradi <pre>
         "student_id" integer not NULL,
         "education_id" integer NOT NULL
       </pre><sup>GET,GET(id),post,PUT(id),DELETE(id)</sup></p>
       <hr>
-      <h1>edu/attendance_lesson/</h1>
+      <a href="/edu/attendance_lesson/" >/edu/attendance_lesson/</a>
       <p>talabani bir kunlik baxosi<pre>
         "lesson_id" integer not NULL,
         "group_id" integer NOT NULL,
@@ -56,7 +58,7 @@
         "came" boolean default false NOT null,
       </pre><sup>GET,GET(id),post,PUT(id),DELETE(id)</sup></p>
       <hr>
-      <h1>/edu/test</h1>
+      <a href="/edu/test">/edu/test</a>
       <p> test bajarish uchun vaqt yaratadi <pre>
         "education_id" INT NOT NULL,
         "start_time" time,
@@ -68,7 +70,7 @@
         "teacher_id" integer not null
       </pre><sup>GET,GET(id),post,PUT(id),DELETE(id)</sup></p>
       <hr>
-      <h1>/edu/attendance_test</h1>
+      <a href="/edu/attendance_test">/edu/attendance_test</a>
       <p>testni talaba va uni baxosiga biriktiradi<pre>
         "test_id" integer not NULL,
         "group_id" integer NOT NULL,
@@ -76,7 +78,7 @@
         "came" boolean default false NOT null,
       </pre><sup>GET,GET(id),post,PUT(id),DELETE(id)</sup></p>
       <hr>
-      <h1>/edu/quations</h1>
+      <a href="/edu/quations">/edu/quations</a>
       <p> savolla yaratib uni testga biriktiradi <pre>
         "question" TEXT NOT NULL,
         "variant1" varchar(100) not null,

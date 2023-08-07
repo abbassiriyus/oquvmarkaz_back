@@ -193,6 +193,7 @@ CREATE TABLE education(
     "description" text,
     "start_date" DATE,
     "end_date" DATE,
+    "sertificat_id" integer NOT NULL,
     "created_date" timestamp default current_timestamp not null
 );
 CREATE TABLE schedule(
@@ -258,5 +259,17 @@ CREATE TABLE quations(
   "time_update" timestamp default current_timestamp not null
 )
 
+
+
+CREATE TABLE sertificat(
+   "id" serial primary key, 
+   "file" TEXT NOT NULL,
+   "description" TEXT NOT NULL,
+   "type" VARCHAR(50) NOT NULL,
+   "director" VARCHAR(70) NOT NULL,
+   "mentor" VARCHAR(70) not NULL,
+   "time_create" timestamp default current_timestamp not null,
+   "time_update" timestamp default current_timestamp not null
+)
 
 
