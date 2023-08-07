@@ -29,7 +29,7 @@ router.get('/knowladge/:id', (req, res) => {
 })
 
 
-router.post("/knowladge",ensureTokenSuper, (req, res) => {
+router.post("/knowladge", (req, res) => {
     const body = req.body;
     var imgName="";
     if(req.files){

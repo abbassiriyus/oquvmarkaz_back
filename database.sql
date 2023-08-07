@@ -127,10 +127,10 @@ CREATE TABLE knowladge (
     "name" VARCHAR (50) NOT NULL,
     "description" VARCHAR (50) NOT NULL,
     "image"  TEXT,
-    "link" VARCHAR NOT NULL,
+    "link" TEXT,
     "base_theme" integer NOT NULL,
     "time_create" timestamp default current_timestamp not null,
-	"time_update" timestamp default current_timestamp not null,
+	"time_update" timestamp default current_timestamp not null
 );
 CREATE TABLE notification (
     "id" serial primary key,

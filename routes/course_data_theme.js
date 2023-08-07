@@ -113,7 +113,7 @@ if(req.files && req.files.image){
             } else {
                 if(req.files && req.files.video){
                     videoFile = req.files.video 
-                videoFile.mv(`${__dirname}/Images/${videoName}`)
+                    videoFile.mv(`${__dirname}/Images/${videoName}`)
              }   
              if(req.files && req.files.image){
                 imgFile = req.files.image
