@@ -77,7 +77,7 @@ router.delete("/help_category/:id",ensureTokenSuper, (req, res) => {
 
 
 })
-router.put("/api_root/:id",ensureTokenSuper, (req, res) => {
+router.put("/help_category/:id",ensureTokenSuper, (req, res) => {
     const id = req.params.id
     const body = req.body
     pool.query("SELECT * FROM help_category where id=$1", [req.params.id], (err, result1) => {
@@ -92,7 +92,7 @@ router.put("/api_root/:id",ensureTokenSuper, (req, res) => {
                 imgName=req.body.image
             }
     pool.query(
-        'UPDATE api_root SET name=$1,image=$2 WHERE id = $3',
+        'UPDATE help_category SET name=$1,image=$2 WHERE id = $3',
         [body.name,imgName,id ],
         (err, result) => {
             if (err) {
