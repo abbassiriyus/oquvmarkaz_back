@@ -178,6 +178,13 @@ CREATE TABLE call_me(
  "read" boolean default false not null,
  "time_create" timestamp default current_timestamp not null
 )
+  
+CREATE TABLE purchase(
+    "id" serial primary key,
+   "title" TEXT not null, 
+   "time_create" timestamp default current_timestamp not null
+)
+
 
 -- group
 CREATE TABLE education(

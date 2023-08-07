@@ -26,7 +26,8 @@
 <body>
   <h2><a href="/">documentatisya</a></h2>
     <h1>/edu/education</h1>
-    <p>kurs yaratadi bu guruhlaga biriktirish uchun ishlatiladi darsla agar buki tanlasa talabala chiqishi kerak shunga tegishli  <pre>  "education_name" varchar(255),
+    <p>kurs yaratadi bu guruhlaga biriktirish uchun ishlatiladi darsla agar buki tanlasa talabala chiqishi kerak shunga tegishli  <pre>
+      "education_name" varchar(255),
       "description" text,
       "start_date" DATE,
       "end_date" DATE,</pre><sup>GET,GET(id),post,PUT(id),DELETE(id) </sup></p>
@@ -75,9 +76,16 @@
         "came" boolean default false NOT null,
       </pre><sup>GET,GET(id),post,PUT(id),DELETE(id)</sup></p>
       <hr>
-      <h1></h1>
-      <p> <pre>
-
+      <h1>/edu/quations</h1>
+      <p> savolla yaratib uni testga biriktiradi <pre>
+        "question" TEXT NOT NULL,
+        "variant1" varchar(100) not null,
+        "variant2" varchar(100) not null,
+        "variant3" varchar(100) not null,
+        "variant4" varchar(100) not null,
+        "answer" integer NOT null,
+        "image" TEXT,
+        "test_id" integer NOT null,
       </pre><sup>GET,GET(id),post,PUT(id),DELETE(id)</sup></p>
       <hr>
 </body>
