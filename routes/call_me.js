@@ -67,7 +67,7 @@ router.put("/call_me/:id", (req, res) => {
         }
     )
 })
-router.put("/call_me/read/:id", (req, res) => {
+router.get("/call_me/read/:id", (req, res) => {
     const id = req.params.id
     const body = req.body
     pool.query(
