@@ -9,12 +9,7 @@ var {ensureToken,ensureToken,ensureTokenTeacher,superTeacher }=require("../token
  router.get("/course_theme_comment", (req, res) => {   
      pool.query("SELECT * FROM course_theme_comment", (err, result) => {
         if (!err) {
-     for (let i = 0; i < result.rows.length; i++) {
-       
-        
-     }
-
-         res.status(200).send(result.rows)
+      res.status(200).send(result.rows)
         } else {
             res.send(err)
         }
