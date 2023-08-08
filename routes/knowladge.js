@@ -32,9 +32,10 @@ router.get('/knowladge/:id', (req, res) => {
 router.post("/knowladge", (req, res) => {
     const body = req.body;
     var imgName="";
+    console.log(req.files);
     if(req.files){
-    const imgFile = req.files.image
-     imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+    var imgFile = req.files.image
+    imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
      }else{
       imgName=req.body.image
      }
