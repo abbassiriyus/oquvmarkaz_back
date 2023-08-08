@@ -32,6 +32,7 @@ const group_student=require('./lesson/group_student')
 const attendance_lesson=require('./lesson/attendance_lesson')
 const test=require('./lesson/test')
 const attendance_test=require('./lesson/attendance_test')
+const sertificat=require('./lesson/sertificat.js')
 
 
 app.use(fileUpload())
@@ -79,6 +80,8 @@ app.use("/edu",group_student)
 app.use("/edu",attendance_lesson)
 app.use("/edu",test)
 app.use("/edu",attendance_test)
+app.use("/edu",sertificat)
+
 
 
 

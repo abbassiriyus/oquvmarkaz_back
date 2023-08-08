@@ -16,7 +16,7 @@ CREATE TABLE users (
 	"time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null,
 	"username" VARCHAR(50) NOT NULL,
-
+    "gender" CHAR(1) check("gender" in ('F','M')),
      UNIQUE("email"),
      UNIQUE("password"),
     "position" integer default 1 not null,
@@ -48,6 +48,8 @@ CREATE TABLE "verify"(
     "completed_themes" VARCHAR(50) default 0% NOT NULL,
     "rating" integer default 4  NOT NULL,
     "users" integer NOT NULL,
+    "finishing" boolean default false NOT NULL,
+     UNIQUE (users, course),
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null   
  )
@@ -60,6 +62,7 @@ CREATE TABLE course (
     "course_type" integer NOT NULL,
     "author" integer NOT NULL,
     "image" TEXT,
+    "sertificat_id" integer not NULL,
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null
 )
@@ -120,7 +123,7 @@ CREATE TABLE base_theme(
  "id" serial primary key,
  "name" VARCHAR (50) NOT NULL,
  "time_create" timestamp default current_timestamp not null,
-"time_update" timestamp default current_timestamp not null,
+ "time_update" timestamp default current_timestamp not null,
 )
 CREATE TABLE knowladge (
     "id" serial primary key,
@@ -165,6 +168,7 @@ CREATE TABLE follow(
     "id" serial primary key,
     "topuser" integer NOT NULL,
     "minuser" integer NOT NULL,
+     UNIQUE (topuser, minuser),
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null
 )
@@ -180,7 +184,7 @@ CREATE TABLE call_me(
 )
   
 CREATE TABLE purchase(
-    "id" serial primary key,
+   "id" serial primary key,
    "title" TEXT not null, 
    "time_create" timestamp default current_timestamp not null
 )
@@ -192,6 +196,7 @@ CREATE TABLE education(
     "education_name" varchar(255),
     "description" text,
     "start_date" DATE,
+    "sertificat_id" integer not NULL,
     "end_date" DATE,
     "created_date" timestamp default current_timestamp not null
 );
@@ -202,13 +207,16 @@ CREATE TABLE schedule(
     "start_time" time,
     "day" date not null,
     "end_time" time,
-    "teacher_id" integer not null
+    "teacher_id" integer not null,
+    UNIQUE ("education_id", "start_time","day","end_time","teacher_id")
 );
 
 CREATE TABLE group_student(
   "id" serial primary key,
   "student_id" integer not NULL,
+  "finishing" boolean default false NOT NULL,
   "education_id" integer NOT NULL,
+  UNIQUE("student_id", "education_id"),
   "time_create" timestamp default current_timestamp not null,
   "time_update" timestamp default current_timestamp not null
 );   
@@ -258,8 +266,6 @@ CREATE TABLE quations(
   "time_update" timestamp default current_timestamp not null
 )
 
-
-
 CREATE TABLE sertificat(
    "id" serial primary key, 
    "file" TEXT NOT NULL,
@@ -277,7 +283,9 @@ CREATE TABLE Student_sertificat(
      "title" varchar(50) NOT NULL,
      "description" TEXT,
      "sertificat_id" integer NOT NULL,
-     "student_id" integer NOT NULL
+     "student_id" integer NOT NULL,
+     "time_create" timestamp default current_timestamp not null,
+     "time_update" timestamp default current_timestamp not null
 )
 
 

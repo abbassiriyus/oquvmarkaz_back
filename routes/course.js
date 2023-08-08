@@ -6,13 +6,29 @@ var pool = require("../db")
 var fs =require("fs")
 var {ensureToken,superTeacher }=require("../token/token.js")
 
-router.get("/course",ensureToken, (req, res) => {   
-    pool.query("SELECT * FROM course", (err, result) => {
-        if (!err) {
-            res.status(200).send(result.rows)
+router.get("/course", (req, res) => {   
+    pool.query("SELECT * FROM course", (err1, result1) => {
+        if (!err1) { 
+         pool.query("SELECT id,rating,course FROM registerCourse",(err,result)=>{
+            if(!err){
+   for (let i = 0; i < result1.rows.length; i++) {
+   var a=0
+   var b=0
+    for (let j = 0; j < result.rows.length; j++) {
+       if(result1.rows[i].id==result.rows[j].course){
+       a=a+result.rows[j].rating
+       b++
+       }
+    }
+    result1.rows[i].star=a/b
+}
+
+
+        res.status(200).send(result1.rows)
+            }
+         })
         } else {
-            res.send
-            (err)
+            res.send(err)
         }
     })
 })

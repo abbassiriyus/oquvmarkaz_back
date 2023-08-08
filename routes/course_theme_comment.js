@@ -7,8 +7,13 @@ const pool = require("../db")
 var {ensureToken,ensureToken,ensureTokenTeacher,superTeacher }=require("../token/token.js")
 
  router.get("/course_theme_comment", (req, res) => {   
-     pool.query("SELECT * FROM course_theme_comment", (err, result1) => {
+     pool.query("SELECT * FROM course_theme_comment", (err, result) => {
         if (!err) {
+     for (let i = 0; i < result.rows.length; i++) {
+       
+        
+     }
+
          res.status(200).send(result.rows)
         } else {
             res.send(err)
@@ -42,7 +47,6 @@ router.get('/course_theme_comment/:id', (req, res) => {
 
 
 router.post("/course_theme_comment", (req, res) => {
-    console.log("hello");
     const body = req.body;
     var imgName="";
     if(req.files){
@@ -94,7 +98,7 @@ router.delete("/course_theme_comment/:id", (req, res) => {
 
 
 })
-router.put("/api_root/:id",ensureToken, (req, res) => {
+router.put("/course_theme_comment/:id",ensureToken, (req, res) => {
     const id = req.params.id
     const body = req.body
     pool.query("SELECT * FROM course_theme_comment where id=$1", [req.params.id], (err, result1) => {
@@ -109,7 +113,7 @@ router.put("/api_root/:id",ensureToken, (req, res) => {
                 imgName=req.body.image
             }
     pool.query(
-        'UPDATE api_root SET theme=$1,text=$2,image=$3,subcomment=$4,user_id=$5, WHERE id = $6',
+        'UPDATE course_theme_comment SET theme=$1,text=$2,image=$3,subcomment=$4,user_id=$5, WHERE id = $6',
         [body.theme,body.text,imgName,body.subcomment,body.user_id,id ],
         (err, result) => {
             if (err) {
