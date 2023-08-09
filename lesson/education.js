@@ -57,7 +57,7 @@ router.put("/education/:id",ensureToken, (req, res) => {
     const body = req.body
     pool.query(
         'UPDATE education SET education_name=$1,description=$2,start_date=$3,end_date=$4 WHERE id = $5',
-        [body.b  ,body.description,body.start_date,body.end_date,id ],
+        [body.education_name,body.description,body.start_date,body.end_date,id ],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)

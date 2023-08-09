@@ -119,42 +119,49 @@ pool.query("SELECT * FROM registerCourse where id=$1", [req.params.id], (err, re
     pool.query("SELECT * FROM course where id=$1", [result1.rows[0].course], (err, result2) => {
         if (!err) {
          pool.query("SELECT * FROM sertificat where id=$1", [result2.rows[0].sertificat_id], (err, result3) => {
-                        if (!err) {
-                            const content = fs.readFileSync(
-                                path.resolve(__dirname, `./Images/${result2.rows[0].file}`),
-                                "binary"
-                            );
-                            const zip = new PizZip(content);
-                            const doc = new Docxtemplater(zip, {
-                                paragraphLoop: true,
-                                linebreaks: true,
-                            });
-                            pool.query("SELECT * FROM users where id=$1", [result1.rows[0].users], (err, result4) => {
-                                if (!err) {
-                                    doc.render({
-                                        first_name:result4.rows[0].users,
-                                        last_name:result4.rows[0].last_name,
-                                        date: new Date(),
-                                        director: result1.rows[0].director,
-                                        description: result1.rows[0].description,
-                                        mentor: result1.rows[0].mentor,
-                                    });
-                                    
-                                    const buf = doc.getZip().generate({
-                                        type: "nodebuffer",
-                                        compression: "DEFLATE",
-                                    });
-                                    
-                               var name=new Date()
+        if (!err) {
+            console.log(result3.rows);
+        // Load the docx file as binary content
+const content = fs.readFileSync(
+    path.resolve(__dirname, `./Images/${result3.rows[0].file}`),
+    "binary"
+);
+
+const zip = new PizZip(content);
+
+const doc = new Docxtemplater(zip, {
+    paragraphLoop: true,
+    linebreaks: true,
+});
+pool.query("SELECT * FROM users where id=$1", [result1.rows[0].users], (err, result4) => {
+if (!err) {
+    var date=new Date()
+    var current_date = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+ date.getDate()
+    doc.render({
+    full_name: result4.rows[0].last_name,
+    description:result3.rows[0].description,
+    date: current_date,
+    director: result3.rows[0].director,
+    mentor: result3.rows[0].mentor,
+  });
+
+const buf = doc.getZip().generate({
+    type: "nodebuffer",
+    compression: "DEFLATE",
+});
+
+// buf is a nodejs Buffer, you can either write it to a
+// file or res.send it with express for example.
+fs.writeFileSync(path.resolve(__dirname, `./sertificat/${new Date()}.docx`), buf);
+        res.status(200).send(result.rows)
+    } else {
+        res.status(400).send(err)
+    }
+})
 
 
-
-                               
-                                fs.writeFileSync(path.resolve(__dirname, `./Images/${name}.docx`), buf);   
-                                  }else{
-                                    res.status(400).send({ err:err,message:"user not"})
-                                  }
-                            })  
+             
+                
                           } else {
                             res.status(400).send({err:err,message:"not found course"})
                           }
