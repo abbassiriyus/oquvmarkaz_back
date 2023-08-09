@@ -142,7 +142,7 @@ if (!err) {
     description:result3.rows[0].description,
     date: current_date,
     director: result3.rows[0].director,
-    mentor: result3.rows[0].mentor,
+    mentor: (result4.rows.filter(item=>item.id==result3.rows[0].mentor))[0].last_name,
   });
 
 const buf = doc.getZip().generate({
@@ -150,10 +150,36 @@ const buf = doc.getZip().generate({
     compression: "DEFLATE",
 });
 
-// buf is a nodejs Buffer, you can either write it to a
-// file or res.send it with express for example.
-fs.writeFileSync(path.resolve(__dirname, `./sertificat/${new Date()}.docx`), buf);
-        res.status(200).send(result.rows)
+var name_file=Date.now()
+fs.writeFileSync(path.resolve(__dirname, `./sertifikat/${name_file}.docx`), buf);
+pool.query(
+    'UPDATE registerCourse SET finishing=$1    WHERE id = $2',
+    [true,req.params.id ],
+    (err, result) => {
+        if (err) {
+            res.status(400).send(err)
+        } else {
+    pool.query('INSERT INTO Student_sertificat (file,title,description,sertificat_id,student_id) VALUES ($1,$2,$3,$4,$5) RETURNING *',
+            [`${name_file}.docx`,result4.rows[0].last_name,result3.rows[0].description,result3.rows[0].id,result4.rows[0].id,],
+             (err, result) => {
+                if (err) {
+                    res.status(400).send(err);
+                } else {
+                    res.status(201).send("Created");
+                }
+            });   
+
+
+
+
+
+        }
+    }
+)      
+
+
+
+
     } else {
         res.status(400).send(err)
     }
