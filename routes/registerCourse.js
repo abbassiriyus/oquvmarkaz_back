@@ -110,7 +110,24 @@ router.get("/super/registerCourse",ensureToken, (req,res)=>{
 router.get('/mycourse/:id', ensureToken , (req,res)=>{
     pool.query("SELECT * FROM registerCourse where users=$1", [req.params.id], (err, result) => {
         if (!err) {
-            res.status(200).send(result.rows)
+            var a=result.rows
+            var as=[]
+        pool.query("SELECT * FROM course", (err, result1) => {
+        if (!err) {
+        var b=result1.rows
+       for (let i = 0; i < a.length; i++) {
+        for (let j = 0; j< b.length; j++) {
+        if(a[i].course==b[j].id){
+        as.push(b[j])
+        }
+        }
+       }
+                    res.status(200).send(as)
+        
+                } else {
+                    res.send(err)
+                }
+            })
         } else {
             res.status(400).send(err)
         }
