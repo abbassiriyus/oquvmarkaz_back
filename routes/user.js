@@ -398,7 +398,7 @@ router.put("/oneuser/:id",ensureToken, (req, res) => {
  pool.query("SELECT * FROM users", (err, result) => {
         if (!err) {
             var a=result.rows.filter(item=>item.id==req.params.id) 
-            if(a[0].image){
+            if(a.length>0 && a[0].image){
                 fs.unlink(`./Images/${a[0].image}`,()=>{})
             }
     pool.query(
