@@ -56,8 +56,8 @@ router.put("/attendance_test/:id",ensureToken, (req, res) => {
     const id = req.params.id
     const body = req.body
     pool.query(
-        'UPDATE attendance_test SET lesson_id=$1,group_id=$2,mark=$3,came=$4 WHERE id = $5',
-        [body.b  ,body.group_id,body.mark,body.came,id ],
+        'UPDATE attendance_test SET test_id=$1,group_id=$2,mark=$3,came=$4 WHERE id = $5',
+        [body.test_id ,body.group_id,body.mark,body.came,id ],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)
