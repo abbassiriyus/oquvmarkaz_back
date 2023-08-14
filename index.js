@@ -26,7 +26,9 @@ const registerCourse=require('./routes/registerCourse')
 const help_category=require('./routes/help_category')
 
 // edu
+const quations=require('./lesson/quations')
 const education=require('./lesson/education')
+
 const schedule=require('./lesson/schedule')
 const group_student=require('./lesson/group_student')
 const attendance_lesson=require('./lesson/attendance_lesson')
@@ -81,6 +83,9 @@ app.use("/edu",attendance_lesson)
 app.use("/edu",test)
 app.use("/edu",attendance_test)
 app.use("/edu",sertificat)
+
+app.use("/edu",quations)
+
 
 
 
