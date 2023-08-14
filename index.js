@@ -22,6 +22,7 @@ const course_data_category=require('./routes/course_data_category')
 const base_theme=require('./routes/base_theme')
 const knowladge=require('./routes/knowladge')
 const help=require('./routes/help')
+const notification=require('./routes/notification')
 const registerCourse=require('./routes/registerCourse')
 const help_category=require('./routes/help_category')
 
@@ -71,6 +72,7 @@ app.get('/', function(req, res) {
  app.use("/api",follow)
  app.use("/api",call_me)
  app.use("/api",help_category)
+ app.use("/api",notification)
 
 
 
