@@ -224,7 +224,7 @@ const io = new Server(server, {
  });
 
 //  app.use("/message",socket)
-server.listen(5000, () => {
+server.listen(5001, () => {
     console.log("Localhost is Running");
 })
 

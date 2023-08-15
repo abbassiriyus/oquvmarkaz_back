@@ -66,7 +66,7 @@ router.post("/course",superTeacher, (req, res) => {
             }
         });
 });
-router.post("/course/:courseid/register/:userid",ensureToken, (req, res) => {
+router.post("/course/:courseid/register/:userid", (req, res) => {
 var body=req.body
    var userid=req.params.userid
    var courseid=req.params.courseid
@@ -90,14 +90,9 @@ var body=req.body
     res.status(445).send('mablag yetarli emas, yokida kurs yoki user aniqlanmadi')
    }
    
-})
-
-  } else {
-        res.send
-        (err)
-    }
-})
-});
+})} else {
+        res.status("siz yuborayapgan user fanda aniqlanmagan").send(err)
+    }})});
 router.delete("/course/:id",superTeacher, (req, res) => {
     var id = req.params.id
     pool.query("SELECT * FROM course", (err, result) => {
