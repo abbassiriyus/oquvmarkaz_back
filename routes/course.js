@@ -91,7 +91,7 @@ var body=req.body
    }
    
 })} else {
-        res.status("siz yuborayapgan user fanda aniqlanmagan").send(err)
+        res.status(491).send({err:err,message:"siz yuborayapgan user fanda aniqlanmagan"})
     }})});
 router.delete("/course/:id",superTeacher, (req, res) => {
     var id = req.params.id
