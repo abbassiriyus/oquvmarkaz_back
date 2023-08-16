@@ -67,6 +67,78 @@ router.post("/register", (req, res) => {
             }
 })
 
+router.post("/change/password", (req, res) => {
+    const body = req.body
+    if(body){
+    var code =Math.floor(Math.random() * 900000)+100000;
+    var a=0
+    pool.query("SELECT * FROM users", (err, result) => {
+        if (!err) {
+         var d2=result.rows.filter(item=>item.email===req.body.email)
+        if(d2.length>0){
+         a=d2[0].id
+        }else{
+         res.status(400).send("email topilmadi")
+        }
+        console.log(a);
+    if(body.email.includes('@') && a!==0){
+    pool.query('UPDATE users SET verify=$1 WHERE id=$2',
+    [code,a], (err, result) => {
+            if (err) {
+                res.status(400).send("malumot To`liq emas")
+            } else {
+                var mailOptions = {
+                    from: "webabbas9@gmail.com",
+                    to: body.email,
+                    subject: "Verification Code",
+                    html: `Your activation code:${code}`
+                 };
+                transporter.sendMail(mailOptions, function(error, info){
+                    if(error){
+                       console.log(error,"error");
+                    }else{
+                       console.log("your code: "+code);
+                    }
+                 });
+                res.status(201).send("send message your email")
+            }
+        })}else{
+            if(!(body.email.includes('@'))){
+                res.status(421).send("email xato kiritildi")
+            }}
+            if(a==1){
+                res.status(422).send("siz kiritgan malumotlar bizni bazamizda oldindan saqlangan")  
+            }}else{
+                res.status(441).send("malumotni yubormadingiz")
+            }
+})
+   }
+})
+
+router.put("/reset/", (req, res) => {
+    const body = req.body
+    pool.query("SELECT * FROM users", (err, result1) => {
+        if (!err) {
+            console.log(result1.rows);
+            console.log(body.code);
+            var s=result1.rows.filter(item=>item.verify==body.code)
+            console.log(s);
+            pool.query('UPDATE users SET password=$1 WHERE id=$2',
+            [body.password,s[0].id],
+            (err, result) => {
+                if (err) {
+                    res.status(400).send({err:err,message:'parol oldin ishlatilgan'})
+                } else {
+                    res.status(200).send("Updated")
+                }})
+        } else {
+            res.status(400).send(err)
+        } 
+    }) 
+  
+})
+
+    
 // verifikatsiya
 router.post("/verify", (req, res) => {
     const body = req.body
