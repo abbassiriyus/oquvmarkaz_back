@@ -23,7 +23,7 @@ CREATE TABLE users (
     "position" integer default 1 not null,
     "rooms" TEXT[] NOT NULL default "{}"
 );
-CREATE TABLE  messages (
+CREATE TABLE messages (
   "id" SERIAL PRIMARY KEY,
   "room" TEXT NOT NULL,
   "author" TEXT NOT NULL,
