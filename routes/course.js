@@ -98,7 +98,9 @@ router.delete("/course/:id",superTeacher, (req, res) => {
     pool.query("SELECT * FROM course", (err, result) => {
         if (!err) {
             var a=result.rows.filter(item=>item.id==req.params.id) 
+          if(a.length>0){
             fs.unlink(`./Images/${a[0].image}`,()=>{})
+          }
     pool.query('DELETE FROM course WHERE id = $1', [id], (err, result) => {
         if (err) {
             res.status(400).send(err)
