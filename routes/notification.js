@@ -82,7 +82,7 @@ router.get("/notification/read/:id", (req, res) => {
     const body = req.body
     pool.query(
         'UPDATE notification SET read=$1 WHERE id = $2',
-        [body.read,id ],
+        [true,id ],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)
