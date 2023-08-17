@@ -21,6 +21,7 @@ const course_theme_task=require('./routes/course_theme_task.js')
 const course_theme_comment=require('./routes/course_theme_comment')
 const course_data_theme=require('./routes/course_data_theme')
 const course_data_category=require('./routes/course_data_category')
+const course_theme_task_student=require('./routes/course_theme_task_student')
 const base_theme=require('./routes/base_theme')
 const knowladge=require('./routes/knowladge')
 const help=require('./routes/help')
@@ -70,6 +71,7 @@ app.get('/', function(req, res) {
  app.use("/api",course_data_category)
  app.use("/api",course_theme_comment)
  app.use("/api",course_data_theme)
+ app.use("/api",course_theme_task_student)
  app.use("/api",base_theme)
  app.use("/api",knowladge)
  app.use("/api",help)
@@ -80,8 +82,7 @@ app.get('/', function(req, res) {
 
 
 
-// api endu
-
+// api edu
 app.use("/edu",education)
 app.use("/edu",schedule)
 app.use("/edu",group_student)
