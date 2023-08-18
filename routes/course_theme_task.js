@@ -77,7 +77,7 @@ router.delete("/course_theme_task/:id",ensureToken, (req, res) => {
 
 
 })
-router.put("/api_root/:id",ensureToken, (req, res) => {
+router.put("/course_theme_task/:id",ensureToken, (req, res) => {
     const id = req.params.id
     const body = req.body
     pool.query("SELECT * FROM course_theme_task where id=$1", [req.params.id], (err, result1) => {
@@ -92,7 +92,7 @@ router.put("/api_root/:id",ensureToken, (req, res) => {
                 imgName=req.body.image
             }
     pool.query(
-        'UPDATE api_root SET content=$1,course_theme=$2,image=$3 WHERE id = $4',
+        'UPDATE course_theme_task SET content=$1,course_theme=$2,image=$3 WHERE id = $4',
         [body.content,body.course_theme,imgName,id ],
         (err, result) => {
             if (err) {

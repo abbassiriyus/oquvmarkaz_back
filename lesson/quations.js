@@ -4,8 +4,8 @@ var router = express.Router();
 var jwt = require('jsonwebtoken');
 const pool = require("../db")
 var {ensureToken }=require("../token/token.js")
-
- router.get("/quations",ensureToken, (req, res) => {   
+const fs =require("fs")
+ router.get("/quations", (req, res) => {   
      pool.query("SELECT * FROM quations", (err, result) => {
         if (!err) {
 
@@ -17,9 +17,9 @@ var {ensureToken }=require("../token/token.js")
      })
    })
 
-router.get('/quations/:id',ensureToken, (req, res) => {
+router.get('/quations/:id', (req, res) => {
     
-    pool.query("SELECT * FROM quations where theme=$1", [req.params.id], (err, result) => {
+    pool.query("SELECT * FROM quations where id=$1", [req.params.id], (err, result) => {
         if (!err) {
             res.status(200).send(result.rows)
         } else {
@@ -82,10 +82,12 @@ router.delete("/quations/:id",ensureToken, (req, res) => {
 router.put("/quations/:id",ensureToken, (req, res) => {
     const id = req.params.id
     const body = req.body
+    var imgName=""
+  if(body){
     pool.query("SELECT * FROM quations where id=$1", [req.params.id], (err, result1) => {
         if (!err) {
-            if(result1[0].image){
-                fs.unlink(`./Images/${result1[0].image}`,()=>{})   
+            if(result1.rows[0].image){
+                fs.unlink(`./Images/${result1.rows[0].image}`,()=>{})   
               }
               if(req.files){
                 const imgFile = req.files.image
@@ -94,11 +96,11 @@ router.put("/quations/:id",ensureToken, (req, res) => {
                 imgName=req.body.image
             }
     pool.query(
-        'UPDATE quations SET question=$1,answer=$2,image=$3,variant1=$4,variant2=$5,variant3=$6,variant4=$7,user_id=$8, WHERE id = $9',
-        [body.question,body.answer,imgName,body.variant1,body.variant2,body.variant3,body.variant4,body.user_id,id ],
+        'UPDATE quations SET question=$1,answer=$2,image=$3,variant1=$4,variant2=$5,variant3=$6,variant4=$7,test_id=$8 WHERE id=$9',
+        [body.question,body.answer,imgName,body.variant1,body.variant2,body.variant3,body.variant4,body.test_id,id ],
         (err, result) => {
             if (err) {
-                res.status(400).send(err)
+                res.status(400).send({err:err,message:'savol ioliq emas'})
             } else {
                 res.status(200).send("Updated")
             }
@@ -108,6 +110,9 @@ router.put("/quations/:id",ensureToken, (req, res) => {
     res.status(400).send(err)
 }
     })
+  }else{
+    res.status(430).send("data yuborimadi")
+  }
 })
 
 module.exports = router;
