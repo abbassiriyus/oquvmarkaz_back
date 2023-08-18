@@ -290,4 +290,11 @@ CREATE TABLE Student_sertificat(
      "time_update" timestamp default current_timestamp not null
 )
 
-
+CREATE TABLE university  (
+    "id" serial primary key,
+    "title" VARCHAR (50) NOT NULL,
+    "deskription" integer NOT NULL,
+    "image" TEXT,
+    "time_create" timestamp default current_timestamp not null,
+	"time_update" timestamp default current_timestamp not null
+)

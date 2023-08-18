@@ -28,6 +28,8 @@ const help=require('./routes/help')
 const notification=require('./routes/notification')
 const registerCourse=require('./routes/registerCourse')
 const help_category=require('./routes/help_category')
+const university=require('./routes/university')
+
 
 // edu
 const quations=require('./lesson/quations')
@@ -79,6 +81,8 @@ app.get('/', function(req, res) {
  app.use("/api",call_me)
  app.use("/api",help_category)
  app.use("/api",notification)
+ app.use("/api",university)
+
 
 
 

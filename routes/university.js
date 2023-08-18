@@ -3,10 +3,10 @@ var express = require('express');
 var router = express.Router();
 var jwt = require('jsonwebtoken');
 const pool = require("../db")
-var {ensureToken }=require("../token/token.js")
+var { ensureToken }=require("../token/token.js")
 
- router.get("/quations",ensureToken, (req, res) => {   
-     pool.query("SELECT * FROM quations", (err, result) => {
+router.get("/university", (req, res) => {   
+    pool.query("SELECT * FROM university", (err, result) => {
         if (!err) {
 
             res.status(200).send(result.rows)
@@ -14,12 +14,12 @@ var {ensureToken }=require("../token/token.js")
         } else {
             res.send(err)
         }
-     })
-   })
+    })
+})
 
-router.get('/quations/:id',ensureToken, (req, res) => {
+router.get('/university/:id', (req, res) => {
     
-    pool.query("SELECT * FROM quations where theme=$1", [req.params.id], (err, result) => {
+    pool.query("SELECT * FROM university where id=$1", [req.params.id], (err, result) => {
         if (!err) {
             res.status(200).send(result.rows)
         } else {
@@ -29,8 +29,7 @@ router.get('/quations/:id',ensureToken, (req, res) => {
 })
 
 
-router.post("/quations", (req, res) => {
-    console.log("hello");
+router.post("/university", (req, res) => {
     const body = req.body;
     var imgName="";
     if(req.files){
@@ -39,13 +38,12 @@ router.post("/quations", (req, res) => {
     }else{
         imgName=req.body.image
     }
-    pool.query('INSERT INTO quations (question,answer,image,variant1,variant2,variant3,variant4,test_id) VALUES ($1 ,$2 ,$3 ,$4 ,$5,$6,$7,$8 ) RETURNING *',
-        [body.question,body.answer,imgName,body.variant1,body.variant2,body.variant3,body.variant4,body.test_id],
+        pool.query('INSERT INTO university (title,deskription,image) VALUES ($1,$2,$3) RETURNING *',
+        [body.title,body.deskription,imgName],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
             } else {
-                console.log("hello");
                 if(req.files){
                     const imgFile = req.files.image
                     imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
@@ -56,14 +54,14 @@ router.post("/quations", (req, res) => {
         });
 });
 
-router.delete("/quations/:id",ensureToken, (req, res) => {
+router.delete("/university/:id",ensureToken, (req, res) => {
     const id = req.params.id
-    pool.query("SELECT * FROM quations where id=$1", [req.params.id], (err, result1) => {
+    pool.query("SELECT * FROM university where id=$1", [req.params.id], (err, result1) => {
         if (!err) {
             if(result1[0].image){
               fs.unlink(`./Images/${result1[0].image}`,()=>{})   
             }
-            pool.query('DELETE FROM quations WHERE id = $1', [id], (err, result) => {
+            pool.query('DELETE FROM university WHERE id = $1', [id], (err, result) => {
                 if (err) {
                     res.status(400).send(err)
                 } else {
@@ -79,10 +77,10 @@ router.delete("/quations/:id",ensureToken, (req, res) => {
 
 
 })
-router.put("/quations/:id",ensureToken, (req, res) => {
+router.put("/university/:id",ensureToken, (req, res) => {
     const id = req.params.id
     const body = req.body
-    pool.query("SELECT * FROM quations where id=$1", [req.params.id], (err, result1) => {
+    pool.query("SELECT * FROM university where id=$1", [req.params.id], (err, result1) => {
         if (!err) {
             if(result1[0].image){
                 fs.unlink(`./Images/${result1[0].image}`,()=>{})   
@@ -94,8 +92,8 @@ router.put("/quations/:id",ensureToken, (req, res) => {
                 imgName=req.body.image
             }
     pool.query(
-        'UPDATE quations SET question=$1,answer=$2,image=$3,variant1=$4,variant2=$5,variant3=$6,variant4=$7,user_id=$8, WHERE id = $9',
-        [body.question,body.answer,imgName,body.variant1,body.variant2,body.variant3,body.variant4,body.user_id,id ],
+        'UPDATE university SET title=$1,deskription=$2,image=$3 WHERE id = $4',
+        [body.title,body.deskription,imgName,id ],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)
