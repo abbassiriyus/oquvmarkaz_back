@@ -32,7 +32,7 @@ const help_category=require('./routes/help_category')
 // edu
 const quations=require('./lesson/quations')
 const education=require('./lesson/education')
-
+const Student_sertificat=require('./lesson/Student_sertificat')
 const schedule=require('./lesson/schedule')
 const group_student=require('./lesson/group_student')
 const attendance_lesson=require('./lesson/attendance_lesson')
@@ -85,6 +85,7 @@ app.get('/', function(req, res) {
 // api edu
 app.use("/edu",education)
 app.use("/edu",schedule)
+app.use("/edu",Student_sertificat)
 app.use("/edu",group_student)
 app.use("/edu",attendance_lesson)
 app.use("/edu",test)
