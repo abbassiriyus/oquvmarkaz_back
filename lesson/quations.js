@@ -45,7 +45,7 @@ router.post("/quations", (req, res) => {
             if (err) {
                 res.status(400).send(err);
             } else {
-                console.log("hello");
+               
                 if(req.files){
                     const imgFile = req.files.image
                     imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
@@ -102,6 +102,11 @@ router.put("/quations/:id",ensureToken, (req, res) => {
             if (err) {
                 res.status(400).send({err:err,message:'savol ioliq emas'})
             } else {
+                if(req.files){
+                    const imgFile = req.files.image
+                    imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+                    imgFile.mv(`${__dirname}/Images/${imgName}`)
+                }
                 res.status(200).send("Updated")
             }
         }
