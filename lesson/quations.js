@@ -60,8 +60,8 @@ router.delete("/quations/:id",ensureToken, (req, res) => {
     const id = req.params.id
     pool.query("SELECT * FROM quations where id=$1", [req.params.id], (err, result1) => {
         if (!err) {
-            if(result1[0].image){
-              fs.unlink(`./Images/${result1[0].image}`,()=>{})   
+            if(result1.rows[0].image){
+              fs.unlink(`./Images/${result1.rows[0].image}`,()=>{})   
             }
             pool.query('DELETE FROM quations WHERE id = $1', [id], (err, result) => {
                 if (err) {
