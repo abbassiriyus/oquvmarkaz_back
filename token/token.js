@@ -14,7 +14,7 @@ function ensureToken(req,res,next){
     req.token=bearerToken
     jwt.verify(bearerToken,'secret',((require1,result1)=>{
         if(result1==undefined){
-            res.status(502).send("token failed")
+            res.status(504).send("token failed")
         }else{
          next()
         }
@@ -35,7 +35,7 @@ function ensureTokenSuper(req,res,next){
     req.token=bearerToken
     jwt.verify(bearerToken,'secret',((require1,result1)=>{
         if(result1==undefined || result1.position!=3){
-            res.status(502).send("token failed")
+            res.status(504).send("token failed")
         }else{
          next()
         }
@@ -52,7 +52,7 @@ function ensureTokenTeacher(req,res,next){
     req.token=bearerToken
     jwt.verify(bearerToken,'secret',((require1,result1)=>{
         if(result1==undefined || result1.position!=2){
-            res.status(502).send("token failed")
+            res.status(504).send("token failed")
         }else{
          next()
         }
@@ -70,7 +70,7 @@ function superTeacher(req,res,next){
     req.token=bearerToken
     jwt.verify(bearerToken,'secret',((require1,result1)=>{
         if(result1==undefined || result1.position<2 ){
-            res.status(502).send("token failed")
+            res.status(504).send("token failed")
         }else{
          next()
         }
