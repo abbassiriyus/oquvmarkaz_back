@@ -48,7 +48,6 @@ router.post("/quations", (req, res) => {
                
                 if(req.files){
                     const imgFile = req.files.image
-                    imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
                     imgFile.mv(`${__dirname}/Images/${imgName}`)
                 }
                 res.status(201).send("Created");
