@@ -54,7 +54,7 @@ router.get('/course_data_category/:id',ensureToken, (req, res) => {
 })
 
 
-router.post("/course_data_category",ensureTokenSuper, (req, res) => {
+router.post("/course_data_category",ensureToken, (req, res) => {
     const body = req.body;
         pool.query('INSERT INTO course_data_category (name,course) VALUES ($1,$2) RETURNING *',
         [body.name,body.course],
@@ -67,7 +67,7 @@ router.post("/course_data_category",ensureTokenSuper, (req, res) => {
         });
 });
 
-router.delete("/course_data_category/:id",ensureTokenSuper, (req, res) => {
+router.delete("/course_data_category/:id",ensureToken, (req, res) => {
     const id = req.params.id
     pool.query('DELETE FROM course_data_category WHERE id = $1', [id], (err, result) => {
         if (err) {
@@ -77,7 +77,7 @@ router.delete("/course_data_category/:id",ensureTokenSuper, (req, res) => {
         }
     })
 })
-router.put("/course_data_category/:id",ensureTokenSuper, (req, res) => {
+router.put("/course_data_category/:id",ensureToken, (req, res) => {
     const id = req.params.id
     const body = req.body
     pool.query(
