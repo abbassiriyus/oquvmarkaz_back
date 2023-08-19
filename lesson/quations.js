@@ -104,7 +104,6 @@ router.put("/quations/:id",ensureToken, (req, res) => {
             } else {
                 if(req.files){
                     const imgFile = req.files.image
-                    imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
                     imgFile.mv(`${__dirname}/Images/${imgName}`)
                 }
                 res.status(200).send("Updated")
