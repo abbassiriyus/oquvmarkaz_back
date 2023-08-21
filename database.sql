@@ -180,6 +180,9 @@ CREATE TABLE call_me(
  "fullname" VARCHAR(120) NOT NULL,
  "email" VARCHAR(50),
  "message" TEXT,
+ "city" VARCHAR(120),
+ "phone" varchar(30),
+ "which_lesson"  varchar(100),
  "purchase" TEXT,
  "read" boolean default false not null,
  "time_create" timestamp default current_timestamp not null
@@ -225,8 +228,9 @@ CREATE TABLE group_student(
 CREATE TABLE attendance_lesson(
   "id" serial primary key,
   "lesson_id" integer not NULL,
-  "group_id" integer NOT NULL,
+  "student_id" integer NOT NULL,
   "mark" integer,
+  UNIQUE("student_id", "lesson_id"),
   "came" boolean default false NOT null,
   "time_create" timestamp default current_timestamp not null,
   "time_update" timestamp default current_timestamp not null
@@ -293,7 +297,7 @@ CREATE TABLE Student_sertificat(
 CREATE TABLE university  (
     "id" serial primary key,
     "title" VARCHAR (50) NOT NULL,
-    "deskription" integer NOT NULL,
+    "deckription" TEXT NOT NULL,
     "image" TEXT,
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null

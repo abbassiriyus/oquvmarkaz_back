@@ -31,8 +31,8 @@ router.get('/attendance_lesson/:id', (req, res) => {
 
 router.post("/attendance_lesson",ensureToken, (req, res) => {
     const body = req.body;
-        pool.query('INSERT INTO attendance_lesson (lesson_id,group_id,mark,came) VALUES ($1,$2,$3,$4) RETURNING *',
-        [body.lesson_id,body.group_id,body.mark,body.came],
+        pool.query('INSERT INTO attendance_lesson (lesson_id,student_id,mark,came) VALUES ($1,$2,$3,$4) RETURNING *',
+        [body.lesson_id,body.student_id,body.mark,body.came],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
@@ -56,8 +56,8 @@ router.put("/attendance_lesson/:id",ensureToken, (req, res) => {
     const id = req.params.id
     const body = req.body
     pool.query(
-        'UPDATE attendance_lesson SET lesson_id=$1,group_id=$2,mark=$3,came=$4 WHERE id = $5',
-        [body.b  ,body.group_id,body.mark,body.came,id ],
+        'UPDATE attendance_lesson SET lesson_id=$1,student_id=$2,mark=$3,came=$4 WHERE id = $5',
+        [body.b  ,body.student_id,body.mark,body.came,id ],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)
