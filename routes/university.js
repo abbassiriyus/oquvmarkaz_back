@@ -38,8 +38,8 @@ router.post("/university", (req, res) => {
     }else{
         imgName=req.body.image
     }
-        pool.query('INSERT INTO university (title,deskription,image) VALUES ($1,$2,$3) RETURNING *',
-        [body.title,body.deskription,imgName],
+        pool.query('INSERT INTO university (title,deckription,image) VALUES ($1,$2,$3) RETURNING *',
+        [body.title,body.deckription,imgName],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
@@ -95,8 +95,8 @@ router.put("/university/:id",ensureToken, (req, res) => {
                 imgName=req.body.image
             }
     pool.query(
-        'UPDATE university SET title=$1,deskription=$2,image=$3 WHERE id = $4',
-        [body.title,body.deskription,imgName,id ],
+        'UPDATE university SET title=$1,deckription=$2,image=$3 WHERE id = $4',
+        [body.title,body.deckription,imgName,id ],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)
