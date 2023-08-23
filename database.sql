@@ -302,3 +302,11 @@ CREATE TABLE university  (
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null
 )
+
+CREATE TABLE payment(
+    "id" serial primary key,
+    "amout" VARCHAR (50) NOT NULL,
+    "user_id" TEXT NOT NULL,
+    "time_create" timestamp default current_timestamp not null,
+	"time_update" timestamp default current_timestamp not null
+)

@@ -21,15 +21,15 @@ const course_theme_task=require('./routes/course_theme_task.js')
 const course_theme_comment=require('./routes/course_theme_comment')
 const course_data_theme=require('./routes/course_data_theme')
 const course_data_category=require('./routes/course_data_category')
-const course_theme_task_student=require('./routes/course_theme_task_student')
-const base_theme=require('./routes/base_theme')
-const knowladge=require('./routes/knowladge')
-const help=require('./routes/help')
-const notification=require('./routes/notification')
-const registerCourse=require('./routes/registerCourse')
-const help_category=require('./routes/help_category')
-const university=require('./routes/university')
-
+const course_theme_task_student=require('./routes/course_theme_task_student.js')
+const base_theme=require('./routes/base_theme.js')
+const knowladge=require('./routes/knowladge.js')
+const help=require('./routes/help.js')
+const notification=require('./routes/notification.js')
+const registerCourse=require('./routes/registerCourse.js')
+const help_category=require('./routes/help_category.js')
+const university=require('./routes/university.js')
+const payment=require('./routes/payment.js')
 
 // edu
 const quations=require('./lesson/quations')
@@ -82,6 +82,8 @@ app.get('/', function(req, res) {
  app.use("/api",help_category)
  app.use("/api",notification)
  app.use("/api",university)
+ app.use("/pay",payment)
+
 
 
 
