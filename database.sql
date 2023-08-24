@@ -311,7 +311,7 @@ CREATE TABLE payment(
 	"time_update" timestamp default current_timestamp not null
 )
 
-CREATE TABLE Admin(
+CREATE TABLE admin(
     "id" serial primary key,
     "user_id" integer not null,
      UNIQUE("user_id"),
@@ -377,7 +377,7 @@ CREATE TABLE Admin(
      "category_post" boolean default false not null,
      "category_delete" boolean default false not null,
      "category_put" boolean default false not null,
-    "notification_get" boolean default false not null,
+     "notification_get" boolean default false not null,
      "notification_post" boolean default false not null,
      "notification_delete" boolean default false not null,
      "notification_put" boolean default false not null,
