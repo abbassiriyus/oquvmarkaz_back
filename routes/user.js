@@ -510,15 +510,17 @@ router.put("/oneuser/:id",ensureToken, (req, res) => {
    
 })
 
-router.put("/auth/balanse/:id", (req, res) => {
+router.put("/balance/:id", (req, res) => {
     const id = req.params.id
     const body = req.body
+    
     pool.query("SELECT * FROM users", (err, result1) => {
-        var one=result1.rows.filter(item=>item.id===id)
+        var one=result1.rows.filter(item=>item.id*1===id*1)
         if (!err) { 
+          
              pool.query(
-        'UPDATE users SET balance=$1    WHERE id = $2',
-        [ (body.balance*1)+(one.balance*1),id],
+        'UPDATE users SET balance=$1 WHERE id = $2',
+        [ (body.balance*1)+((one[0].balance)*1),id],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)
