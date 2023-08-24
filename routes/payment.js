@@ -5,6 +5,10 @@ var jwt = require('jsonwebtoken');
 const pool = require("../db")
 
 
+
+
+
+
 router.get("/payment", (req, res) => {   
     pool.query("SELECT * FROM payment", (err, result) => {
         if (!err) {
