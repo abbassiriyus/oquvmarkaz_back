@@ -51,6 +51,30 @@ app.use(express.static('./routes/Images'))
 app.use(bodyParser.json());
 
 
+app.post("/payment", cors(), async (req, res) => {
+  let { amount, id } = req.body
+  try {
+    const payment = await stripe.paymentIntents.create({
+      amount,
+      currency: "USD",
+      description: "Spatula company",
+      payment_method: id,
+      confirm: true
+    })
+        alert(payment)
+    console.log("Payment", payment)
+    res.json({
+      message: "Payment successful",
+      success: true
+    })
+  } catch (error) {
+    console.log("Error", error)
+    res.json({
+      message: "Payment failed",
+      success: false
+    })
+  }
+})
 
 
 
