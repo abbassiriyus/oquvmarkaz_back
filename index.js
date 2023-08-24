@@ -31,6 +31,8 @@ const registerCourse=require('./routes/registerCourse.js')
 const help_category=require('./routes/help_category.js')
 const university=require('./routes/university.js')
 const payment=require('./routes/payment.js')
+const admin=require('./routes/admin.js')
+
 
 // edu
 const quations=require('./lesson/quations')
@@ -91,6 +93,8 @@ app.get('/', function(req, res) {
  app.use("/api", registerCourse )
  app.use("/auth", user )
  app.use("/auth", message )
+ app.use("/auth", admin )
+
 
  app.use("/api" ,cours_types)
  app.use("/api" ,course)
