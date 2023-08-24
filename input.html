@@ -118,6 +118,9 @@ font-size: 12px;
 <h1>/api/follow/</h1>
 <p>obuna bo`lish top kimga min kim obuna bolayapgani users/follow get id da follows da massiv korinishida keladi followstop kimga obuna bolgani followmin kimla unga obuna bo`lgani <span>{topuser, minuser}</span><sup>GET,GET(id),POST,PUT(id),DELETE(id)</sup></p>
 <hr>
+<h1>/auth/balanse/:id</h1>
+<p>to`lov amalga oshirish uchun<sup>PUT(id)</sup></p>
+<hr>
 <h1>auth/users/follow/:id</h1>
 <p>obunachilari va user malumotlari top i_follow obuna bo`lganlari, me_follow unga obuna bo`lganlari</p>
 <hr>
@@ -154,7 +157,7 @@ auth yoq shuni oldiga linkni bersang boldi
 
 <p>adminga dostupla berish uchun tablitsa  <pre> 
   "user_id" integer not null,
-  
+
   UNIQUE("user_id"),
   "diogram_get" boolean default false not null,
   "alluser_get" boolean default false not null,
