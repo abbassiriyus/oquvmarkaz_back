@@ -35,8 +35,8 @@ router.get('/payment/:id', (req, res) => {
 
 router.post("/payment", (req, res) => {
     const body = req.body;
-        pool.query('INSERT INTO payment (amout,user_id) VALUES ($1,$2) RETURNING *',
-        [body.amout,body.user_id],
+        pool.query('INSERT INTO payment (amout,user_id,type) VALUES ($1,$2,$3) RETURNING *',
+        [body.amout,body.user_id,body.type],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
@@ -60,8 +60,8 @@ router.put("/payment/:id", (req, res) => {
     const id = req.params.id
     const body = req.body
     pool.query(
-        'UPDATE payment SET amout=$1,user_id=$2 WHERE id = $3',
-        [body.amout,body.user_id,id ],
+        'UPDATE payment SET amout=$1,user_id=$2,type=$3 WHERE id = $4',
+        [body.amout,body.user_id, body.type,id ],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)
