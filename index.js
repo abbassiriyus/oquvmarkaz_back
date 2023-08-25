@@ -13,7 +13,6 @@ const stripe = require("stripe")(STRIPE_SECRET_TEST)
 const pool = require("./db")
 const user=require('./routes/user.js')
 const message=require('./routes/message.js')
-
 const call_me=require('./routes/call_me.js')
 const follow=require('./routes/follow.js')
 const cours_types=require('./routes/cours_types.js')
