@@ -8,8 +8,8 @@ const fs=require('fs')
 const http = require("http");
 const { Server } = require("socket.io");
 require("dotenv").config()
-const stripe = require("stripe")(process.env.STRIPE_SECRET_TEST)
-
+var STRIPE_SECRET_TEST=JSON.parse(fs.readFileSync("./configpayment.txt",{encoding: 'utf-8'})).strip_key
+const stripe = require("stripe")(STRIPE_SECRET_TEST)
 const pool = require("./db")
 const user=require('./routes/user.js')
 const message=require('./routes/message.js')
