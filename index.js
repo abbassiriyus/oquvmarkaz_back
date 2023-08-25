@@ -32,6 +32,7 @@ const help_category=require('./routes/help_category.js')
 const university=require('./routes/university.js')
 const payment=require('./routes/payment.js')
 const admin=require('./routes/admin.js')
+const paymentconfig=require('./paymentconfig.js')
 
 
 // edu
@@ -115,7 +116,7 @@ app.get('/', function(req, res) {
 
 
 
-
+ app.use("/super",paymentconfig)
 
 // api edu
 app.use("/edu",education)
