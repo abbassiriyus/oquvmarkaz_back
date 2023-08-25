@@ -32,8 +32,6 @@ const university=require('./routes/university.js')
 const payment=require('./routes/payment.js')
 const admin=require('./routes/admin.js')
 const paymentconfig=require('./paymentconfig.js')
-
-
 // edu
 const quations=require('./lesson/quations')
 const education=require('./lesson/education')
@@ -44,16 +42,11 @@ const attendance_lesson=require('./lesson/attendance_lesson')
 const test=require('./lesson/test')
 const attendance_test=require('./lesson/attendance_test')
 const sertificat=require('./lesson/sertificat.js')
-
-
 app.use(fileUpload())
 app.use(cors())
 app.use(express.static('./lesson/Images'))
 app.use(express.static('./routes/Images'))
-
 app.use(bodyParser.json());
-
-
 app.post("/payment", cors(), async (req, res) => {
   let { amount, id } = req.body
   try {
@@ -114,7 +107,6 @@ app.get('/', function(req, res) {
  app.use("/pay",payment)
 
 
-
  app.use("/super",paymentconfig)
 
 // api edu
@@ -126,15 +118,9 @@ app.use("/edu",attendance_lesson)
 app.use("/edu",test)
 app.use("/edu",attendance_test)
 app.use("/edu",sertificat)
-
 app.use("/edu",quations)
 
-
-
-
-
 const server = http.createServer(app);
-
 const io = new Server(server, {
   cors: {
     origin: "*",
