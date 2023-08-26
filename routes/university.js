@@ -4,7 +4,7 @@ var router = express.Router();
 var jwt = require('jsonwebtoken');
 const pool = require("../db")
 var { ensureToken }=require("../token/token.js")
-
+const fs=require('fs')
 router.get("/university", (req, res) => {   
     pool.query("SELECT * FROM university", (err, result) => {
         if (!err) {
@@ -57,7 +57,7 @@ router.delete("/university/:id",ensureToken, (req, res) => {
     const id = req.params.id
     pool.query("SELECT * FROM university where id=$1", [req.params.id], (err, result1) => {
         if (!err) {
-            if(result1[0].image){
+            if(result1.rows[0].image){
               fs.unlink(`./Images/${result1.rows[0].image}`,()=>{})   
             }
             pool.query('DELETE FROM university WHERE id = $1', [id], (err, result) => {

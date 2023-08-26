@@ -307,6 +307,7 @@ CREATE TABLE payment(
     "id" serial primary key,
     "amout" VARCHAR (50) NOT NULL,
     "user_id" TEXT NOT NULL,
+    "type" varchar(20) not NULL
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null
 )

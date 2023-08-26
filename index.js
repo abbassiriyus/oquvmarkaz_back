@@ -8,12 +8,11 @@ const fs=require('fs')
 const http = require("http");
 const { Server } = require("socket.io");
 require("dotenv").config()
-const stripe = require("stripe")(process.env.STRIPE_SECRET_TEST)
-
+var STRIPE_SECRET_TEST=JSON.parse(fs.readFileSync("./configpayment.txt",{encoding: 'utf-8'})).strip_key
+const stripe = require("stripe")(STRIPE_SECRET_TEST)
 const pool = require("./db")
 const user=require('./routes/user.js')
 const message=require('./routes/message.js')
-
 const call_me=require('./routes/call_me.js')
 const follow=require('./routes/follow.js')
 const cours_types=require('./routes/cours_types.js')
@@ -32,8 +31,7 @@ const help_category=require('./routes/help_category.js')
 const university=require('./routes/university.js')
 const payment=require('./routes/payment.js')
 const admin=require('./routes/admin.js')
-
-
+const paymentconfig=require('./paymentconfig.js')
 // edu
 const quations=require('./lesson/quations')
 const education=require('./lesson/education')
@@ -44,16 +42,11 @@ const attendance_lesson=require('./lesson/attendance_lesson')
 const test=require('./lesson/test')
 const attendance_test=require('./lesson/attendance_test')
 const sertificat=require('./lesson/sertificat.js')
-
-
 app.use(fileUpload())
 app.use(cors())
 app.use(express.static('./lesson/Images'))
 app.use(express.static('./routes/Images'))
-
 app.use(bodyParser.json());
-
-
 app.post("/payment", cors(), async (req, res) => {
   let { amount, id } = req.body
   try {
@@ -114,8 +107,7 @@ app.get('/', function(req, res) {
  app.use("/pay",payment)
 
 
-
-
+ app.use("/super",paymentconfig)
 
 // api edu
 app.use("/edu",education)
@@ -126,16 +118,9 @@ app.use("/edu",attendance_lesson)
 app.use("/edu",test)
 app.use("/edu",attendance_test)
 app.use("/edu",sertificat)
-
 app.use("/edu",quations)
 
-
-
-
-
-
 const server = http.createServer(app);
-
 const io = new Server(server, {
   cors: {
     origin: "*",
