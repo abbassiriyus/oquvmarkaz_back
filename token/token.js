@@ -34,7 +34,7 @@ function ensureTokenSuper(req,res,next){
     const bearerToken=bearer[1]
     req.token=bearerToken
     jwt.verify(bearerToken,'secret',((require1,result1)=>{
-        if(result1==undefined || result1.position!=3){
+        if(result1==undefined || (result1.position!=3 && result1.position!=5)){
             res.status(504).send("token failed")
         }else{
          next()

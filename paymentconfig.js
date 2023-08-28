@@ -8,7 +8,7 @@ router.get('/pay',(req,res)=>{
 
     fs.readFile('./configpayment.txt',{encoding: 'utf-8'},(err,data)=>{
    if(!err){
-res.status(200).send(JSON.parse(data))
+   res.status(200).send(JSON.parse(data))
    }else{
     res.status(400).send(err)
    }
