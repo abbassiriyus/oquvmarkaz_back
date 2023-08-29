@@ -45,7 +45,7 @@ const test=require('./lesson/test')
 const attendance_test=require('./lesson/attendance_test')
 const sertificat=require('./lesson/sertificat.js')
 
-const fetch = require("node-fetch");
+const fetch = require("node-fetch-commonjs");
 
 const logger = require("morgan");
 
