@@ -307,7 +307,7 @@ router.get('/teacher/:id',ensureToken, function(req, res) {
     pool.query("SELECT id , address , description,email,image,username,last_name,phone_number FROM users", (err, result) => {
         if (!err) {
             var course=null
-            pool.query("SELECT * FROM course", (err, result2) => {
+        pool.query("SELECT * FROM course", (err, result2) => {
            course=result2.rows.filter(item=>item.author==req.params.id)
            var a=result.rows.filter(item=>item.id*1===req.params.id*1) 
            a[0].course=course
