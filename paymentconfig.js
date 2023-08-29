@@ -25,7 +25,10 @@ var body=req.body
   var put={
     "public_key":body.public_key?body.public_key:data2.public_key,
     "strip_key":body.strip_key?body.strip_key:data2.strip_key,
-    "paypal_kluch":body.paypal_kluch?body.paypal_kluch:data2.paypal_kluch
+    "paypal_kluch":body.paypal_kluch?body.paypal_kluch:data2.paypal_kluch,
+    "domain":body.paypal_kluch?body.paypal_kluch:data2.paypal_kluch,
+    "daily_API_KEY":body.paypal_kluch?body.paypal_kluch:data2.paypal_kluch,
+
   }
    fs.writeFileSync('./configpayment.txt',JSON.stringify(put),{encoding: 'utf-8'})
   res.status(200).send("update")

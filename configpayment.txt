@@ -1,1 +1,1 @@
-{"public_key":"1","strip_key":"2","paypal_kluch":"jhkghf"}
+{"public_key":"1","strip_key":"2","paypal_kluch":"jhkghf","domain":"","daily_API_KEY":""}
