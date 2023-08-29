@@ -1,3 +1,4 @@
+process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 1;
 const express = require("express")
 const app = express()
 const cors = require("cors")
@@ -42,11 +43,20 @@ const attendance_lesson=require('./lesson/attendance_lesson')
 const test=require('./lesson/test')
 const attendance_test=require('./lesson/attendance_test')
 const sertificat=require('./lesson/sertificat.js')
+
+const fetch = require("node-fetch");
+
+const logger = require("morgan");
+
+
 app.use(fileUpload())
 app.use(cors())
 app.use(express.static('./lesson/Images'))
 app.use(express.static('./routes/Images'))
 app.use(bodyParser.json());
+
+
+
 app.post("/payment", cors(), async (req, res) => {
   let { amount, id } = req.body
   try {
