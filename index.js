@@ -1,4 +1,6 @@
 process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 1;
+require("dotenv").config()
+const fetch = require("node-fetch");
 const express = require("express")
 const app = express()
 const cors = require("cors")
@@ -8,7 +10,7 @@ const path = require('path');
 const fs=require('fs')
 const http = require("http");
 const { Server } = require("socket.io");
-require("dotenv").config()
+
 var STRIPE_SECRET_TEST=JSON.parse(fs.readFileSync("./configpayment.txt",{encoding: 'utf-8'})).strip_key
 var API_KEY=JSON.parse(fs.readFileSync("./configpayment.txt",{encoding: 'utf-8'})).daily_API_KEY
 const stripe = require("stripe")(STRIPE_SECRET_TEST)
@@ -45,7 +47,7 @@ const test=require('./lesson/test')
 const attendance_test=require('./lesson/attendance_test')
 const sertificat=require('./lesson/sertificat.js')
 
-const fetch = require("node-fetch-commonjs");
+
 
 const logger = require("morgan");
 
@@ -55,7 +57,10 @@ app.use(cors())
 app.use(express.static('./lesson/Images'))
 app.use(express.static('./routes/Images'))
 app.use(bodyParser.json());
-
+app.use(logger("dev"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cors());
 
 
 const headers = {
