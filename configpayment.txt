@@ -1,1 +1,1 @@
-{"public_key":"1","strip_key":"2","paypal_kluch":"jhkghf","domain":"","daily_API_KEY":""}
+{"public_key":"1","strip_key":"2","paypal_kluch":"jhkghf","domain":"https://videochat-wt4t.onrender.com/","daily_API_KEY":"d54f1f20282f7839768abf5e1d7c687cc4656355cd5c505e1b549d0ea87a921d"}
