@@ -26,8 +26,8 @@ var body=req.body
     "public_key":body.public_key?body.public_key:data2.public_key,
     "strip_key":body.strip_key?body.strip_key:data2.strip_key,
     "paypal_kluch":body.paypal_kluch?body.paypal_kluch:data2.paypal_kluch,
-    "domain":body.paypal_kluch?body.paypal_kluch:data2.paypal_kluch,
-    "daily_API_KEY":body.paypal_kluch?body.paypal_kluch:data2.paypal_kluch,
+    "domain":body.domain?body.domain:data2.domain,
+    "daily_API_KEY":body.daily_API_KEY?body.daily_API_KEY:data2.daily_API_KEY,
 
   }
    fs.writeFileSync('./configpayment.txt',JSON.stringify(put),{encoding: 'utf-8'})
