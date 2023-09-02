@@ -101,6 +101,10 @@ router.put("/university/:id",ensureToken, (req, res) => {
             if (err) {
                 res.status(400).send(err)
             } else {
+                if(req.files){
+                    const imgFile = req.files.image
+                   imgFile.mv(`${__dirname}/Images/${imgName}`)
+                    }
                 res.status(200).send("Updated")
             }
         }

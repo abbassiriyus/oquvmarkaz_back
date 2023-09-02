@@ -44,9 +44,8 @@ router.post("/help_category", (req, res) => {
             if (err) {
                 res.status(400).send(err);
             } else {
-                if(req.files){
+                if(req.files && req.files.image){
                     const imgFile = req.files.image
-                    imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
                     imgFile.mv(`${__dirname}/Images/${imgName}`)
                 }
                 res.status(201).send("Created");
@@ -65,6 +64,7 @@ router.delete("/help_category/:id", (req, res) => {
                 if (err) {
                     res.status(400).send(err)
                 } else {
+                    
                     res.status(200).send("Deleted")
                 }
             })
@@ -98,6 +98,10 @@ router.put("/help_category/:id",ensureTokenSuper, (req, res) => {
             if (err) {
                 res.status(400).send(err)
             } else {
+                if(req.files && req.files.image){
+                    const imgFile = req.files.image
+                    imgFile.mv(`${__dirname}/Images/${imgName}`)
+                }
                 res.status(200).send("Updated")
             }
         }

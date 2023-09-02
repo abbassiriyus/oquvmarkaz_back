@@ -46,7 +46,6 @@ router.post("/course_theme_task_student",ensureToken, (req, res) => {
             } else {
                 if(req.files){
                     const imgFile = req.files.image
-                    imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
                     imgFile.mv(`${__dirname}/Images/${imgName}`)
                 }
                 res.status(201).send("Created");
@@ -98,6 +97,10 @@ router.put("/course_theme_task_student/:id",ensureToken, (req, res) => {
             if (err) {
                 res.status(400).send(err)
             } else {
+                if(req.files){
+                    const imgFile = req.files.image
+                    imgFile.mv(`${__dirname}/Images/${imgName}`)
+                }
                 res.status(200).send("Updated")
             }
         }

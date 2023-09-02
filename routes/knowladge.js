@@ -32,7 +32,6 @@ router.get('/knowladge/:id', (req, res) => {
 router.post("/knowladge", (req, res) => {
     const body = req.body;
     var imgName="";
-    console.log(req.files);
     if(req.files){
     var imgFile = req.files.image
     imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
@@ -67,13 +66,24 @@ router.delete("/knowladge/:id",ensureTokenSuper, (req, res) => {
 router.put("/knowladge/:id",ensureTokenSuper, (req, res) => {
     const id = req.params.id
     const body = req.body
+    var imgName="";
+    if(req.files){
+    var imgFile = req.files.image
+    imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+     }else{
+      imgName=req.body.image
+     }
     pool.query(
         'UPDATE knowladge SET name=$1,description=$2,image=$3,link=$4,base_theme=$5   WHERE id = $6',
-        [body.name,body.description,body.image,body.link,body.base_theme,id ],
+        [body.name,body.description,imgName,body.link,body.base_theme,id ],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)
             } else {
+                if(req.files){
+                    const imgFile = req.files.image
+                   imgFile.mv(`${__dirname}/Images/${imgName}`)
+                    }
                 res.status(200).send("Updated")
             }
         }

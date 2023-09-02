@@ -57,11 +57,10 @@ router.post("/course",superTeacher, (req, res) => {
             if (err) {
                 res.status(400).send(err);
             } else {
-                if(req.files){
-                    var imgFile = req.files.image
-                    imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+                if(req.files && req.files.image){
+                    const imgFile = req.files.image
                     imgFile.mv(`${__dirname}/Images/${imgName}`)
-                  }
+                }
                 res.status(201).send("Created");
             }
         });
@@ -129,7 +128,10 @@ router.put("/course/:id",superTeacher, (req, res) => {
             if (err) {
                 res.status(400).send(err)
             } else {
-                imgFile.mv(`${__dirname}/Images/${imgName}`)
+                if(req.files && req.files.image){
+                    const imgFile = req.files.image
+                    imgFile.mv(`${__dirname}/Images/${imgName}`)
+                }
                 res.status(200).send("Updated")
             }
         }

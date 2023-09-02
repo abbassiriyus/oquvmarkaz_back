@@ -44,7 +44,7 @@ router.post("/course_theme_task",ensureToken, (req, res) => {
             if (err) {
                 res.status(400).send(err);
             } else {
-                if(req.files){
+                if(req.files && req.files.image){
                     const imgFile = req.files.image
                     imgFile.mv(`${__dirname}/Images/${imgName}`)
                 }
@@ -97,7 +97,7 @@ router.put("/course_theme_task/:id",ensureToken, (req, res) => {
             if (err) {
                 res.status(400).send(err)
             } else {
-                if(req.files){
+                if(req.files && req.files.image){
                     const imgFile = req.files.image
                     imgFile.mv(`${__dirname}/Images/${imgName}`)
                 }
