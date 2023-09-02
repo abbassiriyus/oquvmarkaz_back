@@ -81,8 +81,8 @@ router.put("/course_theme_task/:id",ensureToken, (req, res) => {
     const body = req.body
     pool.query("SELECT * FROM course_theme_task where id=$1", [req.params.id], (err, result1) => {
         if (!err) {
-            if(result1[0].image){
-                fs.unlink(`./Images/${result1[0].image}`,()=>{})   
+            if(result1.rows[0].image){
+                fs.unlink(`./Images/${result1.rows[0].image}`,()=>{})   
               }
               if(req.files){
                 const imgFile = req.files.image
