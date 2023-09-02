@@ -46,7 +46,6 @@ router.post("/course_theme_task",ensureToken, (req, res) => {
             } else {
                 if(req.files){
                     const imgFile = req.files.image
-                    imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
                     imgFile.mv(`${__dirname}/Images/${imgName}`)
                 }
                 res.status(201).send("Created");
@@ -58,8 +57,8 @@ router.delete("/course_theme_task/:id",ensureToken, (req, res) => {
     const id = req.params.id
     pool.query("SELECT * FROM course_theme_task where id=$1", [req.params.id], (err, result1) => {
         if (!err) {
-            if(result1[0].image){
-              fs.unlink(`./Images/${result1[0].image}`,()=>{})   
+            if(result1.rows[0].image){
+              fs.unlink(`./Images/${result1.rows[0].image}`,()=>{})   
             }
             pool.query('DELETE FROM course_theme_task WHERE id = $1', [id], (err, result) => {
                 if (err) {
@@ -98,6 +97,10 @@ router.put("/course_theme_task/:id",ensureToken, (req, res) => {
             if (err) {
                 res.status(400).send(err)
             } else {
+                if(req.files){
+                    const imgFile = req.files.image
+                    imgFile.mv(`${__dirname}/Images/${imgName}`)
+                }
                 res.status(200).send("Updated")
             }
         }
