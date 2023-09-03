@@ -95,7 +95,7 @@ router.put("/sertificat/:id",superTeacher, (req, res) => {
                 imgName=req.body.file
             }
     pool.query(
-        'UPDATE sertificat SET description=$1,type=$2,file=$3,director=$4,mentor=$5, WHERE id = $6',
+        'UPDATE sertificat SET description=$1,type=$2,file=$3,director=$4,mentor=$5 WHERE id = $6',
         [body.description,body.type,imgName,body.director,body.mentor,id ],
         (err, result) => {
             if (err) {
