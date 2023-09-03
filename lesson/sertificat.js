@@ -29,7 +29,7 @@ router.get('/sertificat/:id', (req, res) => {
           }
     })
 })
-router.post("/sertificat", (req, res) => {
+router.post("/sertificat",superTeacher, (req, res) => {
     const body = req.body;
     var imgName="";
     if(req.files){
@@ -54,7 +54,7 @@ router.post("/sertificat", (req, res) => {
         });
 });
 
-router.delete("/sertificat/:id", (req, res) => {
+router.delete("/sertificat/:id",superTeacher, (req, res) => {
     const id = req.params.id
     pool.query("SELECT * FROM sertificat where id=$1", [req.params.id], (err, result1) => {
         console.log(result1.rows);
@@ -80,7 +80,7 @@ router.delete("/sertificat/:id", (req, res) => {
 
 
 })
-router.put("/sertificat/:id",ensureTokenSuper, (req, res) => {
+router.put("/sertificat/:id",superTeacher, (req, res) => {
     const id = req.params.id
     const body = req.body
     pool.query("SELECT * FROM sertificat where id=$1", [req.params.id], (err, result1) => {

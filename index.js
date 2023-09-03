@@ -108,7 +108,7 @@ const createRoom = (room) => {
 };
 
 app.get("/video-call/:id", async function (req, res) {
-  const roomId = req.params.id;
+  const roomId = req.params.id;markazback2.onrender.com
 
   const room = await getRoom(roomId);
   if (room.error) {

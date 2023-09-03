@@ -39,8 +39,13 @@ router.post("/course_data_theme", (req, res) => {
     videoName = Date.now()+videoFile.name.slice(videoFile.name.lastIndexOf('.'))   
    }else{
 if(body.video){
-    videoName=body.video.replice("https://www.youtube.com/watch?v=","https://www.youtube.com/embed/")
-    videoName=body.video.replice("https://youtu.be/","https://www.youtube.com/embed/")
+    if (body.video.includes('https://www.youtube.com/watch?v=')) {
+     videoName=body.video.replice("https://www.youtube.com/watch?v=","https://www.youtube.com/embed/")    
+    }
+   if(body.video.includes("https://youtu.be/")){
+  videoName=body.video.replice("https://youtu.be/","https://www.youtube.com/embed/")
+   }
+  
 }else{
     videoName=null
 }
