@@ -383,7 +383,21 @@ CREATE TABLE admin(
      "notification_delete" boolean default false not null,
      "notification_put" boolean default false not null,
      "get_pay" boolean default false not null,
-
+     
+     "servis_get" boolean default false not null,
+     "servis_post" boolean default false not null,
+     "servis_delete" boolean default false not null,
+     "servis_put" boolean default false not null,
+     "homiy_get" boolean default false not null,
+     "homiy_post" boolean default false not null,
+     "homiy_delete" boolean default false not null,
+     "homiy_put" boolean default false not null,
+    "sertifikat_get" boolean default false not null,
+     "sertifikat_post" boolean default false not null,
+     "sertifikat_delete" boolean default false not null,
+     "sertifikat_put" boolean default false not null,
+     "create_video" boolean default false not null,
+     "pomish" boolean default false not null,
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null   
 )
