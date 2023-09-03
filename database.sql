@@ -395,3 +395,12 @@ CREATE TABLE servis(
    "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null
 )
+CREATE TABLE homiy(
+   "id" serial primary key,
+    "title" VARCHAR (50) NOT NULL,
+    "deckription" VARCHAR (50) NOT NULL,
+    "image" text,
+     "admin_id" integer,
+   "time_create" timestamp default current_timestamp not null,
+	"time_update" timestamp default current_timestamp not null
+)
