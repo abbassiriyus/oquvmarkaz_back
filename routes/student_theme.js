@@ -17,7 +17,7 @@ router.get("/student_theme", (req, res) => {
     })
 })
 
-router.get('/student_theme/:id', (req, res) => {
+router.get('/student_theme/:id',ensureToken, (req, res) => {
     
     pool.query("SELECT * FROM student_theme where id=$1", [req.params.id], (err, result) => {
         if (!err) {
@@ -29,7 +29,7 @@ router.get('/student_theme/:id', (req, res) => {
 })
 
 
-router.post("/student_theme",ensureTokenSuper, (req, res) => {
+router.post("/student_theme",ensureToken, (req, res) => {
     const body = req.body;
         pool.query('INSERT INTO student_theme (student_id,theme_id,complate) VALUES ($1,$2,$3) RETURNING *',
         [body.student_id,body.theme_id,body.complate],
@@ -42,7 +42,7 @@ router.post("/student_theme",ensureTokenSuper, (req, res) => {
         });
 });
 
-router.delete("/student_theme/:id",ensureTokenSuper, (req, res) => {
+router.delete("/student_theme/:id",ensureToken, (req, res) => {
     const id = req.params.id
     pool.query('DELETE FROM student_theme WHERE id = $1', [id], (err, result) => {
         if (err) {
@@ -52,7 +52,7 @@ router.delete("/student_theme/:id",ensureTokenSuper, (req, res) => {
         }
     })
 })
-router.put("/student_theme/:id",ensureTokenSuper, (req, res) => {
+router.put("/student_theme/:id",ensureToken, (req, res) => {
     const id = req.params.id
     const body = req.body
     pool.query(
