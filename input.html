@@ -170,7 +170,6 @@ auth yoq shuni oldiga linkni bersang boldi
 
 <p>adminga dostupla berish uchun tablitsa  <pre> 
   "user_id" integer not null,
-
   UNIQUE("user_id"),
   "diogram_get" boolean default false not null,
   "alluser_get" boolean default false not null,
@@ -239,6 +238,21 @@ auth yoq shuni oldiga linkni bersang boldi
   "notification_delete" boolean default false not null,
   "notification_put" boolean default false not null,
   "get_pay" boolean default false not null,
+  
+  "servis_get" boolean default false not null,
+  "servis_post" boolean default false not null,
+  "servis_delete" boolean default false not null,
+  "servis_put" boolean default false not null,
+  "homiy_get" boolean default false not null,
+  "homiy_post" boolean default false not null,
+  "homiy_delete" boolean default false not null,
+  "homiy_put" boolean default false not null,
+ "sertifikat_get" boolean default false not null,
+  "sertifikat_post" boolean default false not null,
+  "sertifikat_delete" boolean default false not null,
+  "sertifikat_put" boolean default false not null,
+  "create_video" boolean default false not null,
+  "pomish" boolean default false not null,
 </pre>
   <sup>GET,GET(id),POST,PUT(id),DELETE(id)</sup>
 </p>
