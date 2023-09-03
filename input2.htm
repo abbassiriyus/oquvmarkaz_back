@@ -91,7 +91,7 @@
       </pre><sup>GET,GET(id),post,PUT(id),DELETE(id)</sup></p>
       <hr>
 <a href="/sertificat_course/users/:id" >/sertificat_course/users/:id</a>
-<p>registerCourse idsi yuboriladi va Student_sertificat shu apidan getv id qib student id berilsa uni sertifgikati keb chiqadi</p>
+<p>registerCourse idsi yuboriladi va studentga sertificat tayyorlaydi.agar kursni 100% tamomlab oldin bu register kursga sertifikat olmagan bolsa</p>
 <hr>
 <a href="/edu/Student_sertificat">/edu/student_sertificat</a>
 <pre> "file" TEXT NOT NULL, 
@@ -103,6 +103,8 @@
 
 <p> sertifikatla olingan serifikatni /sertificat_course/users/:id shu apiga get soriv yuborish orqali oladi registerCourse finishing false va completed_themes 100% bolsa ola oladi holos <sup>GET</sup></p>
 <hr>
+<a href="/edu/Student_sertificat">/edu/student_sertificat</a>
+<p>get id qilinsa studentni idsi berilib studentni sertificatini chiqaradi</p>
 <hr>
 <a href="/edu/sertificat">/edu/sertificat</a>
 <pre>   "file" TEXT NOT NULL,

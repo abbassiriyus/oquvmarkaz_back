@@ -153,7 +153,7 @@ const buf = doc.getZip().generate({
 var name_file=Date.now()
 fs.writeFileSync(path.resolve(__dirname, `./sertifikat/${name_file}.docx`), buf);
 pool.query(
-    'UPDATE registerCourse SET finishing=$1    WHERE id = $2',
+    'UPDATE registerCourse SET finishing=$1 WHERE id = $2',
     [true,req.params.id ],
     (err, result) => {
         if (err) {
