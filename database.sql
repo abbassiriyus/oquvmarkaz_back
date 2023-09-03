@@ -387,3 +387,11 @@ CREATE TABLE admin(
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null   
 )
+CREATE TABLE Servis(
+   "id" serial primary key,
+    "title" VARCHAR (50) NOT NULL,
+    "description" VARCHAR (50) NOT NULL,
+    "image" text,
+   "time_create" timestamp default current_timestamp not null,
+	"time_update" timestamp default current_timestamp not null
+)

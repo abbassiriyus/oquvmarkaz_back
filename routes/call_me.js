@@ -31,8 +31,8 @@ router.get('/call_me/:id', (req, res) => {
 
 router.post("/call_me", (req, res) => {
     const body = req.body;
-        pool.query('INSERT INTO call_me (fullname,email,message,purchase) VALUES ($1,$2,$3,$4) RETURNING *',
-        [body.fullname,body.email,body.message,body.purchase],
+        pool.query('INSERT INTO call_me (fullname,email,message,city,phone,which_lesson,purchase) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *',
+        [body.fullname,body.email,body.message,body.city,body.phone,body.which_lesson,body.purchase],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
@@ -56,8 +56,8 @@ router.put("/call_me/:id", (req, res) => {
     const id = req.params.id
     const body = req.body
     pool.query(
-        'UPDATE call_me SET fullname=$1,email=$2,message=$3,purchase=$4 WHERE id = $5',
-        [body.fullname,body.email,body.message,body.purchase,id ],
+        'UPDATE call_me SET fullname=$1,email=$2,message=$3,city=$4,phone=$5,which_lesson=$6,purchase=$7 WHERE id = $8',
+        [body.fullname,body.email,body.message,body.city,body.phone,body.which_lesson,body.purchase,id ],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)
