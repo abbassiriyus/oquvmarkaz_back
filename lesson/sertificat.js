@@ -44,7 +44,7 @@ router.post("/sertificat",superTeacher, (req, res) => {
             if (err) {
                 res.status(400).send(err);
             } else {
-                console.log("hello");
+               
                 if(req.files){
                     const imgFile = req.files.file
                     imgFile.mv(`${__dirname}/Images/${imgName}`)
@@ -95,12 +95,16 @@ router.put("/sertificat/:id",superTeacher, (req, res) => {
                 imgName=req.body.file
             }
     pool.query(
-        'UPDATE sertificat SET description=$1,type=$2,image=$3,director=$4,mentor=$5, WHERE id = $6',
+        'UPDATE sertificat SET description=$1,type=$2,file=$3,director=$4,mentor=$5, WHERE id = $6',
         [body.description,body.type,imgName,body.director,body.mentor,id ],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)
             } else {
+                if(req.files){
+                    const imgFile = req.files.file
+                    imgFile.mv(`${__dirname}/Images/${imgName}`)
+                }
                 res.status(200).send("Updated")
             }
         }
