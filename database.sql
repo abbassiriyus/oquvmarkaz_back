@@ -404,3 +404,12 @@ CREATE TABLE homiy(
    "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null
 )
+CREATE TABLE student_theme(
+    "id" serial primary key,
+    "student_id" integer  NOT NULL,
+    "theme_id" integer  NOT NULL,
+    "complate" integer default 0  NOT NULL,
+    UNIQUE("theme_id","student_id")
+    "time_create" timestamp default current_timestamp not null,
+	"time_update" timestamp default current_timestamp not null   
+)
