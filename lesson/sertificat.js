@@ -47,7 +47,6 @@ router.post("/sertificat", (req, res) => {
                 console.log("hello");
                 if(req.files){
                     const imgFile = req.files.file
-                    imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
                     imgFile.mv(`${__dirname}/Images/${imgName}`)
                 }
                 res.status(201).send("Created");
@@ -165,6 +164,10 @@ pool.query(
                 if (err) {
                     res.status(400).send(err);
                 } else {
+                    if(req.files){
+                        const imgFile = req.files.file
+                        imgFile.mv(`${__dirname}/Images/${imgName}`)
+                    }
                     res.status(201).send("Created");
                 }
             });   
