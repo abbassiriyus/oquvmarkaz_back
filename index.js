@@ -36,6 +36,8 @@ const university=require('./routes/university.js')
 const servis=require('./routes/servis.js')
 
 const payment=require('./routes/payment.js')
+const student_theme=require('./routes/student_theme.js')
+
 const admin=require('./routes/admin.js')
 const paymentconfig=require('./paymentconfig.js')
 // edu
@@ -175,6 +177,7 @@ app.get('/', function(req, res) {
  app.use("/api",notification)
  app.use("/api",university)
  app.use("/api",servis)
+ app.use("/api",student_theme)
 
  app.use("/pay",payment)
 
