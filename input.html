@@ -269,5 +269,14 @@ auth yoq shuni oldiga linkni bersang boldi
 <p>prosta get shunda oqilgan bo`ladi</p>
 <sup>GET</sup>
 <hr>
+<h1>api/student_theme/</h1>
+<p>video complate</p>
+<pre> 
+   "student_id" integer  NOT NULL,
+  "theme_id" integer  NOT NULL,
+  "complate" integer default 0  NOT NULL,
+  UNIQUE("theme_id","student_id")
+</pre>
+<sup>GET,GET(id),POST,PUT(id),DELETE(id)</sup>
 </body>
 </html>
