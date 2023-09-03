@@ -36,6 +36,8 @@ const university=require('./routes/university.js')
 const servis=require('./routes/servis.js')
 
 const payment=require('./routes/payment.js')
+const homiy=require('./routes/homiy.js')
+
 const student_theme=require('./routes/student_theme.js')
 
 const admin=require('./routes/admin.js')
@@ -162,6 +164,9 @@ app.get('/', function(req, res) {
 
 
  app.use("/api" ,cours_types)
+ app.use("/api" ,cours_types)
+ app.use("/api" ,homiy)
+
  app.use("/api" ,course)
  app.use("/api",course_theme_task)
  app.use("/api",course_data_category)
