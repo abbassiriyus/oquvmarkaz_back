@@ -33,6 +33,8 @@ const notification=require('./routes/notification.js')
 const registerCourse=require('./routes/registerCourse.js')
 const help_category=require('./routes/help_category.js')
 const university=require('./routes/university.js')
+const servis=require('./routes/servis.js')
+
 const payment=require('./routes/payment.js')
 const admin=require('./routes/admin.js')
 const paymentconfig=require('./paymentconfig.js')
@@ -172,6 +174,8 @@ app.get('/', function(req, res) {
  app.use("/api",help_category)
  app.use("/api",notification)
  app.use("/api",university)
+ app.use("/api",servis)
+
  app.use("/pay",payment)
 
 
