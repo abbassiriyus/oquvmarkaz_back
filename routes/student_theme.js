@@ -67,5 +67,19 @@ router.put("/student_theme/:id",ensureToken, (req, res) => {
         }
     )
 })
-
+router.put("/student_theme/complate/:id",ensureToken, (req, res) => {
+    const id = req.params.id
+    const body = req.body
+    pool.query(
+        'UPDATE student_theme SET complate=$1  WHERE id = $2',
+        [body.complate,id ],
+        (err, result) => {
+            if (err) {
+                res.status(400).send(err)
+            } else {
+                res.status(200).send("Updated")
+            }
+        }
+    )
+})
 module.exports = router;
