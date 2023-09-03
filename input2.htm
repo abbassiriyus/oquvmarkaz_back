@@ -94,7 +94,23 @@
 <p>registerCourse idsi yuboriladi va Student_sertificat shu apidan getv id qib student id berilsa uni sertifgikati keb chiqadi</p>
 <hr>
 <a href="/edu/Student_sertificat">/edu/student_sertificat</a>
-<p> sertifikatla olingan <sup>GET,GET(id),post,PUT(id),DELETE(id)</sup></p>
+<pre> "file" TEXT NOT NULL, 
+  "image" TEXT,
+  "title" varchar(50) NOT NULL,
+  "description" TEXT,
+  "sertificat_id" integer NOT NULL,
+  "student_id" integer NOT NULL,</pre>
+
+<p> sertifikatla olingan serifikatni /sertificat_course/users/:id shu apiga get soriv yuborish orqali oladi registerCourse finishing false va completed_themes 100% bolsa ola oladi holos <sup>GET</sup></p>
+<hr>
+<hr>
+<a href="/edu/sertificat">/edu/sertificat</a>
+<pre>   "file" TEXT NOT NULL,
+  "description" TEXT NOT NULL,
+  "type" VARCHAR(50) NOT NULL,
+  "director" VARCHAR(70) NOT NULL,
+  "mentor" VARCHAR(70) not NULL,</pre>
+<p>sertifikat dizayni <sup>GET,GET(id),post,PUT(id),DELETE(id)</sup></p>
 <hr>
 <p></p>
 </body>

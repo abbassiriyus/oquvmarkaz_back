@@ -126,7 +126,19 @@ font-size: 12px;
 <hr>
 <h1>api/call_me</h1>
 <p>zayafka uchun kasbini o`zgartirish uchun zayafka qoldiradi {sababi-purchase}</p><sup>GET,GET(id),POST,PUT(id),DELETE(id)</sup>
-<span>{fullname,email,message,purchase}</span>
+<span>{ "fullname" VARCHAR(120) NOT NULL,
+  "email" VARCHAR(50),
+  "message" TEXT,
+  "city" VARCHAR(120),
+  "phone" varchar(30),
+  "which_lesson"  varchar(100),
+  "purchase" TEXT,}</span>
+<hr>
+<hr>
+<h1>api/purchase</h1>
+<p></p><sup>GET,GET(id),POST,PUT(id),DELETE(id)</sup>
+<span>{"title" TEXT not null}</span>
+<hr>
 <hr>
 <h1>/call_me/read/:id</h1>GET
 <p>habarni super admin oqiganini tasdiqlab qoyishioo uchun</p>
