@@ -50,7 +50,46 @@ router.get('/course_theme_comment/:id', (req, res) => {
     })
 })
 
+router.get('/course_theme_comment/task/:id', (req, res) => {
+    pool.query("SELECT * FROM course_theme_comment where theme=$1", [req.params.id], (err, result1) => {
+        if (!err) {     
+    pool.query("SELECT id,image,username FROM users", (err, result) => {
+        if (!err){
+           var a=result1.rows
+           var b=result.rows
+               for(let i = 0; i < a.length; i++) {
+                for (let j = 0; j < b.length; j++) {
+                if(a[i].user_id==b[j].id){
+                    a[i].oneuser=b[j]
+                 }
+                }}
+        var comment=a.filter(item=>item.task_commnet_id!==0)
+   pool.query("SELECT * FROM course_theme_task_student where course_theme=$1", [req.params.id], (err, result12) => {
+                if (!err) {
+for (let i = 0; i < comment.length; i++) {
+    comment[i].mark=0
+  for (let j = 0; j < result12.rows.length; j++) {
+ if(comment[i].id==result12.rows[j].feedback){
+    comment[i].mark=result12.rows[j].mark
+ }
+  }   
+}   
 
+
+res.status(200).send(comment)
+
+                } else {
+                    res.status(400).send(err)
+                }
+            })
+      
+                    }
+                 })
+          } else {
+            res.status(400).send(err)
+          }
+    })
+})
 router.post("/course_theme_comment", (req, res) => {
     const body = req.body;
     var imgName="";
