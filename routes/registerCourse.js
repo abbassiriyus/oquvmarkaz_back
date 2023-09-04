@@ -27,7 +27,37 @@ router.get('/super/registerCourse/:id', (req, res) => {
         }
     })
 })
+router.get('/complate/registerCourse/:id', (req, res) => {
+    
+    pool.query("SELECT * FROM registerCourse where id=$1", [req.params.id], (err, result) => {
+        if (!err && result.rows.length==1) {
+            pool.query("SELECT * FROM student_theme", (err, result1) => {
+                if (!err) {
+        var a=result1.rows.filter(item=>item.student_id==result.rows[0].users)
+        var data=0
+        var data0=a.length
+          for (let i= 0; i< a.length; i++) {
+         data=a[i].complate+data
+          }
+         if(data==0){
+       var send=0
+         }else{
+       var send=data/data0
+         }
+          result.rows[0].completed_themes=send
+          res.status(200).send(result.rows)
+                } else {
+                    res.send(err)
+                }
+            })
 
+
+           
+        } else {
+            res.status(400).send(err)
+        }
+    })
+})
 router.post("/super/registerCourse",ensureTokenSuper, (req, res) => {
     const body = req.body;
         pool.query('INSERT INTO registerCourse (course,total_mark,completed_themes,rating,users) VALUES ($1,$2,$3,$4,$5) RETURNING *',

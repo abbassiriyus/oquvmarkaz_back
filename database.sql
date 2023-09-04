@@ -50,7 +50,7 @@ CREATE TABLE "verify"(
     "rating" integer default 4  NOT NULL,
     "users" integer NOT NULL,
     "finishing" boolean default false NOT NULL,
-     UNIQUE (users, course),
+     UNIQUE ("users", "course"),
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null   
  )
