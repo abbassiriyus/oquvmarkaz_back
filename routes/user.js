@@ -243,7 +243,10 @@ router.get('/allusers',ensureToken, function(req, res) {
          })
  });
 // get teacher 
-router.get('/teachers', function(req, res) {
+router.get('/teachers'
+
+
+, function(req, res) {
     pool.query("SELECT * FROM users", (err, result) => {
         if (!err) {
            var a=result.rows.filter(item=>item.position==2)
