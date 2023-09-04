@@ -31,7 +31,7 @@ router.get('/course_theme_comment/:id', (req, res) => {
                 }}
         var comment=a.filter(item=>item.subcomment==0&&item.task_commnet_id==0)
         var subcomment=a.filter(item=>item.subcomment!=0)
-        console.log(subcomment);
+       
         for (let i = 0; i < comment.length; i++) {
          comment[i].message=[]
             for (let j = 0; j < subcomment.length; j++) {
@@ -118,7 +118,6 @@ router.post("/course_theme_comment", (req, res) => {
 router.delete("/course_theme_comment/:id", (req, res) => {
     const id = req.params.id
     pool.query("SELECT * FROM course_theme_comment where id=$1", [req.params.id], (err, result1) => {
-        console.log(result1.rows);
      if (!err && result1.rows.length>0) {
             if(result1.rows[0] && result1.rows[0].image){
               fs.unlink(`./Images/${result1.rows[0].image}`,()=>{})   
