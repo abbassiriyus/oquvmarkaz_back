@@ -16,6 +16,17 @@ var {ensureToken,ensureToken,ensureTokenTeacher,superTeacher }=require("../token
      })
    })
 
+   router.get('/course_theme_comment/subcomment/:id', (req, res) => {
+    
+    pool.query("SELECT * FROM course_theme_comment where subcomment=$1", [req.params.id], (err, result) => {
+        if (!err) {
+            res.status(200).send(result.rows)
+        } else {
+            res.status(400).send(err)
+        }
+    })
+})
+
 router.get('/course_theme_comment/:id', (req, res) => {
     pool.query("SELECT * FROM course_theme_comment where theme=$1", [req.params.id], (err, result1) => {
         if (!err) {     
