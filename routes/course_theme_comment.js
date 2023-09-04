@@ -18,12 +18,24 @@ var {ensureToken,ensureToken,ensureTokenTeacher,superTeacher }=require("../token
 
    router.get('/course_theme_comment/subcomment/:id', (req, res) => {
     
-    pool.query("SELECT * FROM course_theme_comment where subcomment=$1", [req.params.id], (err, result) => {
-        if (!err) {
-            res.status(200).send(result.rows)
-        } else {
+    pool.query("SELECT * FROM course_theme_comment where subcomment=$1", [req.params.id], (err, result1) => {
+        if (!err) {     
+    pool.query("SELECT id,image,username FROM users", (err, result) => {
+        if (!err){
+           var a=result1.rows
+           var b=result.rows
+               for(let i = 0; i < a.length; i++) {
+                for (let j = 0; j < b.length; j++) {
+                if(a[i].user_id==b[j].id){
+                    a[i].oneuser=b[j]
+                 }
+                }}
+                res.status(200).send(a)
+                    }
+                 })
+          } else {
             res.status(400).send(err)
-        }
+          }
     })
 })
 
