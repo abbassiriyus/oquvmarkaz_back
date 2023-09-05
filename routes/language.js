@@ -16,6 +16,21 @@ router.get("/language", (req, res) => {
         }
     })
 })
+router.get("/language/mass", (req, res) => {   
+    pool.query("SELECT * FROM language", (err, result) => {
+        if (!err) {
+ var massiv=[]
+            for (let i = 0; i < result.rows.length; i++) {
+ massiv.push(result.rows[i])
+    
+ }
+            res.status(200).send(massiv)
+
+        } else {
+            res.send(err)
+        }
+    })
+})
 
 router.get('/language/:id', (req, res) => {
     
