@@ -19,7 +19,7 @@ router.get("/university", (req, res) => {
 
 router.get('/university/:id', (req, res) => {
     
-    pool.query("SELECT * FROM university where id=$1", [req.params.id], (err, result) => {
+    pool.query("SELECT * FROM course where homiy_id=$1", [req.params.id], (err, result) => {
         if (!err) {
             res.status(200).send(result.rows)
         } else {
