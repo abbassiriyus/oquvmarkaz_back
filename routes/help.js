@@ -39,7 +39,7 @@ router.post("/help",ensureTokenSuper, (req, res) => {
         imgName=req.body.image
     }
         pool.query('INSERT INTO help (title,description,image) VALUES ($1,$2,$3) RETURNING *',
-        [body.title,body.description,imgName],
+        [body.title,body.description,`https:${req.hostname}/${imgName}`],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);

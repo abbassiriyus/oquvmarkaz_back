@@ -39,7 +39,7 @@ router.post("/course_theme_task",ensureToken, (req, res) => {
         imgName=req.body.image
     }
         pool.query('INSERT INTO course_theme_task (content,course_theme,image) VALUES ($1,$2,$3) RETURNING *',
-        [body.content,body.course_theme,imgName],
+        [body.content,body.course_theme,`https:${req.hostname}/${imgName}`],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);

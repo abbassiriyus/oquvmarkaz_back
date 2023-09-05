@@ -40,7 +40,7 @@ router.post("/servis", (req, res) => {
         imgName=req.body.image
     }
         pool.query('INSERT INTO servis (title,deckription,image) VALUES ($1,$2,$3) RETURNING *',
-        [body.title,body.deckription,imgName],
+        [body.title,body.deckription,`https:${req.hostname}/${imgName}`],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);

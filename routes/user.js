@@ -390,8 +390,8 @@ router.post("/users",ensureTokenSuper, (req, res) => {
     }else{
         imgName=req.body.image
     }
-    pool.query('INSERT INTO users (address, description, email, last_name, password, phone_number, username, position,image) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *',
-    [ body.address,body.description, body.email, body.last_name, body.password, body.phone_number, body.username, body.position,imgName],
+    pool.query('INSERT INTO users (address, description, email, last_name, password, phone_number, username, position,image,youtobe,telegrem,instagram) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9,$10,$11,$12) RETURNING *',
+    [ body.address,body.description, body.email, body.last_name, body.password, body.phone_number, body.username, body.position,`https:${req.hostname}/${imgName}`,body.youtobe,body.telegrem,body.instagram],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
@@ -448,8 +448,8 @@ if(req.files){
 }else{
      imgName = req.body.image
 }
-    pool.query('UPDATE users SET address = $1,balance=$2,description=$3,email=$4, image=$5,last_name=$6,password=$7,phone_number=$8,username=$9,position=$10 WHERE id = $11',
-        [body.address, body.balance, body.description, body.email,`https:${req.hostname}/${imgName}`,body.last_name,body.password,body.phone_number,body.username,body.position, id],
+    pool.query('UPDATE users SET address = $1,balance=$2,description=$3,email=$4, image=$5,last_name=$6,password=$7,phone_number=$8,username=$9,position=$10,youtobe=$11,telegram=$12,instagram=$13 WHERE id = $14',
+        [body.address, body.balance, body.description, body.email,`https:${req.hostname}/${imgName}`,body.last_name,body.password,body.phone_number,body.username,body.position,body.youtobe,body.telegram,body.instagram,id],
         (err, result) => {
             if (err) {
                 console.log("oddiy xato");

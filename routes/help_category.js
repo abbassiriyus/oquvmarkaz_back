@@ -39,7 +39,7 @@ router.post("/help_category", (req, res) => {
         imgName=req.body.image
     }
         pool.query('INSERT INTO help_category (name,image) VALUES ($1,$2) RETURNING *',
-        [body.name,imgName],
+        [body.name,`https:${req.hostname}/${imgName}`],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
