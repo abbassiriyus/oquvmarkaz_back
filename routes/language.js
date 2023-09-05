@@ -21,7 +21,7 @@ router.get("/language/mass", (req, res) => {
         if (!err) {
  var massiv=[]
             for (let i = 0; i < result.rows.length; i++) {
- massiv.push(result.rows[i])
+ massiv.push(result.rows[i].lg)
     
  }
             res.status(200).send(massiv)
