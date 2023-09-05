@@ -10,7 +10,7 @@ const { hostname } = require('os');
 router.get("/company", (req, res) => {   
     pool.query("SELECT * FROM company", (err, result) => {
         if (!err) {
-console.log(req.hostname);
+
             res.status(200).send(result.rows)
 
         } else {
@@ -41,7 +41,7 @@ router.post("/company",ensureToken, (req, res) => {
         imgName=req.body.image
     }
         pool.query('INSERT INTO company (email,twiter,image,call_me,whatsapp,address) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *',
-        [body.email,body.twiter,imgName,body.call_me,body.whatsapp,body.address],
+        [body.email,body.twiter,req.hostname+imgName,body.call_me,body.whatsapp,body.address],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
