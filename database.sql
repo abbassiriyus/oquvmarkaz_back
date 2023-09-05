@@ -45,14 +45,14 @@ CREATE TABLE "verify"(
     "id" serial primary key,
     "course" integer  NOT NULL,
     "total_mark" integer default 0 NOT NULL,
-    "propose_time" timestamp default current_timestamp not null,
+    "propose_time" timestamp default current_timestamp NOT NULL,
     "completed_themes" VARCHAR(50) default 0% NOT NULL,
     "rating" integer default 4  NOT NULL,
     "users" integer NOT NULL,
     "finishing" boolean default false NOT NULL,
      UNIQUE ("users", "course"),
-    "time_create" timestamp default current_timestamp not null,
-	"time_update" timestamp default current_timestamp not null   
+    "time_create" timestamp default current_timestamp NOT NULL,
+	"time_update" timestamp default current_timestamp NOT NULL   
  )
 CREATE TABLE course (
     "id" serial primary key,
@@ -417,4 +417,38 @@ CREATE TABLE student_theme(
     UNIQUE("theme_id","student_id")
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null   
+)
+
+
+
+
+CREATE TABLE operator(
+    "id" serial primary key,
+    "image" TEXT,
+    "name" varchar(50),
+    "description" text,
+    "email" VARCHAR(50),
+   "twiter" VARCHAR(50),
+   "call_me" VARCHAR(50),
+   "whatsapp" VARCHAR(50),
+   "time_create" timestamp default current_timestamp not null,
+	"time_update" timestamp default current_timestamp not null   
+)
+CREATE TABLE operator_work(
+    "id" serial primary key,
+    "opertor_id" integer NOT NULL,
+    "title" VARCHAR(50)  NOT NULL,
+    "time_create" timestamp default current_timestamp not null,
+	"time_update" timestamp default current_timestamp not null     
+)
+CREATE TABLE company(
+"id" serial primary key,
+     "image" TEXT,
+    "email" VARCHAR(50),
+   "twiter" VARCHAR(50),
+   "call_me" VARCHAR(50),
+   "whatsapp" VARCHAR(50),
+   "address" varchar (50)
+    "time_create" timestamp default current_timestamp not null,
+	"time_update" timestamp default current_timestamp not null 
 )
