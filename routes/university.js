@@ -18,14 +18,27 @@ router.get("/university", (req, res) => {
 })
 
 router.get('/university/:id', (req, res) => {
-    
-    pool.query("SELECT * FROM course where homiy_id=$1", [req.params.id], (err, result) => {
-        if (!err) {
-            res.status(200).send(result.rows)
+
+    pool.query("SELECT * FROM course where homiy_id=$1",[req.params.id],(err1, result1) => {
+        if (!err1) { 
+         pool.query("SELECT id,rating,course FROM registerCourse",(err,result)=>{
+            if(!err){
+     for (let i = 0; i < result1.rows.length; i++) {
+      var a=0
+      var b=0
+    for (let j = 0; j < result.rows.length; j++) {
+       if(result1.rows[i].id==result.rows[j].course){
+       a=a+result.rows[j].rating
+       b++
+       }
+    }
+    result1.rows[i].star=a/b
+    } res.status(200).send(result1.rows)}})
         } else {
-            res.status(400).send(err)
+            res.status(400).send(err1)
         }
     })
+
 })
 
 
