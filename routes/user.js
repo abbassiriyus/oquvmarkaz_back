@@ -207,6 +207,9 @@ router.get('/students',ensureToken, function(req, res) {
                     image:item.image,
                     description:item.description,
                     address:item.address,
+                    youtobe:item.youtobe,
+                    telegram:item.telegram,
+                    instagram:item.instagram,
                     date_joined:item.date_joined,
                 })
                })
@@ -233,6 +236,10 @@ router.get('/allusers',ensureToken, function(req, res) {
                      image:item.image,
                      description:item.description,
                      address:item.address,
+                     youtobe:item.youtobe,
+                     telegram:item.telegram,
+                     instagram:item.instagram,
+
                      date_joined:item.date_joined,
                  })
                 })
@@ -261,6 +268,9 @@ router.get('/teachers'
                 image:item.image,
                 description:item.description,
                 address:item.address,
+                youtobe:item.youtobe,
+                telegram:item.telegram,
+                instagram:item.instagram,
                 date_joined:item.date_joined,
             })
            })
