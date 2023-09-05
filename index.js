@@ -44,6 +44,8 @@ const operator_work=require('./routes/operator_work.js')
 const company=require('./routes/company.js')
 
 const student_theme=require('./routes/student_theme.js')
+const language=require('./routes/language.js')
+
 
 
 const admin=require('./routes/admin.js')
@@ -172,6 +174,9 @@ app.get('/', function(req, res) {
  app.use("/api" ,cours_types)
  app.use("/api" ,cours_types)
  app.use("/api" ,homiy)
+ app.use("/api" ,homiy)
+ app.use("/api" ,language)
+
 
  app.use("/api" ,course)
  app.use("/api",course_theme_task)

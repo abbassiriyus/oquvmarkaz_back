@@ -32,19 +32,29 @@ router.get('/university/:id', (req, res) => {
 router.post("/university", (req, res) => {
     const body = req.body;
     var imgName="";
-    if(req.files){
+    if(req.files &&req.files.image){
         const imgFile = req.files.image
          imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
     }else{
         imgName=req.body.image
     }
-        pool.query('INSERT INTO university (title,deckription,image) VALUES ($1,$2,$3) RETURNING *',
-        [body.title,body.deckription,imgName],
+    if(req.files && req.files.logo){
+        const logoFile = req.files.logo
+         logoName = Date.now()+logoFile.name.slice(logoFile.name.lastIndexOf('.'))
+    }else{
+        logoName=req.body.logo
+    }
+        pool.query('INSERT INTO university (title,deckription,image,logo) VALUES ($1,$2,$3,$4) RETURNING *',
+        [body.title,body.deckription,imgName,logoName],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
             } else {
-                if(req.files){
+                if(req.files && req.files.logo){
+                    const logoFile = req.files.image
+                    logoFile.mv(`${__dirname}/Images/${logoName}`)
+                }
+                if(req.files&&req.files.image){
                     const imgFile = req.files.image
                     imgFile.mv(`${__dirname}/Images/${imgName}`)
                 }
@@ -95,8 +105,8 @@ router.put("/university/:id",ensureToken, (req, res) => {
                 imgName=req.body.image
             }
     pool.query(
-        'UPDATE university SET title=$1,deckription=$2,image=$3 WHERE id = $4',
-        [body.title,body.deckription,`https:${req.hostname}/${imgName}`,id ],
+        'UPDATE university SET title=$1,deckription=$2,image=$3,logo WHERE id = $4',
+        [body.title,body.deckription,`https:${req.hostname}/${imgName}`,`https:${req.hostname}/${logoName}`,id ],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)
