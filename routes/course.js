@@ -51,8 +51,8 @@ router.post("/course",superTeacher, (req, res) => {
         imgName=req.body.image
     }
     console.log("sdds");
-    pool.query('INSERT INTO course (name,description,price,planned_time,course_type,author,image) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *',
-        [body.name,body.description,body.price,body.planned_time,body.course_type,body.author,imgName],
+    pool.query('INSERT INTO course (name,description,price,planned_time,course_type,author,image,homiy_id) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *',
+        [body.name,body.description,body.price,body.planned_time,body.course_type,body.author,`https:${req.hostname}/${imgName}`,body.homiy_id],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
@@ -122,8 +122,8 @@ router.put("/course/:id",superTeacher, (req, res) => {
 
     var imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
     pool.query(
-        'UPDATE course SET name=$1,description=$2,price=$3,planned_time=$4,course_type=$5,author=$6,image=$7 WHERE id = $8',
-        [body.name, body.description,body.price,body.planned_time,body.course_type,body.author,`https:${req.hostname}/${imgName}`,id ],
+        'UPDATE course SET name=$1,description=$2,price=$3,planned_time=$4,course_type=$5,author=$6,image=$7,homiy_id=$8 WHERE id = $9',
+        [body.name, body.description,body.price,body.planned_time,body.course_type,body.author,`https:${req.hostname}/${imgName}`,body.homiy_id,id ],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)

@@ -59,6 +59,7 @@ CREATE TABLE course (
     "name" VARCHAR (50) NOT NULL,
     "description" VARCHAR (50) NOT NULL,
     "price" integer NOT NULL,
+    "homiy_id" integer,
     "planned_time" integer NOT NULL,
     "course_type" integer NOT NULL,
     "author" integer NOT NULL,

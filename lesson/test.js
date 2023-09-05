@@ -46,7 +46,7 @@ var a=year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seco
         var test=[]
     for (let i = 0; i < result1.rows.length; i++) {
         for (let j = 0; j < result2.rows.length; j++) {
-    if((result1.rows[i].education_id==result2.rows[j].education_id)&&(result2.rows[j].day).getDate()==date&&(result2.rows[j].day).getFullYear()==year&&(result2.rows[j].day).getMonth()==month){
+    if((result1.rows[i].education_id==result2.rows[j].education_id)&&(result2.rows[j].day).getDate()==date&&(result2.rows[j].day).getFullYear()==year&&(result2.rows[j].day).getMonth()==month&&`${result2.rows[j].start_time}`.slice(0,2)<hours&&`${result2.rows[j].end_time}`.slice(0,2)>hours){
         test.push(result2.rows[j])
        }}}
        res.status(200).send(test)
