@@ -92,7 +92,7 @@ router.put("/course_theme_task/:id",ensureToken, (req, res) => {
             }
     pool.query(
         'UPDATE course_theme_task SET content=$1,course_theme=$2,image=$3 WHERE id = $4',
-        [body.content,body.course_theme,imgName,id ],
+        [body.content,body.course_theme,`https:${req.hostname}/${imgName}`,id ],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)

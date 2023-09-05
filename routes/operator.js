@@ -39,7 +39,7 @@ router.post("/operator",ensureToken, (req, res) => {
         imgName=req.body.image
     }
         pool.query('INSERT INTO operator (email,twiter,image,call_me,whatsapp,name,description) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *',
-        [body.email,body.twiter,imgName,body.call_me,body.whatsapp,body.name,body.description],
+        [body.email,body.twiter,`https:${req.hostname}/${imgName}`,body.call_me,body.whatsapp,body.name,body.description],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
@@ -92,7 +92,7 @@ router.put("/operator/:id",ensureToken, (req, res) => {
             }
     pool.query(
         'UPDATE operator SET email=$1,twiter=$2,image=$3,call_me=$4,whatsapp=$5,name=$6,description=$7 WHERE id=$8',
-        [body.email,body.twiter,imgName,body.call_me,body.whatsapp,body.name,body.description, id ],
+        [body.email,body.twiter,`https:${req.hostname}/${imgName}`,body.call_me,body.whatsapp,body.name,body.description, id ],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)

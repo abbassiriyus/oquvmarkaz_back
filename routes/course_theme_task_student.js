@@ -39,7 +39,7 @@ router.post("/course_theme_task_student",ensureToken, (req, res) => {
         imgName=req.body.image
     }
         pool.query('INSERT INTO course_theme_task_student (content,course_theme,image,feedback,mark) VALUES ($1,$2,$3,$4,$5) RETURNING *',
-        [body.content,body.course_theme,imgName,body.feedback,body.mark],
+        [body.content,body.course_theme,`https:${req.hostname}/${imgName}`,body.feedback,body.mark],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
@@ -92,7 +92,7 @@ router.put("/course_theme_task_student/:id",ensureToken, (req, res) => {
             }
     pool.query(
         'UPDATE course_theme_task_student SET content=$1,course_theme=$2,image=$3,feedback=$4,mark=$5 WHERE id=$6',
-        [body.content,body.course_theme,imgName,body.feedback,body.mark,id ],
+        [body.content,body.course_theme,`https:${req.hostname}/${imgName}`,body.feedback,body.mark,id ],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)

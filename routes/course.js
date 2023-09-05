@@ -123,7 +123,7 @@ router.put("/course/:id",superTeacher, (req, res) => {
     var imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
     pool.query(
         'UPDATE course SET name=$1,description=$2,price=$3,planned_time=$4,course_type=$5,author=$6,image=$7 WHERE id = $8',
-        [body.name, body.description,body.price,body.planned_time,body.course_type,body.author,imgName,id ],
+        [body.name, body.description,body.price,body.planned_time,body.course_type,body.author,`https:${req.hostname}/${imgName}`,id ],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)

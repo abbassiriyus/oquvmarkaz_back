@@ -55,7 +55,7 @@ router.put("/student_sertificat/:id", (req, res) => {
             }
     pool.query(
         'UPDATE Student_sertificat SET title=$1,description=$2,image=$3 WHERE id = $4',
-        [body.title,body.description,imgName,id ],
+        [body.title,body.description,`https:${req.hostname}/${imgName}`,id ],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)

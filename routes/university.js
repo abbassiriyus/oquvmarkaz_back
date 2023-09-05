@@ -96,7 +96,7 @@ router.put("/university/:id",ensureToken, (req, res) => {
             }
     pool.query(
         'UPDATE university SET title=$1,deckription=$2,image=$3 WHERE id = $4',
-        [body.title,body.deckription,imgName,id ],
+        [body.title,body.deckription,`https:${req.hostname}/${imgName}`,id ],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)

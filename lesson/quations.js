@@ -40,7 +40,7 @@ router.post("/quations", (req, res) => {
         imgName=req.body.image
     }
     pool.query('INSERT INTO quations (question,answer,image,variant1,variant2,variant3,variant4,test_id) VALUES ($1 ,$2 ,$3 ,$4 ,$5,$6,$7,$8 ) RETURNING *',
-        [body.question,body.answer,imgName,body.variant1,body.variant2,body.variant3,body.variant4,body.test_id],
+        [body.question,body.answer,`https:${req.hostname}/${imgName}`,body.variant1,body.variant2,body.variant3,body.variant4,body.test_id],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
@@ -96,7 +96,7 @@ router.put("/quations/:id",ensureToken, (req, res) => {
             }
     pool.query(
         'UPDATE quations SET question=$1,answer=$2,image=$3,variant1=$4,variant2=$5,variant3=$6,variant4=$7,test_id=$8 WHERE id=$9',
-        [body.question,body.answer,imgName,body.variant1,body.variant2,body.variant3,body.variant4,body.test_id,id ],
+        [body.question,body.answer,`https:${req.hostname}/${imgName}`,body.variant1,body.variant2,body.variant3,body.variant4,body.test_id,id ],
         (err, result) => {
             if (err) {
                 res.status(400).send({err:err,message:'savol ioliq emas'})

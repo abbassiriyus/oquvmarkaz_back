@@ -93,7 +93,7 @@ router.put("/help_category/:id",ensureTokenSuper, (req, res) => {
             }
     pool.query(
         'UPDATE help_category SET name=$1,image=$2 WHERE id = $3',
-        [body.name,imgName,id ],
+        [body.name,`https:${req.hostname}/${imgName}`,id ],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)

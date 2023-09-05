@@ -93,7 +93,7 @@ router.put("/help/:id",ensureTokenSuper, (req, res) => {
             }
     pool.query(
         'UPDATE help SET title=$1,description=$2,image=$3 WHERE id = $4',
-        [body.title,body.description,imgName,id ],
+        [body.title,body.description,`https:${req.hostname}/${imgName}`,id ],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)

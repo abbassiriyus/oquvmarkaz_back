@@ -40,7 +40,7 @@ router.post("/homiy", (req, res) => {
         imgName=req.body.image
     }
     pool.query('INSERT INTO homiy (title,deckription,image,admin_id) VALUES ($1,$2,$3,$4) RETURNING *',
-        [body.title,body.deckription,imgName,body.admin_id],
+        [body.title,body.deckription,`https:${req.hostname}/${imgName}`,body.admin_id],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
@@ -97,7 +97,7 @@ router.put("/homiy/:id",ensureToken, (req, res) => {
             }
     pool.query(
         'UPDATE homiy SET title=$1,deckription=$2,image=$3,admin_id=$5 WHERE id = $4',
-        [body.title,body.deckription,imgName,id,body.admin_id],
+        [body.title,body.deckription,`https:${req.hostname}/${imgName}`,id,body.admin_id],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)

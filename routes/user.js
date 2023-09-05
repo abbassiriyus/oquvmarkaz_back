@@ -449,7 +449,7 @@ if(req.files){
      imgName = req.body.image
 }
     pool.query('UPDATE users SET address = $1,balance=$2,description=$3,email=$4, image=$5,last_name=$6,password=$7,phone_number=$8,username=$9,position=$10 WHERE id = $11',
-        [body.address, body.balance, body.description, body.email,imgName,body.last_name,body.password,body.phone_number,body.username,body.position, id],
+        [body.address, body.balance, body.description, body.email,`https:${req.hostname}/${imgName}`,body.last_name,body.password,body.phone_number,body.username,body.position, id],
         (err, result) => {
             if (err) {
                 console.log("oddiy xato");
@@ -478,7 +478,7 @@ router.put("/oneuser/:id",ensureToken, (req, res) => {
             }
     pool.query(
     'UPDATE users SET address = $1,description=$2,email=$3, image=$4,last_name=$5,phone_number=$6,username=$7 WHERE id = $8',
-        [body.address, body.description, body.email,imgName,body.last_name,body.phone_number,body.username,id],
+        [body.address, body.description, body.email,`https:${req.hostname}/${imgName}`,body.last_name,body.phone_number,body.username,id],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)

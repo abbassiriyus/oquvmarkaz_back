@@ -8,6 +8,7 @@ var { ensureToken }=require("../token/token.js")
 var fs=require("fs");
 const { hostname } = require('os');
 router.get("/company", (req, res) => {   
+    console.log(req);
     pool.query("SELECT * FROM company", (err, result) => {
         if (!err) {
 
@@ -41,7 +42,7 @@ router.post("/company",ensureToken, (req, res) => {
         imgName=req.body.image
     }
         pool.query('INSERT INTO company (email,twiter,image,call_me,whatsapp,address) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *',
-        [body.email,body.twiter,req.hostname+imgName,body.call_me,body.whatsapp,body.address],
+        [body.email,body.twiter,`https:${req.hostname}/${imgName}`,body.call_me,body.whatsapp,body.address],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
@@ -94,7 +95,7 @@ router.put("/company/:id",ensureToken, (req, res) => {
             }
     pool.query(
         'UPDATE company SET email=$1,twiter=$2,image=$3,call_me=$4,whatsapp=$5,address=$6 WHERE id=$7',
-        [body.email,body.twiter,imgName,body.call_me,body.whatsapp,body.address,id],
+        [body.email,body.twiter,`https:${req.hostname}/${imgName}`,body.call_me,body.whatsapp,body.address,id],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)
