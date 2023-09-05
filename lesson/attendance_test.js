@@ -18,7 +18,6 @@ router.get("/attendance_test", (req, res) => {
 })
 
 router.get('/attendance_test/:id', (req, res) => {
-    
     pool.query("SELECT * FROM attendance_test where id=$1", [req.params.id], (err, result) => {
         if (!err) {
             res.status(200).send(result.rows)
@@ -31,8 +30,8 @@ router.get('/attendance_test/:id', (req, res) => {
 
 router.post("/attendance_test",ensureToken, (req, res) => {
     const body = req.body;
-        pool.query('INSERT INTO attendance_test (test_id,group_id,mark,came) VALUES ($1,$2,$3,$4) RETURNING *',
-        [body.test_id,body.group_id,body.mark,body.came],
+        pool.query('INSERT INTO attendance_test (test_id,group_id,mark,came,student_id) VALUES ($1,$2,$3,$4,$5) RETURNING *',
+        [body.test_id,body.group_id,body.mark,body.came,body.student_id],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
@@ -56,8 +55,8 @@ router.put("/attendance_test/:id",ensureToken, (req, res) => {
     const id = req.params.id
     const body = req.body
     pool.query(
-        'UPDATE attendance_test SET test_id=$1,group_id=$2,mark=$3,came=$4 WHERE id = $5',
-        [body.test_id ,body.group_id,body.mark,body.came,id ],
+        'UPDATE attendance_test SET test_id=$1,group_id=$2,mark=$3,came=$4,student_id=$5 WHERE id = $6',
+        [body.test_id,body.group_id,body.mark,body.came,body.student_id,id ],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)

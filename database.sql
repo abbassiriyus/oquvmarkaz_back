@@ -244,6 +244,7 @@ CREATE TABLE attendance_test(
   "id" serial primary key,
   "test_id" integer not NULL,
   "group_id" integer NOT NULL,
+  "student_id" integer NOT NULL,
   "mark" integer,
   "came" boolean default false NOT null,
   "time_create" timestamp default current_timestamp not null,

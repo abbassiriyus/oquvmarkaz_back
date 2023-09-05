@@ -137,7 +137,7 @@ router.get("/super/registerCourse",ensureToken, (req,res)=>{
     })
 })
 
-router.get('/mycourse/:id', ensureToken , (req,res)=>{
+router.get('/mycourse/:id', (req,res)=>{
     pool.query("SELECT * FROM registerCourse where users=$1", [req.params.id], (err, result) => {
         if (!err) {
             var a=result.rows
