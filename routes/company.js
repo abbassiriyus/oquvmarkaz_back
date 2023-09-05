@@ -3,12 +3,14 @@ var express = require('express');
 var router = express.Router();
 var jwt = require('jsonwebtoken');
 const pool = require("../db")
+var url = require('url');
 var { ensureToken }=require("../token/token.js")
-var fs=require("fs")
+var fs=require("fs");
+const { hostname } = require('os');
 router.get("/company", (req, res) => {   
     pool.query("SELECT * FROM company", (err, result) => {
         if (!err) {
-
+console.log(req.hostname);
             res.status(200).send(result.rows)
 
         } else {

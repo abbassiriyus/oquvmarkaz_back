@@ -190,9 +190,9 @@ app.get('/', function(req, res) {
  app.use("/api",servis)
  app.use("/api",student_theme)
 
- app.use("/pay",operator)
- app.use("/pay",operator_work)
- app.use("/pay",company)
+ app.use("/api",operator)
+ app.use("/api",operator_work)
+ app.use("/api",company)
  app.use("/pay",payment)
 
 

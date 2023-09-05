@@ -448,7 +448,7 @@ CREATE TABLE company(
    "twiter" VARCHAR(50),
    "call_me" VARCHAR(50),
    "whatsapp" VARCHAR(50),
-   "address" varchar (50)
+   "address" varchar (50),
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null 
 )
