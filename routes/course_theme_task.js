@@ -34,12 +34,12 @@ router.post("/course_theme_task",ensureToken, (req, res) => {
     var imgName="";
     if(req.files){
         const imgFile = req.files.image
-         imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+         imgName = `https:${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
     }else{
         imgName=req.body.image
     }
         pool.query('INSERT INTO course_theme_task (content,course_theme,image) VALUES ($1,$2,$3) RETURNING *',
-        [body.content,body.course_theme,`https:${req.hostname}/${imgName}`],
+        [body.content,body.course_theme,imgName],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
@@ -86,13 +86,13 @@ router.put("/course_theme_task/:id",ensureToken, (req, res) => {
               }
               if(req.files){
                 const imgFile = req.files.image
-                 imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+                 imgName = `https:${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
             }else{
                 imgName=req.body.image
             }
     pool.query(
         'UPDATE course_theme_task SET content=$1,course_theme=$2,image=$3 WHERE id = $4',
-        [body.content,body.course_theme,`https:${req.hostname}/${imgName}`,id ],
+        [body.content,body.course_theme,imgName,id ],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)

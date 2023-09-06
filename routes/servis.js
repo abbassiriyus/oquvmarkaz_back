@@ -35,12 +35,12 @@ router.post("/servis", (req, res) => {
     var imgName="";
     if(req.files){
         const imgFile = req.files.image
-         imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+         imgName = `https:${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
     }else{
         imgName=req.body.image
     }
         pool.query('INSERT INTO servis (title,deckription,image) VALUES ($1,$2,$3) RETURNING *',
-        [body.title,body.deckription,`https:${req.hostname}/${imgName}`],
+        [body.title,body.deckription,imgName],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
@@ -91,13 +91,13 @@ router.put("/servis/:id",ensureToken, (req, res) => {
               }
               if(req.files){
                 const imgFile = req.files.image
-                 imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+                 imgName = `https:${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
             }else{
                 imgName=req.body.image
             }
     pool.query(
         'UPDATE servis SET title=$1,deckription=$2,image=$3 WHERE id = $4',
-        [body.title,body.deckription,`https:${req.hostname}/${imgName}`,id ],
+        [body.title,body.deckription,imgName,id ],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)

@@ -35,12 +35,12 @@ router.post("/homiy", (req, res) => {
     var imgName="";
     if(req.files){
         const imgFile = req.files.image
-         imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+         imgName = `https:${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
     }else{
         imgName=req.body.image
     }
     pool.query('INSERT INTO homiy (title,deckription,image,admin_id) VALUES ($1,$2,$3,$4) RETURNING *',
-        [body.title,body.deckription,`https:${req.hostname}/${imgName}`,body.admin_id],
+        [body.title,body.deckription,imgName,body.admin_id],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
@@ -91,13 +91,13 @@ router.put("/homiy/:id",ensureToken, (req, res) => {
               }
               if(req.files){
                 const imgFile = req.files.image
-                 imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+                 imgName = `https:${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
             }else{
                 imgName=req.body.image
             }
     pool.query(
         'UPDATE homiy SET title=$1,deckription=$2,image=$3,admin_id=$5 WHERE id = $4',
-        [body.title,body.deckription,`https:${req.hostname}/${imgName}`,id,body.admin_id],
+        [body.title,body.deckription,imgName,id,body.admin_id],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)

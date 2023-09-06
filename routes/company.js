@@ -37,12 +37,12 @@ router.post("/company",ensureToken, (req, res) => {
     var imgName="";
     if(req.files){
         const imgFile = req.files.image
-         imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+         imgName = `https:${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
     }else{
         imgName=req.body.image
     }
         pool.query('INSERT INTO company (email,twiter,image,call_me,whatsapp,address) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *',
-        [body.email,body.twiter,`https:${req.hostname}/${imgName}`,body.call_me,body.whatsapp,body.address],
+        [body.email,body.twiter,imgName,body.call_me,body.whatsapp,body.address],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
@@ -89,13 +89,13 @@ router.put("/company/:id",ensureToken, (req, res) => {
               }
               if(req.files){
                 const imgFile = req.files.image
-                 imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+                 imgName = `https:${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
             }else{
                 imgName=req.body.image
             }
     pool.query(
         'UPDATE company SET email=$1,twiter=$2,image=$3,call_me=$4,whatsapp=$5,address=$6 WHERE id=$7',
-        [body.email,body.twiter,`https:${req.hostname}/${imgName}`,body.call_me,body.whatsapp,body.address,id],
+        [body.email,body.twiter,imgName,body.call_me,body.whatsapp,body.address,id],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)

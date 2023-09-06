@@ -34,12 +34,12 @@ router.post("/help_category", (req, res) => {
     var imgName="";
     if(req.files){
         const imgFile = req.files.image
-         imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+         imgName = `https:${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
     }else{
         imgName=req.body.image
     }
         pool.query('INSERT INTO help_category (name,image) VALUES ($1,$2) RETURNING *',
-        [body.name,`https:${req.hostname}/${imgName}`],
+        [body.name,imgName],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
@@ -87,13 +87,13 @@ router.put("/help_category/:id",ensureTokenSuper, (req, res) => {
               }
               if(req.files){
                 const imgFile = req.files.image
-                 imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+                 imgName = `https:${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
             }else{
                 imgName=req.body.image
             }
     pool.query(
         'UPDATE help_category SET name=$1,image=$2 WHERE id = $3',
-        [body.name,`https:${req.hostname}/${imgName}`,id ],
+        [body.name,imgName,id ],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)

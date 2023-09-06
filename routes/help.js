@@ -34,19 +34,19 @@ router.post("/help",ensureTokenSuper, (req, res) => {
     if(req.files){
         const imgFile = req.files. 
         image
-         imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+         imgName = `https:${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
     }else{
         imgName=req.body.image
     }
         pool.query('INSERT INTO help (title,description,image) VALUES ($1,$2,$3) RETURNING *',
-        [body.title,body.description,`https:${req.hostname}/${imgName}`],
+        [body.title,body.description,imgName],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
             } else {
                 if(req.files){
                     const imgFile = req.files.image
-                    imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+                    imgName = `https:${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
                     imgFile.mv(`${__dirname}/Images/${imgName}`)
                 }
                 res.status(201).send("Created");
@@ -87,13 +87,13 @@ router.put("/help/:id",ensureTokenSuper, (req, res) => {
               }
               if(req.files){
                 const imgFile = req.files.image
-                 imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+                 imgName = `https:${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
             }else{
                 imgName=req.body.image
             }
     pool.query(
         'UPDATE help SET title=$1,description=$2,image=$3 WHERE id = $4',
-        [body.title,body.description,`https:${req.hostname}/${imgName}`,id ],
+        [body.title,body.description,imgName,id ],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)

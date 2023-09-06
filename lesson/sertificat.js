@@ -34,12 +34,12 @@ router.post("/sertificat",superTeacher, (req, res) => {
     var imgName="";
     if(req.files){
         const imgFile = req.files.file
-         imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+         imgName = `https:${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
     }else{
         imgName=req.body.file
     }
     pool.query('INSERT INTO sertificat (description,type,file,director,mentor) VALUES ($1 ,$2 ,$3 ,$4 ,$5 ) RETURNING *',
-        [body.description,body.type,`https:${req.hostname}/${imgName}`,body.director,body.mentor],
+        [body.description,body.type,imgName,body.director,body.mentor],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
@@ -90,13 +90,13 @@ router.put("/sertificat/:id",superTeacher, (req, res) => {
               }
               if(req.files){
                 const imgFile = req.files.file
-                 imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+                 imgName = `https:${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
             }else{
                 imgName=req.body.file
             }
     pool.query(
         'UPDATE sertificat SET description=$1,type=$2,file=$3,director=$4,mentor=$5   WHERE id = $6',
-        [body.description,body.type,`https:${req.hostname}/${imgName}`,body.director,body.mentor,id ],
+        [body.description,body.type,imgName,body.director,body.mentor,id ],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)

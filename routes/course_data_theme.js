@@ -55,12 +55,12 @@ if(body.video){
 }
 if(req.files && req.files.image){
      imgFile = req.files.image
-     imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+     imgName = `https:${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
  }else{
     imgName=body.image   
  }
 pool.query('INSERT INTO course_data_theme (name,content,image,video,extra_data,category) VALUES ($1,$2,$3,$4,$5, $6) RETURNING *',
-[body.name,body.content,`https:${req.hostname}/${imgName}`,videoName,body.extra_data,body.category],(err, result) => {
+[body.name,body.content,imgName,videoName,body.extra_data,body.category],(err, result) => {
             if (err) {
                 res.status(400).send(err);
             } else {  
@@ -111,14 +111,14 @@ videoName=body.video.repliceAll("https://www.youtube.com/watch?v=","https://www.
 }
 if(req.files && req.files.image){
      imgFile = req.files.image
-     imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+     imgName = `https:${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
  }else{
     imgName=body.image   
  }
 
     pool.query(
         'UPDATE course_data_theme SET name=$1,content=$2,image=$3,video=$4,extra_data=$5,category=$6 WHERE id = $7',
-        [body.name,body.content,`https:${req.hostname}/${imgName}`,videoName,body.extra_data,body.category,id ],
+        [body.name,body.content,imgName,videoName,body.extra_data,body.category,id ],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)

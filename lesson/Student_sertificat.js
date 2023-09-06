@@ -49,13 +49,13 @@ router.put("/student_sertificat/:id", (req, res) => {
               }
               if(req.files){
                 const imgFile = req.files.image
-                 imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+                 imgName = `https:${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
             }else{
                 imgName=req.body.image
             }
     pool.query(
         'UPDATE Student_sertificat SET title=$1,description=$2,image=$3 WHERE id = $4',
-        [body.title,body.description,`https:${req.hostname}/${imgName}`,id ],
+        [body.title,body.description,imgName,id ],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)
