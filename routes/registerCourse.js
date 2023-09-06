@@ -172,16 +172,16 @@ router.get('/nomycourse/:id' , (req,res)=>{
         pool.query("SELECT * FROM course", (err, result1) => {
         if (!err) {
         var b=result1.rows
-       for (let i = 0; i < a.length; i++) {
+       for (let i = 0; i < b.length; i++) {
         var s=true
-        for (let j = 0; j<b.length; j++) {
-        if(a[i].course==b[j].id && req.params.id==a[i].users){
+        for (let j = 0; j<a.length; j++) {
+        if(a[j].course==b[i].id && req.params.id==a[j].users){
         s=false
         }
         }
-        a[i].buy=s
-       }res.status(200).send(a)
-        
+        b[i].buy=s
+       }
+       res.status(200).send(b.filter(item=>item.buy))
                 } else {
                     res.send(err)
                 }
