@@ -8,11 +8,9 @@ var {ensureToken,ensureTokenTeacher,superTeacher }=require("../token/token.js")
 router.get("/test", (req, res) => {   
     pool.query("SELECT * FROM test", (err, result) => {
         if (!err) {
-
             res.status(200).send(result.rows)
-
         } else {
-            res.send(err)
+            res.status(400).send(err)
         }
     })
 })
@@ -28,6 +26,39 @@ router.get('/test/:id', (req, res) => {
     })
 })
 
+
+router.get('/test/student/:id', (req, res) => {
+let dateObject = new Date();
+console.log("A date object is defined")
+
+let date = (dateObject.getDate());
+let month = (dateObject.getMonth());
+let year = dateObject.getFullYear();
+
+let hours = dateObject.getHours();
+let minutes = dateObject.getMinutes();
+let seconds = dateObject.getSeconds();
+var a=year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds;
+    pool.query("SELECT * FROM group_student where student_id=$1", [req.params.id], (err, result1) => {
+        if (!err) {
+            pool.query("SELECT * FROM test", (err, result2) => {
+                if (!err) {
+        var test=[]
+    for (let i = 0; i < result1.rows.length; i++) {
+        for (let j = 0; j < result2.rows.length; j++) {
+    if((result1.rows[i].education_id==result2.rows[j].education_id)&&(result2.rows[j].day).getDate()==date&&(result2.rows[j].day).getFullYear()==year&&(result2.rows[j].day).getMonth()==month&&`${result2.rows[j].start_time}`.slice(0,2)<hours&&`${result2.rows[j].end_time}`.slice(0,2)>hours){
+        test.push(result2.rows[j])
+       }}}
+       res.status(200).send(test)
+    } else {
+                    res.send({err:err,message:"not found education"})
+                }
+            })
+        } else {
+            res.status(400).send(err)
+        }
+    })
+})
 
 router.post("/test",ensureToken, (req, res) => {
     const body = req.body;

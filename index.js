@@ -38,7 +38,15 @@ const servis=require('./routes/servis.js')
 const payment=require('./routes/payment.js')
 const homiy=require('./routes/homiy.js')
 
+
+const operator=require('./routes/operator.js')
+const operator_work=require('./routes/operator_work.js')
+const company=require('./routes/company.js')
+
 const student_theme=require('./routes/student_theme.js')
+const language=require('./routes/language.js')
+
+
 
 const admin=require('./routes/admin.js')
 const paymentconfig=require('./paymentconfig.js')
@@ -166,6 +174,9 @@ app.get('/', function(req, res) {
  app.use("/api" ,cours_types)
  app.use("/api" ,cours_types)
  app.use("/api" ,homiy)
+ app.use("/api" ,homiy)
+ app.use("/api" ,language)
+
 
  app.use("/api" ,course)
  app.use("/api",course_theme_task)
@@ -184,7 +195,11 @@ app.get('/', function(req, res) {
  app.use("/api",servis)
  app.use("/api",student_theme)
 
+ app.use("/api",operator)
+ app.use("/api",operator_work)
+ app.use("/api",company)
  app.use("/pay",payment)
+
 
 
  app.use("/super",paymentconfig)

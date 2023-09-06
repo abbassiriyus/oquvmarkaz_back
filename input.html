@@ -293,6 +293,7 @@ auth yoq shuni oldiga linkni bersang boldi
 </pre>
 <sup>GET,GET(id),POST,PUT(id),DELETE(id)</sup>
 
+
 <hr>
 <pre>
   // 20230904151506
@@ -462,5 +463,49 @@ auth yoq shuni oldiga linkni bersang boldi
 ]
 </pre>
 
+<pre>
+  <h1>/api/</h1>
+  CREATE TABLE operator(
+    "image" TEXT,
+    "name" varchar(50),
+    "description" text,
+    "email" VARCHAR(50),
+   "twiter" VARCHAR(50),
+   "call_me" VARCHAR(50),
+   "whatsapp" VARCHAR(50),
+)
+CREATE TABLE operator_work(
+
+    "opertor_id" integer NOT NULL,
+    "title" VARCHAR(50)  NOT NULL,
+   
+)
+CREATE TABLE company(
+
+     "image" TEXT,
+    "email" VARCHAR(50),
+   "twiter" VARCHAR(50),
+   "call_me" VARCHAR(50),
+   "whatsapp" VARCHAR(50),
+   "address" varchar (50)
+)
+</pre>
+<pre>
+university 
+    "title" VARCHAR (50) NOT NULL,
+    "deckription" TEXT NOT NULL,
+    "image" TEXT,
+    "logo":TEXT,
+</pre>
+<hr>
+<pre>
+  CREATE TABLE language(  
+    "lg" varchar(10),
+   
+    )
+    api/language
+    api/language/mass 
+
+</pre>
 </body>
 </html>

@@ -9,8 +9,8 @@ const nodemailer =require("nodemailer")
 const transporter = nodemailer.createTransport({
    service: "gmail",
    auth: {
-      user: "webabbas9@gmail.com",
-      pass: "hftxvfnsdklodkwh"
+      user: "info.baisan.org@gmail.com",
+      pass: "iedlfweqtzyvstgg"
    }
 });
 
@@ -38,7 +38,7 @@ router.post("/register", (req, res) => {
                 res.status(400).send("malumot To`liq emas")
             } else {
                 var mailOptions = {
-                    from: "webabbas9@gmail.com",
+                    from: "info.baisan.org@gmail.com",
                     to: body.email,
                     subject: "Verification Code",
                     html: `Your activation code:${code}`
@@ -70,7 +70,7 @@ router.post("/register", (req, res) => {
 router.post("/change/password", (req, res) => {
     const body = req.body
     if(body){
-    var code =Math.floor(Math.random() * 900000)+100000;
+    var code=Math.floor(Math.random()*900000)+100000;
     var a=0
     pool.query("SELECT * FROM users", (err, result) => {
         if (!err) {
@@ -82,13 +82,13 @@ router.post("/change/password", (req, res) => {
         }
         console.log(a);
     if(body.email.includes('@') && a!==0){
-    pool.query('UPDATE users SET verify=$1 WHERE id=$2',
-    [code,a], (err, result) => {
+      pool.query('UPDATE users SET verify=$1 WHERE id=$2',
+       [code,a], (err, result) => {
             if (err) {
                 res.status(400).send("malumot To`liq emas")
             } else {
                 var mailOptions = {
-                    from: "webabbas9@gmail.com",
+                    from: "info.baisan.org@gmail.com",
                     to: body.email,
                     subject: "Verification Code",
                     html: `Your activation code:${code}`
@@ -207,6 +207,9 @@ router.get('/students',ensureToken, function(req, res) {
                     image:item.image,
                     description:item.description,
                     address:item.address,
+                    youtobe:item.youtobe,
+                    telegram:item.telegram,
+                    instagram:item.instagram,
                     date_joined:item.date_joined,
                 })
                })
@@ -233,6 +236,10 @@ router.get('/allusers',ensureToken, function(req, res) {
                      image:item.image,
                      description:item.description,
                      address:item.address,
+                     youtobe:item.youtobe,
+                     telegram:item.telegram,
+                     instagram:item.instagram,
+
                      date_joined:item.date_joined,
                  })
                 })
@@ -261,6 +268,9 @@ router.get('/teachers'
                 image:item.image,
                 description:item.description,
                 address:item.address,
+                youtobe:item.youtobe,
+                telegram:item.telegram,
+                instagram:item.instagram,
                 date_joined:item.date_joined,
             })
            })
@@ -386,12 +396,12 @@ router.post("/users",ensureTokenSuper, (req, res) => {
     var imgName=""
     if(req.files && req.files.image){
          const imgFile = req.files.image
-         imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+         imgName = `https:${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
     }else{
         imgName=req.body.image
     }
-    pool.query('INSERT INTO users (address, description, email, last_name, password, phone_number, username, position,image) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *',
-    [ body.address,body.description, body.email, body.last_name, body.password, body.phone_number, body.username, body.position,imgName],
+    pool.query('INSERT INTO users (address, description, email, last_name, password, phone_number, username, position,image,youtobe,telegrem,instagram) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9,$10,$11,$12) RETURNING *',
+    [ body.address,body.description, body.email, body.last_name, body.password, body.phone_number, body.username, body.position,imgName,body.youtobe,body.telegrem,body.instagram],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
@@ -444,19 +454,21 @@ router.put("/userssuperadmin/:id",ensureTokenSuper, (req, res) => {
             fs.unlink(`./Images/${a[0].image}`,()=>{})}})
 if(req.files){
     const imgFile = req.files.image
-     imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+     imgName = `https:${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
 }else{
      imgName = req.body.image
 }
-    pool.query('UPDATE users SET address = $1,balance=$2,description=$3,email=$4, image=$5,last_name=$6,password=$7,phone_number=$8,username=$9,position=$10 WHERE id = $11',
-        [body.address, body.balance, body.description, body.email,imgName,body.last_name,body.password,body.phone_number,body.username,body.position, id],
+    pool.query('UPDATE users SET address = $1,balance=$2,description=$3,email=$4, image=$5,last_name=$6,password=$7,phone_number=$8,username=$9,position=$10,youtobe=$11,telegram=$12,instagram=$13 WHERE id = $14',
+        [body.address, body.balance, body.description, body.email,imgName,body.last_name,body.password,body.phone_number,body.username,body.position,body.youtobe,body.telegram,body.instagram,id],
         (err, result) => {
             if (err) {
                 console.log("oddiy xato");
                 res.status(400).send(err)
             } else {
-                const imgFile = req.files.image
-                if(req.files){imgFile.mv(`${__dirname}/Images/${imgName}`)}
+                if(req.files){
+                 const imgFile = req.files.image
+                if(req.files){imgFile.mv(`${__dirname}/Images/${imgName}`)}    
+                }
                 res.status(200).send("Updated")
             }
         }
@@ -469,7 +481,7 @@ router.put("/oneuser/:id",ensureToken, (req, res) => {
     const body = req.body
     if(req.files){
    const imgFile = req.files.image
-   var imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+   var imgName = `https:${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
  pool.query("SELECT * FROM users", (err, result) => {
         if (!err) {
             var a=result.rows.filter(item=>item.id==req.params.id) 

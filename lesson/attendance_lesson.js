@@ -27,6 +27,17 @@ router.get('/attendance_lesson/:id', (req, res) => {
         }
     })
 })
+router.get('/attendance_lesson/student/:id', (req, res) => {
+    pool.query("SELECT * FROM attendance_lesson where id=$1", [req.params.id], (err, result) => {
+        if (!err) {
+
+            res.status(200).send(result.rows)
+       
+        } else {
+            res.status(400).send(err)
+        }
+    })
+})
 
 
 router.post("/attendance_lesson",ensureToken, (req, res) => {
