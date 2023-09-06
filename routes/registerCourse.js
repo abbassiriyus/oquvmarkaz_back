@@ -164,7 +164,7 @@ router.get('/mycourse/:id', ensureToken , (req,res)=>{
     })
 })
 
-router.get('/nomycourse/:id', ensureToken , (req,res)=>{
+router.get('/nomycourse/:id' , (req,res)=>{
     pool.query("SELECT * FROM registerCourse where users=$1", [req.params.id], (err, result) => {
         if (!err) {
         var a=result.rows
@@ -179,8 +179,7 @@ router.get('/nomycourse/:id', ensureToken , (req,res)=>{
         }
         }
         a[i].buy=s
-       }
-                    res.status(200).send(as)
+       }res.status(200).send(a)
         
                 } else {
                     res.send(err)
