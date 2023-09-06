@@ -465,8 +465,10 @@ if(req.files){
                 console.log("oddiy xato");
                 res.status(400).send(err)
             } else {
-                const imgFile = req.files.image
-                if(req.files){imgFile.mv(`${__dirname}/Images/${imgName}`)}
+                if(req.files){
+                 const imgFile = req.files.image
+                if(req.files){imgFile.mv(`${__dirname}/Images/${imgName}`)}    
+                }
                 res.status(200).send("Updated")
             }
         }
