@@ -116,6 +116,7 @@ router.put("/rating/registerCourse/:id",ensureToken, (req, res) => {
     const id = req.params.id
     const body = req.body
     pool.query(
+        
         'UPDATE registerCourse SET rating=$1 WHERE id = $2',
         [body.rating,id],
         (err, result) => {

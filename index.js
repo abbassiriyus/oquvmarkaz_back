@@ -171,11 +171,9 @@ app.get('/', function(req, res) {
  app.use("/auth", admin )
 
 
- app.use("/api" ,cours_types)
- app.use("/api" ,cours_types)
- app.use("/api" ,homiy)
- app.use("/api" ,homiy)
- app.use("/api" ,language)
+ app.use("/api",cours_types)
+ app.use("/api",homiy)
+ app.use("/api",language)
 
 
  app.use("/api" ,course)
