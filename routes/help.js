@@ -34,7 +34,7 @@ router.post("/help",ensureTokenSuper, (req, res) => {
     if(req.files){
         const imgFile = req.files. 
         image
-         imgName = `https://${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+         imgName = `https://${req.hostname}/`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
     }else{
         imgName=req.body.image
     }
@@ -46,7 +46,7 @@ router.post("/help",ensureTokenSuper, (req, res) => {
             } else {
                 if(req.files){
                     const imgFile = req.files.image
-                    imgName = `https://${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+                    imgName = `https://${req.hostname}/`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
                     imgFile.mv(`${__dirname}/Images/${imgName}`)
                 }
                 res.status(201).send("Created");
@@ -59,7 +59,7 @@ router.delete("/help/:id",ensureTokenSuper, (req, res) => {
     pool.query("SELECT * FROM help where id=$1", [req.params.id], (err, result1) => {
         if (!err) {
             if(result1.rows[0].image){
-              fs.unlink(`./Images/${result1.rows[0].image}`,()=>{})   
+                 
             }
             pool.query('DELETE FROM help WHERE id = $1', [id], (err, result) => {
                 if (err) {
@@ -83,11 +83,11 @@ router.put("/help/:id",ensureTokenSuper, (req, res) => {
     pool.query("SELECT * FROM help where id=$1", [req.params.id], (err, result1) => {
         if (!err) {
             if(result1.rows[0].image){
-                fs.unlink(`./Images/${result1.rows[0].image}`,()=>{})   
+                   
               }
               if(req.files){
                 const imgFile = req.files.image
-                 imgName = `https://${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+                 imgName = `https://${req.hostname}/`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
             }else{
                 imgName=req.body.image
             }

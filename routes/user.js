@@ -396,7 +396,7 @@ router.post("/users",ensureTokenSuper, (req, res) => {
     var imgName=""
     if(req.files && req.files.image){
          const imgFile = req.files.image
-         imgName = `https://${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+         imgName = `https://${req.hostname}/`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
     }else{
         imgName=req.body.image
     }
@@ -454,7 +454,7 @@ router.put("/userssuperadmin/:id",ensureTokenSuper, (req, res) => {
             fs.unlink(`./Images/${a[0].image}`,()=>{})}})
 if(req.files){
     const imgFile = req.files.image
-     imgName = `https://${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+     imgName = `https://${req.hostname}/`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
 }else{
      imgName = req.body.image
 }
@@ -481,7 +481,7 @@ router.put("/oneuser/:id",ensureToken, (req, res) => {
     const body = req.body
     if(req.files){
    const imgFile = req.files.image
-   var imgName = `https://${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+   var imgName = `https://${req.hostname}/`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
  pool.query("SELECT * FROM users", (err, result) => {
         if (!err) {
             var a=result.rows.filter(item=>item.id==req.params.id) 

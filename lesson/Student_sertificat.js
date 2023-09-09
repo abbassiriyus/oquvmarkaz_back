@@ -45,11 +45,11 @@ router.put("/student_sertificat/:id", (req, res) => {
     pool.query("SELECT * FROM Student_sertificat where id=$1", [req.params.id], (err, result1) => {
         if (!err) {
             if(result1.rows[0].image){
-                fs.unlink(`./Images/${result1.rows[0].image}`,()=>{})   
+                   
               }
               if(req.files){
                 const imgFile = req.files.image
-                 imgName = `https://${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+                 imgName = `https://${req.hostname}/`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
             }else{
                 imgName=req.body.image
             }

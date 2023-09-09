@@ -35,7 +35,7 @@ router.post("/quations", (req, res) => {
     var imgName="";
     if(req.files){
         const imgFile = req.files.image
-         imgName = `https://${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+         imgName = `https://${req.hostname}/`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
     }else{
         imgName=req.body.image
     }
@@ -60,7 +60,7 @@ router.delete("/quations/:id",ensureToken, (req, res) => {
     pool.query("SELECT * FROM quations where id=$1", [req.params.id], (err, result1) => {
         if (!err) {
             if(result1.rows[0].image){
-              fs.unlink(`./Images/${result1.rows[0].image}`,()=>{})   
+                 
             }
             pool.query('DELETE FROM quations WHERE id = $1', [id], (err, result) => {
                 if (err) {
@@ -86,11 +86,11 @@ router.put("/quations/:id",ensureToken, (req, res) => {
     pool.query("SELECT * FROM quations where id=$1", [req.params.id], (err, result1) => {
         if (!err) {
             if(result1.rows[0].image){
-                fs.unlink(`./Images/${result1.rows[0].image}`,()=>{})   
+                   
               }
               if(req.files){
                 const imgFile = req.files.image
-                 imgName = `https://${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+                 imgName = `https://${req.hostname}/`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
             }else{
                 imgName=req.body.image
             }

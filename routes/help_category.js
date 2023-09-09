@@ -34,7 +34,7 @@ router.post("/help_category", (req, res) => {
     var imgName="";
     if(req.files){
         const imgFile = req.files.image
-         imgName = `https://${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+         imgName = `https://${req.hostname}/`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
     }else{
         imgName=req.body.image
     }
@@ -58,7 +58,7 @@ router.delete("/help_category/:id", (req, res) => {
     pool.query("SELECT * FROM help_category where id=$1", [req.params.id], (err, result1) => {
         if (!err) {
             if(result1.rows[0].image){
-              fs.unlink(`./Images/${result1.rows[0].image}`,()=>{})   
+                 
             }
             pool.query('DELETE FROM help_category WHERE id = $1', [id], (err, result) => {
                 if (err) {
@@ -83,11 +83,11 @@ router.put("/help_category/:id",ensureTokenSuper, (req, res) => {
     pool.query("SELECT * FROM help_category where id=$1", [req.params.id], (err, result1) => {
         if (!err) {
             if(result1.rows[0].image){
-                fs.unlink(`./Images/${result1.rows[0].image}`,()=>{})   
+                   
               }
               if(req.files){
                 const imgFile = req.files.image
-                 imgName = `https://${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+                 imgName = `https://${req.hostname}/`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
             }else{
                 imgName=req.body.image
             }
