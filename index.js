@@ -162,7 +162,7 @@ app.get('/doc',(req,res)=>{
 res.status(200).send(data)
 })
 app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname, '/input.html'));
+    res.sendFile(path.join(__dirname, '/oldinp.html'));
 });
 
  app.use("/api", registerCourse )
