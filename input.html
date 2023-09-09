@@ -130,6 +130,29 @@
   </div>
 <div class="bir">
   <h1>/api/base_theme</h1>
+  <h2>GET,POST,DELETE,PUT</h2>
+  <p>yangiliklarni kategoriyalari</p>
+  <pre>
+    "name" VARCHAR (50) NOT NULL,
+  </pre>
+<hr>
+<h1>/api/call_me</h1>
+<h2>GET,POST,DELETE,PUT</h2>
+<p>menga boglaning</p>
+<pre>
+  "fullname" VARCHAR(120) NOT NULL,
+  "email" VARCHAR(50),
+  "message" TEXT,
+  "city" VARCHAR(120),
+  "phone" varchar(30),
+  "which_lesson"  varchar(100),
+  "purchase" TEXT,
+  "read" boolean default false not null,
+</pre>
+<hr>
+<h1>/call_me/read/:id</h1>
+<h2>GET</h2>
+<p>menga qo`ngiroq qilingni o`qilgan qiladi</p>
 </div>
 
 
