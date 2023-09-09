@@ -34,7 +34,7 @@ router.post("/sertificat",superTeacher, (req, res) => {
     var imgName="";
     if(req.files){
         const imgFile = req.files.file
-         imgName = `https:${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+         imgName = `https://${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
     }else{
         imgName=req.body.file
     }
@@ -90,7 +90,7 @@ router.put("/sertificat/:id",superTeacher, (req, res) => {
               }
               if(req.files){
                 const imgFile = req.files.file
-                 imgName = `https:${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+                 imgName = `https://${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
             }else{
                 imgName=req.body.file
             }

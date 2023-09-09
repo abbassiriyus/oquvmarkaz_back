@@ -55,7 +55,7 @@ if(body.video){
 }
 if(req.files && req.files.image){
      imgFile = req.files.image
-     imgName = `https:${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+     imgName = `https://${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
  }else{
     imgName=body.image   
  }
@@ -111,7 +111,7 @@ videoName=body.video.repliceAll("https://www.youtube.com/watch?v=","https://www.
 }
 if(req.files && req.files.image){
      imgFile = req.files.image
-     imgName = `https:${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+     imgName = `https://${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
  }else{
     imgName=body.image   
  }

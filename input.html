@@ -1,511 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document1</title>
-    <style>
-      h2{
-        font-size: 40px;
-      }
-      p{
-font-size: 12px;    
-      }
-      h1{
-        font-size: 14px;
-        color: red;
-      }
-      span{
-        color: green;
-        border-bottom: 1px solid green;
-      }
-      sup{
-        color: blueviolet;
-      }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    h1{
+      font-size: 24px;
+      color: crimson;
+    }
+    p{
+      color: gray;
+      font-size: 12px;
+    }
+    .bir{
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0px 0px 2px gray;padding: 4px;
+    }
+    .body{
+    display: flex;
+    flex-wrap:wrap;
+  }
+  sub{
+    color: red;
+    font-size: 12px;
+  }
+  pre{
+    color: rebeccapurple;
+  }
+  h2{
+    color: aqua;
+    font-family: cursive;
+    font-size: 10px;
+  }
+  </style>
 </head>
 <body>
-<h1>auth/change/password</h1>{email}
-<h1>auth/reset</h1>{code,password} PUT
-  <hr>
-  <h2><a href="/doc">documentatisya2 edu</a></h2>
-<h1 style="color: red;">/auth/register</h1>
-<span>{
-  password,
-  email,
-  username
-}</span>  <p>
-    <br>
-    email password faqat 1 marta ishlatiladi
-    post royhatdan O`tish>>>>> <sup>POST</sup>
-  </p>
-  <hr>
-<h1 style="color: red;">/auth/verify</h1> <p> - bunga tushgan kodni qaytarib yuboramiz <sup>post</sup> <span>{code}</span> </p>
-<hr>
-<h1 style="color: red;">/auth/students</h1>
-<p>talabalarni hammasini o`zini oladi <sup>GET</sup></p><hr>
-<h1 style="color: red;">/auth/teachers</h1>
-<p>o`tituvchilar hammasini o`zini oladi <sup>GET</sup></p><hr>
-<h1 style="color: red;">/auth/users/:id</h1>
+<div class="body">
+  <div class="bir">
+    <h1>/auth/admin</h1><span>superadmin</span>
+    <h2>GET,POST,DELETE,PUT</h2>
+    <p>superadmin adminlarga dostub beradi</p>
+    <pre>CREATE TABLE admin(
+      "user_id" integer not null,
+       UNIQUE("user_id"),
+       "diogram_get" boolean default false not null,
+       "alluser_get" boolean default false not null,
+       "alluser_post" boolean default false not null,
+       "alluser_delete" boolean default false not null,
+       "alluser_put" boolean default false not null,
+       "student_get" boolean default false not null,
+       "student_post" boolean default false not null,
+       "student_delete" boolean default false not null,
+       "student_put" boolean default false not null,
+       "teacher_get" boolean default false not null,
+       "teacher_post" boolean default false not null,
+       "teacher_delete" boolean default false not null,
+       "teacher_put" boolean default false not null,
+       "admin_get" boolean default false not null,
+       "admin_post" boolean default false not null,
+       "admin_delete" boolean default false not null,
+       "admin_put" boolean default false not null,
+       "course_get" boolean default false not null,
+       "course_post" boolean default false not null,
+       "course_delete" boolean default false not null,
+       "course_put" boolean default false not null,
+       "news_get" boolean default false not null,
+       "news_post" boolean default false not null,
+       "news_delete" boolean default false not null,
+       "news_put" boolean default false not null,
+       "chat_get" boolean default false not null,
+       "chat_post" boolean default false not null,
+       "chat_delete" boolean default false not null,
+       "chat_put" boolean default false not null,
+       "get_allchat" boolean default false not null,
+       "dars_get" boolean default false not null,
+       "dars_post" boolean default false not null,
+       "dars_delete" boolean default false not null,
+       "dars_put" boolean default false not null,
+        "dars_student_get" boolean default false not null,
+       "dars_student_post" boolean default false not null,
+       "dars_student_delete" boolean default false not null,
+       "dars_student_put" boolean default false not null,
+       "test_get" boolean default false not null,
+       "test_post" boolean default false not null,
+       "test_delete" boolean default false not null,
+       "test_put" boolean default false not null,
+       "test_student_get" boolean default false not null,
+       "test_student_post" boolean default false not null,
+       "test_student_delete" boolean default false not null,
+       "test_student_put" boolean default false not null,
+       "call_me_get" boolean default false not null,
+       "call_me_post" boolean default false not null,
+       "call_me_delete" boolean default false not null,
+       "call_me_put" boolean default false not null,
+       "universitet_get" boolean default false not null,
+       "universitet_post" boolean default false not null,
+       "universitet_delete" boolean default false not null,
+       "universitet_put" boolean default false not null,
+       "help_get" boolean default false not null,
+       "help_post" boolean default false not null,
+       "help_delete" boolean default false not null,
+       "help_put" boolean default false not null,
+       "category_get" boolean default false not null,
+       "category_post" boolean default false not null,
+       "category_delete" boolean default false not null,
+       "category_put" boolean default false not null,
+       "notification_get" boolean default false not null,
+       "notification_post" boolean default false not null,
+       "notification_delete" boolean default false not null,
+       "notification_put" boolean default false not null,
+       "get_pay" boolean default false not null,
+       "servis_get" boolean default false not null,
+       "servis_post" boolean default false not null,
+       "servis_delete" boolean default false not null,
+       "servis_put" boolean default false not null,
+       "homiy_get" boolean default false not null,
+       "homiy_post" boolean default false not null,
+       "homiy_delete" boolean default false not null,
+       "homiy_put" boolean default false not null,
+      "sertifikat_get" boolean default false not null,
+       "sertifikat_post" boolean default false not null,
+       "sertifikat_delete" boolean default false not null,
+       "sertifikat_put" boolean default false not null,
+       "create_video" boolean default false not null,
+       "pomish" boolean default false not null,
+  )</pre>
+  </div>
+<div class="bir"></div>
 
-<p>id va token bolsa bolgani hammasi keladi <sup>GET</sup></p><hr>
-<h1 style="color: red;">/auth/oneuser</h1>
-<p>token qaysi yuzerni tokeni bolsa ushani to`liq malumotini qaytaradi <sup>GET</sup>
-</p>
-<hr>
-<h1 style="color: red;">/auth/login</h1>
-<p>login parol qoilib kirish <span>{email, password}</span> yoki <span>{username, password}</span> token beradi <sup>POST</sup></p>
-<hr>
-<h1>auth/users</h1>
-<p>superadmin token bilan hamma userlani to`liq malumotini oladi<sup>GET</sup></p>
-<hr>
-<h1>/api/cours_types</h1>
-<p>kurslani turini aniqlab beradi <span>{name}</span> <sup>GET,GET(id),POST,PUT(id),DELETE(id)</sup></p>
-<hr>
-<h1>/api/course</h1>
-<p>kurslani turini aniqlab beradi <span>{id} </span><sup>GET,GET(id),post,PUT(id),DELETE(id)</sup> </p>
-<hr>
-<h1>/auth/userssuperadmin/:id</h1>
-<p>user<sup>put(id)</sup><span>{address, description, email, last_name, password, phone_number, username, position,image}</span> superadminga</p>
-<hr>
-<h1>/auth/users</h1>
-<p>user <span>{address,description,email, image,last_name,phone_number,username}</span> <sup>post</sup>token superadmin</p>
-<hr>
-<h1>/auth/teacher/:id</h1>
-<p>teacher kurslarini ham olib keladi<span></span> <sup>GET(id)</sup>token</p>
-<hr>
-<h1>/auth/oneuser/:id</h1>
-<p>user <span>{address,description,email, image,last_name,phone_number,username}</span> <sup>put(id)</sup>token</p>
-<hr>
-<h1>/api/base_theme</h1>
-<p>yangiliklarni turini aniqlab beradi <span>{name}</span> <sup>GET,GET(id),POST,PUT(id),DELETE(id)</sup></p>
-<hr>
-<h1>/api/knowladge</h1>
-<p>yangilik uchun to`liq yangilik oynasi<pre>  
-  "name" VARCHAR (50) NOT NULL,
-  "description" VARCHAR (50) NOT NULL,
-  "image"  TEXT,
-  "link" VARCHAR NOT NULL,
-  "base_theme" integer NOT NULL
-</pre> <sup>GET,GET(id),POST,PUT(id),DELETE(id)</sup></p>
-<hr>
-<h1>/api/api_root</h1>
-<p>table bor lekin nimagaligini bilmadim<span>{questions}</span> <sup>GET,GET(id),POST,PUT(id),DELETE(id)</sup></p>
-<hr>
-<h1>/api/course/:courseid/register/:userid</h1>
-<p>course sotib olish balansi yetarli bo`lishi shart course <span>{id}</span> berib yuboriladi</p><hr>
-<h1>/api/super/registerCourse</h1>
-<p>superadmin barcha royhatdan otilgan kurslarni nazorat qilishi uchun<span>{course,total_mark,completed_themes,rating,users}</span> berib yuboriladi <sup>GET,GET(id),POST,PUT(id),DELETE(id)</sup></p>
-<hr>
-<h1>/student_theme/complate/:id</h1>
-<p> kursni qancha qismini o`zlashtirgani <span>{complate}</span><sup>PUT</sup></p><hr>
-<h1>/api/rating/registerCourse/:id</h1>
-<p> kursga bergan shaxsiy baxosi <span>{rating}</span><sup>PUT</sup></p><hr>
-<h1>/api/mycourse/:id</h1>
-<p>mening shaxsiy kurslarini olaish<span>GET</span><sup></sup></p><hr>
-<h1>/api/course_data_theme</h1>
-<p>video linki yoki ozi, rasm linki yoki o`zi yuboriladi<span>{name,content,image,video,extra_data,cadegory}</span><sup>GET,GET(id),POST,PUT(id),DELETE(id)</sup></p><hr>
-<h1>/api/course_data_category</h1>
-<p>kurslani kategoriyasi<span>{name,course}</span><sup>GET,GET(id),POST,PUT(id),DELETE(id)</sup></p><hr>
-<h1>/api/course_data_category/course/:courseid</h1>
-<p>res.data.all barcha malumot, res.data.one bitinchi darsni toliq malumoti<sup>GET</sup></p><hr>
-<h1>api/help/</h1>
-<p>help text <span>{title,description,image}</span><sup>GET,GET(id),POST,PUT(id),DELETE(id)</sup></p>
-<hr>
-<h1>api/help_category/</h1>
-<p>help text ni kategoriyalari <span>{name,image}</span><sup>GET,GET(id),POST,PUT(id),DELETE(id)</sup></p>
-<hr>
-<h1>/api/follow/</h1>
-<p>obuna bo`lish top kimga min kim obuna bolayapgani users/follow get id da follows da massiv korinishida keladi followstop kimga obuna bolgani followmin kimla unga obuna bo`lgani <span>{topuser, minuser}</span><sup>GET,GET(id),POST,PUT(id),DELETE(id)</sup></p>
-<hr>
-<h1>/auth/balance/:id</h1>
-<p>to`lov amalga oshirish uchun<sup>PUT(id)</sup></p>
-<hr>
-<h1>auth/users/follow/:id</h1>
-<p>obunachilari va user malumotlari top i_follow obuna bo`lganlari, me_follow unga obuna bo`lganlari</p>
-<hr>
-<h1>api/call_me</h1>
-<p>zayafka uchun kasbini o`zgartirish uchun zayafka qoldiradi {sababi-purchase}</p><sup>GET,GET(id),POST,PUT(id),DELETE(id)</sup>
-<span>{ "fullname" VARCHAR(120) NOT NULL,
-  "email" VARCHAR(50),
-  "message" TEXT,
-  "city" VARCHAR(120),
-  "phone" varchar(30),
-  "which_lesson"  varchar(100),
-  "purchase" TEXT,}</span>
-<hr>
-<hr>
-<h1>api/purchase</h1>
-<p></p><sup>GET,GET(id),POST,PUT(id),DELETE(id)</sup>
-<span>{"title" TEXT not null}</span>
-<hr>
-<hr>
-<h1>/call_me/read/:id</h1>GET
-<p>habarni super admin oqiganini tasdiqlab qoyishioo uchun</p>
-<hr>
-<h1>api/course_theme_task_student</h1>
-<span>content,course_theme,image,feedback,mark
+
+
+
+
+
+</div>
+
   
-</span>
-<p>oquvchini kursda vazifa yuboirish</p>
-<hr>
-<h1>/notification</h1>
-<p> bilkdirishnoma  ,GET(id) da malumot o`qilgan deb qoladi <pre>"title" VARCHAR (50),
-  "description" VARCHAR (50) NOT NULL,
-  "user_id" integer NOT NULL,
-  "to_user_id" integer NOT NULL,</pre>
-  <sup>GET,GET(id),POST,PUT(id),DELETE(id)</sup>
-</p>
-<hr>
-<h1>/pay/payment</h1>
-auth yoq shuni oldiga linkni bersang boldi
-<p>yuborilgan to`lovni kim va qancha yuborgani chiqadi. akkauntga pul tashlash akkauntga tushayapga pulani hisoblash uchun<pre> 
-  "amout" VARCHAR (50) NOT NULL,
-  "user_id" TEXT NOT NULL,
-  "type" varchar(20) not NULL</pre>
-  <sup>GET,GET(id),POST,PUT(id),DELETE(id)</sup>
-</p>
-<hr>
-<h1>/auth/admin</h1>
-
-<p>adminga dostupla berish uchun tablitsa  <pre> 
-  "user_id" integer not null,
-  UNIQUE("user_id"),
-  "diogram_get" boolean default false not null,
-  "alluser_get" boolean default false not null,
-  "alluser_post" boolean default false not null,
-  "alluser_delete" boolean default false not null,
-  "alluser_put" boolean default false not null,
-  "student_get" boolean default false not null,
-  "student_post" boolean default false not null,
-  "student_delete" boolean default false not null,
-  "student_put" boolean default false not null,
-  "teacher_get" boolean default false not null,
-  "teacher_post" boolean default false not null,
-  "teacher_delete" boolean default false not null,
-  "teacher_put" boolean default false not null,
-  "admin_get" boolean default false not null,
-  "admin_post" boolean default false not null,
-  "admin_delete" boolean default false not null,
-  "admin_put" boolean default false not null,
-  "course_get" boolean default false not null,
-  "course_post" boolean default false not null,
-  "course_delete" boolean default false not null,
-  "course_put" boolean default false not null,
-  "news_get" boolean default false not null,
-  "news_post" boolean default false not null,
-  "news_delete" boolean default false not null,
-  "news_put" boolean default false not null,
-  "chat_get" boolean default false not null,
-  "chat_post" boolean default false not null,
-  "chat_delete" boolean default false not null,
-  "chat_put" boolean default false not null,
-  "get_allchat" boolean default false not null,
-  "dars_get" boolean default false not null,
-  "dars_post" boolean default false not null,
-  "dars_delete" boolean default false not null,
-  "dars_put" boolean default false not null,
-   "dars_student_get" boolean default false not null,
-  "dars_student_post" boolean default false not null,
-  "dars_student_delete" boolean default false not null,
-  "dars_student_put" boolean default false not null,
-  "test_get" boolean default false not null,
-  "test_post" boolean default false not null,
-  "test_delete" boolean default false not null,
-  "test_put" boolean default false not null,
-  "test_student_get" boolean default false not null,
-  "test_student_post" boolean default false not null,
-  "test_student_delete" boolean default false not null,
-  "test_student_put" boolean default false not null,
-  "call_me_get" boolean default false not null,
-  "call_me_post" boolean default false not null,
-  "call_me_delete" boolean default false not null,
-  "call_me_put" boolean default false not null,
-  "universitet_get" boolean default false not null,
-  "universitet_post" boolean default false not null,
-  "universitet_delete" boolean default false not null,
-  "universitet_put" boolean default false not null,
-  "help_get" boolean default false not null,
-  "help_post" boolean default false not null,
-  "help_delete" boolean default false not null,
-  "help_put" boolean default false not null,
-  "category_get" boolean default false not null,
-  "category_post" boolean default false not null,
-  "category_delete" boolean default false not null,
-  "category_put" boolean default false not null,
-  "notification_get" boolean default false not null,
-  "notification_post" boolean default false not null,
-  "notification_delete" boolean default false not null,
-  "notification_put" boolean default false not null,
-  "get_pay" boolean default false not null,
-  
-  "servis_get" boolean default false not null,
-  "servis_post" boolean default false not null,
-  "servis_delete" boolean default false not null,
-  "servis_put" boolean default false not null,
-  "homiy_get" boolean default false not null,
-  "homiy_post" boolean default false not null,
-  "homiy_delete" boolean default false not null,
-  "homiy_put" boolean default false not null,
- "sertifikat_get" boolean default false not null,
-  "sertifikat_post" boolean default false not null,
-  "sertifikat_delete" boolean default false not null,
-  "sertifikat_put" boolean default false not null,
-  "create_video" boolean default false not null,
-  "pomish" boolean default false not null,
-</pre>
-  <sup>GET,GET(id),POST,PUT(id),DELETE(id)</sup>
-</p>
-<hr>
-<h1>/super/pay</h1>
-<pre>
-  {"public_key":"1","strip_key":"2","paypal_kluch":"jhkghf"}
-</pre>
-<sup>GET,PUT</sup>
-<hr>
-<h1>api/servis</h1>
-<pre>
-  "title" VARCHAR (50) NOT NULL,
-    "description" VARCHAR (50) NOT NULL,
-    "image" text,
-</pre>
-<sup>GET,GET(id),POST,PUT(id),DELETE(id)</sup>
-<hr>
-<h1>api/homiy</h1>
-<pre>
-  "title" VARCHAR (50) NOT NULL,
-  "deckription" VARCHAR (50) NOT NULL,
-  "image" text,
-   "admin_id" integer,
-</pre>
-<sup>GET,GET(id),POST,PUT(id),DELETE(id)</sup>
-<h1>api/notification/read/:id</h1>
-<p>prosta get shunda oqilgan bo`ladi</p>
-<sup>GET</sup>
-<hr>
-<h1>api/student_theme/</h1>
-<p>video complate</p>
-<pre> 
-   "student_id" integer  NOT NULL,
-  "theme_id" integer  NOT NULL,
-  "complate" integer default 0  NOT NULL,
-  UNIQUE("theme_id","student_id")
-</pre>
-<sup>GET,GET(id),POST,PUT(id),DELETE(id)</sup>
-
-
-<hr>
-<pre>
-  // 20230904151506
-/api/course_theme_comment/task/117
-
-[
-  {
-    "id": 38,
-    "theme": 117,
-    "image": "0",
-    "task_commnet_id": 1,
-    "text": "asdsadasd",
-    "subcomment": 0,
-    "user_id": "1",
-    "time_create": "2023-09-04T08:43:17.058Z",
-    "time_update": "2023-09-04T08:43:17.058Z",
-    "oneuser": {
-      "id": 1,
-      "image": "https://www.lansweeper.com/wp-content/uploads/2018/05/ASSET-USER-ADMIN.png",
-      "username": "abbas"
-    },
-    "mark": 4
-  }
-]
-</pre>
-<hr>
-<pre>
-  // 20230904151701
-  // http://localhost:5001/api/course_theme_comment/117
-  
-  [
-    {
-      "id": 33,
-      "theme": 117,
-      "image": "undefined",
-      "task_commnet_id": 0,
-      "text": "salom abbas",
-      "subcomment": 0,
-      "user_id": "1",
-      "time_create": "2023-09-04T08:12:51.599Z",
-      "time_update": "2023-09-04T08:12:51.599Z",
-      "oneuser": {
-        "id": 1,
-        "image": "https://www.lansweeper.com/wp-content/uploads/2018/05/ASSET-USER-ADMIN.png",
-        "username": "abbas"
-      },
-      "message": [
-        {
-          "id": 8,
-          "theme": 117,
-          "image": "undefined",
-          "task_commnet_id": 0,
-          "text": "asdsa",
-          "subcomment": 33,
-          "user_id": "1",
-          "time_create": "2023-09-04T10:03:46.000Z",
-          "time_update": "2023-09-04T10:03:46.000Z",
-          "oneuser": {
-            "id": 1,
-            "image": "https://www.lansweeper.com/wp-content/uploads/2018/05/ASSET-USER-ADMIN.png",
-            "username": "abbas"
-          }
-        },
-        {
-          "id": 11,
-          "theme": 117,
-          "image": "undefined",
-          "task_commnet_id": 0,
-          "text": "jonibek",
-          "subcomment": 33,
-          "user_id": "1",
-          "time_create": "2023-09-04T10:17:31.000Z",
-          "time_update": "2023-09-04T10:17:31.000Z",
-          "oneuser": {
-            "id": 1,
-            "image": "https://www.lansweeper.com/wp-content/uploads/2018/05/ASSET-USER-ADMIN.png",
-            "username": "abbas"
-          }
-        }
-      ]
-    },
-    {
-      "id": 35,
-      "theme": 117,
-      "image": "undefined",
-      "task_commnet_id": 0,
-      "text": "wrerwefwer",
-      "subcomment": 0,
-      "user_id": "1",
-      "time_create": "2023-09-04T08:19:10.046Z",
-      "time_update": "2023-09-04T08:19:10.046Z",
-      "oneuser": {
-        "id": 1,
-        "image": "https://www.lansweeper.com/wp-content/uploads/2018/05/ASSET-USER-ADMIN.png",
-        "username": "abbas"
-      },
-      "message": [
-        {
-          "id": 13,
-          "theme": 117,
-          "image": "undefined",
-          "task_commnet_id": 0,
-          "text": "sadsa",
-          "subcomment": 35,
-          "user_id": "1",
-          "time_create": "2023-09-04T10:34:07.000Z",
-          "time_update": "2023-09-04T10:34:07.000Z",
-          "oneuser": {
-            "id": 1,
-            "image": "https://www.lansweeper.com/wp-content/uploads/2018/05/ASSET-USER-ADMIN.png",
-            "username": "abbas"
-          }
-        }
-      ]
-    },
-    {
-      "id": 40,
-      "theme": 117,
-      "image": "undefined",
-      "task_commnet_id": 0,
-      "text": "tyguhijkl;",
-      "subcomment": 0,
-      "user_id": "1",
-      "time_create": "2023-09-04T09:13:00.336Z",
-      "time_update": "2023-09-04T09:13:00.336Z",
-      "oneuser": {
-        "id": 1,
-        "image": "https://www.lansweeper.com/wp-content/uploads/2018/05/ASSET-USER-ADMIN.png",
-        "username": "abbas"
-      },
-      "message": [
-        
-      ]
-    }
-  ]
-
-
-</pre>
-<hr>
-<pre>
-  // 20230904155831
-// /api/course_theme_comment/subcomment/33
-
-[
-  {
-    "id": 8,
-    "theme": 117,
-    "image": "undefined",
-    "task_commnet_id": 0,
-    "text": "asdsa",
-    "subcomment": 33,
-    "user_id": "1",
-    "time_create": "2023-09-04T10:03:46.000Z",
-    "time_update": "2023-09-04T10:03:46.000Z"
-  },
-  {
-    "id": 11,
-    "theme": 117,
-    "image": "undefined",
-    "task_commnet_id": 0,
-    "text": "jonibek",
-    "subcomment": 33,
-    "user_id": "1",
-    "time_create": "2023-09-04T10:17:31.000Z",
-    "time_update": "2023-09-04T10:17:31.000Z"
-  }
-]
-</pre>
-
-<pre>
-  <h1>/api/</h1>
-  CREATE TABLE operator(
-    "image" TEXT,
-    "name" varchar(50),
-    "description" text,
-    "email" VARCHAR(50),
-   "twiter" VARCHAR(50),
-   "call_me" VARCHAR(50),
-   "whatsapp" VARCHAR(50),
-)
-CREATE TABLE operator_work(
-
-    "opertor_id" integer NOT NULL,
-    "title" VARCHAR(50)  NOT NULL,
-   
-)
-CREATE TABLE company(
-
-     "image" TEXT,
-    "email" VARCHAR(50),
-   "twiter" VARCHAR(50),
-   "call_me" VARCHAR(50),
-   "whatsapp" VARCHAR(50),
-   "address" varchar (50)
-)
-</pre>
-<pre>
-university 
-    "title" VARCHAR (50) NOT NULL,
-    "deckription" TEXT NOT NULL,
-    "image" TEXT,
-    "logo":TEXT,
-</pre>
-<hr>
-<pre>
-  CREATE TABLE language(  
-    "lg" varchar(10),
-   
-    )
-    api/language
-    api/language/mass 
-
-</pre>
 </body>
 </html>

@@ -47,7 +47,7 @@ router.post("/university", (req, res) => {
     var imgName="";
     if(req.files &&req.files.image){
         const imgFile = req.files.image
-         imgName = `https:${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+         imgName = `https://${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
     }else{
         imgName=req.body.image
     }
@@ -113,13 +113,13 @@ router.put("/university/:id",ensureToken, (req, res) => {
               }
               if(req.files){
                 const imgFile = req.files.image
-                 imgName = `https:${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+                 imgName = `https://${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
             }else{
                 imgName=req.body.image
             }
     pool.query(
         'UPDATE university SET title=$1,deckription=$2,image=$3,logo WHERE id = $4',
-        [body.title,body.deckription,imgName,`https:${req.hostname}/${logoName}`,id ],
+        [body.title,body.deckription,imgName,`https://${req.hostname}/${logoName}`,id ],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)

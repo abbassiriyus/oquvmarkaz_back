@@ -46,7 +46,7 @@ router.post("/course",superTeacher, (req, res) => {
     var imgName=""
   if(req.files){
     var imgFile = req.files.image
-     imgName = `https:${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+     imgName = `https://${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
     }else{
         imgName=req.body.image
     }
@@ -120,7 +120,7 @@ router.put("/course/:id",superTeacher, (req, res) => {
             var a=result.rows.filter(item=>item.id==req.params.id) 
             fs.unlink(`./Images/${a[0].image}`,()=>{})}})
 
-    var imgName = `https:${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+    var imgName = `https://${req.hostname}/${imgName}`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
     pool.query(
         'UPDATE course SET name=$1,description=$2,price=$3,planned_time=$4,course_type=$5,author=$6,image=$7,homiy_id=$8 WHERE id = $9',
         [body.name, body.description,body.price,body.planned_time,body.course_type,body.author,imgName,body.homiy_id,id ],
