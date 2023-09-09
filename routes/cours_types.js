@@ -56,7 +56,7 @@ router.put("/cours_types/:id", (req, res) => {
     const id = req.params.id
     const body = req.body
     pool.query(
-        'UPDATE cours_types SET name=$1    WHERE id = $2',
+        'UPDATE cours_types SET name=$1 WHERE id = $2',
         [body.name,id ],
         (err, result) => {
             if (err) {
