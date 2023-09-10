@@ -153,6 +153,54 @@
 <h1>/call_me/read/:id</h1>
 <h2>GET</h2>
 <p>menga qo`ngiroq qilingni o`qilgan qiladi</p>
+<pre></pre>
+  <hr>
+  <h1>/company/:id</h1>
+  <h2>GET,POST,DELETE,PUT</h2>
+  <p>company malumoti </p>
+<pre>
+  "image" TEXT,
+    "email" VARCHAR(50),
+   "twiter" VARCHAR(50),
+   "call_me" VARCHAR(50),
+   "whatsapp" VARCHAR(50),
+   "address" varchar (50),
+</pre>
+
+  <hr>
+  <h1>/cours_types/:id</h1>
+  <h2>GET,POST,DELETE,PUT</h2>
+  <p>course typeslari ketadi</p>
+</pre>"name" VARCHAR(50) NOT NULL,</pre>
+<hr>
+<h1>/course_data_category/course/:id</h1>
+<h2>GET,POST,DELETE,PUT</h2>
+<p>kurs_ma'lumotlari_toifasi</p>
+<pre>
+  "name" VARCHAR (50) NOT NULL,
+    "content" TEXT,
+    "image" TEXT,
+    "video" TEXT,
+    "extra_data" VARCHAR(50) NOT NULL,
+    "category" integer NOT NULL,
+</pre>
+<hr>
+<h1>/course_data_theme/:id</h1>
+<h2>GET,POST,DELETE,PUT</h2>
+<p>kurs_ma'lumotlari_mavzusi</p>
+<pre>
+  "name" VARCHAR (50) NOT NULL,
+    "content" TEXT,
+    "image" TEXT,
+    "video" TEXT,
+    "extra_data" VARCHAR(50) NOT NULL,
+    "category" integer NOT NULL,
+</pre>
+<hr>
+<h1>/course_theme_comment/:id</h1>
+<h2>GET,POST,DELETE,PUT</h2>
+<p>kurs_mavzusi_sharh</p>
+<pre></pre>
 </div>
 
 

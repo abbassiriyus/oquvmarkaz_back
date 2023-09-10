@@ -465,4 +465,15 @@ CREATE TABLE language(
 "lg" varchar(10),
 "time_create" timestamp default current_timestamp not null,
 "time_update" timestamp default current_timestamp not null 
+);
+CREATE TABLE course_theme_comment(
+    "id" serial primary key,
+    "theme" varchar (50) not null,
+    "image" TEXT,
+    "task_commnet_id" varchar(50) not null,
+    "text" varchar (50) not null,
+    "subcomment"VARCHAR (50) not null,
+    "user_id" varchar (50) not null,
+    "time_create" timestamp default current_timestamp not null
+    "time_update" timestamp default current_timestamp not null 
 )
