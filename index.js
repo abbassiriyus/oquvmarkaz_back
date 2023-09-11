@@ -45,6 +45,8 @@ const company=require('./routes/company.js')
 
 const student_theme=require('./routes/student_theme.js')
 const language=require('./routes/language.js')
+const mark=require('./lesson/mark.js')
+
 
 
 
@@ -169,12 +171,10 @@ app.get('/', function(req, res) {
  app.use("/auth", user )
  app.use("/auth", message )
  app.use("/auth", admin )
-
-
+ app.use("/edu",mark)
  app.use("/api",cours_types)
  app.use("/api",homiy)
  app.use("/api",language)
-
 
  app.use("/api" ,course)
  app.use("/api",course_theme_task)
