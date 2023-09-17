@@ -29,7 +29,7 @@ router.get('/group_student/:id', (req, res) => {
 })
 
 
-router.post("/group_student",ensureTokenSuper, (req, res) => {
+router.post("/group_student",superTeacher, (req, res) => {
     const body = req.body;
         pool.query('INSERT INTO group_student (student_id,education_id) VALUES ($1,$2) RETURNING *',
         [body.student_id,body.education_id],
@@ -42,7 +42,7 @@ router.post("/group_student",ensureTokenSuper, (req, res) => {
         });
 });
 
-router.delete("/group_student/:id",ensureTokenSuper, (req, res) => {
+router.delete("/group_student/:id",superTeacher, (req, res) => {
     const id = req.params.id
     pool.query('DELETE FROM group_student WHERE id = $1', [id], (err, result) => {
         if (err) {

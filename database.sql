@@ -141,9 +141,8 @@ CREATE TABLE notification (
     "to_user_id" integer NOT NULL,
     "read" boolean default false not null,
     "time_create" timestamp default current_timestamp not null,
-	"time_update" timestamp default current_timestamp not null,
+	"time_update" timestamp default current_timestamp not null
 );
-
 
 CREATE TABLE help_category(
     "id" serial primary key,
