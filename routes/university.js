@@ -117,9 +117,15 @@ router.put("/university/:id",ensureToken, (req, res) => {
             }else{
                 imgName=req.body.image
             }
+            if(req.files){
+                const logoFIle = req.files.logo
+                 logoName = `https://${req.hostname}/`+Date.now()+logoFIle.name.slice(logoFIle.name.lastIndexOf('.'))
+            }else{
+                imgName=req.body.logo
+            }
     pool.query(
-        'UPDATE university SET title=$1,deckription=$2,image=$3,logo WHERE id = $4',
-        [body.title,body.deckription,imgName,`https://${req.hostname}/${logoName}`,id ],
+        'UPDATE university SET title=$1,deckription=$2,image=$3,logo=$4 WHERE id = $5',
+        [body.title,body.deckription,imgName,logoName,id ],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)

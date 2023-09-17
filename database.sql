@@ -295,7 +295,7 @@ CREATE TABLE university  (
     "title" VARCHAR (50) NOT NULL,
     "deckription" TEXT NOT NULL,
     "image" TEXT,
-    "logo":TEXT,
+    "logo" TEXT,
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null
 )
