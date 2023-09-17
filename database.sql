@@ -137,6 +137,7 @@ CREATE TABLE notification (
     "title" VARCHAR (50),
     "description" VARCHAR (50) NOT NULL,
     "user_id" integer NOT NULL,
+    "notification_id" integer NOT NULL,
     "to_user_id" integer NOT NULL,
     "read" boolean default false not null,
     "time_create" timestamp default current_timestamp not null,

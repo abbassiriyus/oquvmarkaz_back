@@ -17,21 +17,10 @@ router.get("/notification", (req, res) => {
     })
 })
 
-router.get('/notification/:id', (req, res) => {
-    
+router.get('/notification/:id', (req, res) => {  
     pool.query("SELECT * FROM notification where id=$1", [req.params.id], (err, result1) => {
         if (!err) {
-         pool.query(
-                'UPDATE notification SET read=$1 WHERE id = $2',
-                [true,id ],
-                (err, result) => {
-                    if (err) {
-                        res.status(400).send(err)
-                    } else {
-                     res.status(200).send(result1.rows)   
-                    }
-                }
-            )
+            res.status(200).send(result1.rows)   
         } else {
             res.status(400).send(err)
         }
@@ -41,8 +30,8 @@ router.get('/notification/:id', (req, res) => {
 
 router.post("/notification", (req, res) => {
     const body = req.body;
-        pool.query('INSERT INTO notification (title,description,user_id,to_user_id) VALUES ($1,$2,$3,$4) RETURNING *',
-        [body.title,body.description,body.user_id,body.to_user_id],
+        pool.query('INSERT INTO notification (title,description,user_id,to_user_id,notification_id) VALUES ($1,$2,$3,$4,$5) RETURNING *',
+        [body.title,body.description,body.user_id,body.to_user_id,body.notification_id],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
@@ -66,8 +55,8 @@ router.put("/notification/:id", (req, res) => {
     const id = req.params.id
     const body = req.body
     pool.query(
-        'UPDATE notification SET title=$1,description=$2,user_id=$3,to_user_id=$4 WHERE id = $5',
-        [body.title,body.description,body.user_id,body.to_user_id,id ],
+        'UPDATE notification SET title=$1,description=$2,user_id=$3,to_user_id=$4,notification_id=$5 WHERE id = $6',
+        [body.title,body.description,body.user_id,body.to_user_id,body.notification_id,id ],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)
