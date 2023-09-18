@@ -401,7 +401,7 @@ router.post("/users",ensureTokenSuper, (req, res) => {
         imgName=req.body.image
     }
     pool.query('INSERT INTO users (address, description, email, last_name, password, phone_number, username, position,image,youtobe,telegrem,instagram) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9,$10,$11,$12) RETURNING *',
-    [ body.address,body.description, body.email, body.last_name, body.password, body.phone_number, body.username, body.position,imgName,body.youtobe,body.telegrem,body.instagram],
+    [ body.address,body.description, body.email, body.last_name, body.password, body.phone_number, body.username, body.position, imgName ,body.youtobe,body.telegrem,body.instagram],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);

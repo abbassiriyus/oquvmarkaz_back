@@ -111,13 +111,13 @@ router.put("/university/:id",ensureToken, (req, res) => {
             if(result1.rows[0].image){
                    
               }
-              if(req.files){
+              if(req.files && req.files.image ){
                 const imgFile = req.files.image
                  imgName = `https://${req.hostname}/`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
             }else{
                 imgName=req.body.image
             }
-            if(req.files){
+            if(req.files && req.files.logo){
                 const logoFIle = req.files.logo
                  logoName = `https://${req.hostname}/`+Date.now()+logoFIle.name.slice(logoFIle.name.lastIndexOf('.'))
             }else{
