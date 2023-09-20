@@ -24,7 +24,7 @@ CREATE TABLE users (
      UNIQUE("email"),
      UNIQUE("password"),
     "position" integer default 1 not null,
-    "rooms" TEXT[] NOT NULL default "{}"
+    "rooms" TEXT NOT NULL
 );
 CREATE TABLE messages (
   "id" SERIAL PRIMARY KEY,
@@ -49,7 +49,7 @@ CREATE TABLE "verify"(
     "course" integer  NOT NULL,
     "total_mark" integer default 0 NOT NULL,
     "propose_time" timestamp default current_timestamp NOT NULL,
-    "completed_themes" VARCHAR(50) default 0% NOT NULL,
+    "completed_themes" VARCHAR(50) default 0 NOT NULL,
     "rating" integer default 4  NOT NULL,
     "users" integer NOT NULL,
     "finishing" boolean default false NOT NULL,
@@ -70,13 +70,13 @@ CREATE TABLE course (
     "sertificat_id" integer not NULL,
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null
-)
+);
 CREATE TABLE cours_types(
     "id" serial primary key,
     "name" VARCHAR(50) NOT NULL,
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null
-)
+);
 CREATE TABLE course_theme_task  (
     "id" serial primary key,
     "content" VARCHAR (50) NOT NULL,
@@ -84,7 +84,7 @@ CREATE TABLE course_theme_task  (
     "image" TEXT,
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null
-)
+);
 CREATE TABLE course_theme_task_student(
     "id" serial primary key,
     "content" VARCHAR (50) NOT NULL,
@@ -94,7 +94,7 @@ CREATE TABLE course_theme_task_student(
     "mark" integer,
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null
-)
+);
 
 
 CREATE TABLE course_data_theme (
@@ -107,21 +107,21 @@ CREATE TABLE course_data_theme (
     "category" integer NOT NULL,
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null
-)
+);
 CREATE TABLE course_data_category(
     "id" serial primary key,
     "name" VARCHAR (50) NOT NULL,
     "course" integer NOT NULL,
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null
-)
+);
 
 CREATE TABLE base_theme(
  "id" serial primary key,
  "name" VARCHAR (50) NOT NULL,
  "time_create" timestamp default current_timestamp not null,
- "time_update" timestamp default current_timestamp not null,
-)
+ "time_update" timestamp default current_timestamp not null
+);
 CREATE TABLE knowladge (
     "id" serial primary key,
     "name" VARCHAR (50) NOT NULL,
@@ -149,7 +149,7 @@ CREATE TABLE help_category(
     "name" VARCHAR (50) NOT NULL,
     "image" TEXT,
     "time_create" timestamp default current_timestamp not null,
-	"time_update" timestamp default current_timestamp not null,
+	"time_update" timestamp default current_timestamp not null
 );
 
 CREATE TABLE help(
@@ -158,7 +158,7 @@ CREATE TABLE help(
     "description" TEXT NOT NULL,
     "image" TEXT,
     "time_create" timestamp default current_timestamp not null,
-	"time_update" timestamp default current_timestamp not null,
+	"time_update" timestamp default current_timestamp not null
 );
 
 CREATE TABLE follow(
@@ -168,7 +168,7 @@ CREATE TABLE follow(
      UNIQUE (topuser, minuser),
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null
-)
+);
 
 CREATE TABLE call_me(
  "id" serial primary key,
@@ -181,13 +181,13 @@ CREATE TABLE call_me(
  "purchase" TEXT,
  "read" boolean default false not null,
  "time_create" timestamp default current_timestamp not null
-)
+);
   
 CREATE TABLE purchase(
    "id" serial primary key,
    "title" TEXT not null, 
    "time_create" timestamp default current_timestamp not null
-)
+);
 
 
 -- group
@@ -266,7 +266,7 @@ CREATE TABLE quations(
     "test_id" integer NOT null,
     "time_create" timestamp default current_timestamp not null,
   "time_update" timestamp default current_timestamp not null
-)
+);
 
 CREATE TABLE sertificat(
    "id" serial primary key, 
@@ -277,7 +277,7 @@ CREATE TABLE sertificat(
    "mentor" VARCHAR(70) not NULL,
    "time_create" timestamp default current_timestamp not null,
    "time_update" timestamp default current_timestamp not null
-)
+);
 CREATE TABLE Student_sertificat(
      "id" serial primary key,  
      "file" TEXT NOT NULL, 
@@ -288,7 +288,7 @@ CREATE TABLE Student_sertificat(
      "student_id" integer NOT NULL,
      "time_create" timestamp default current_timestamp not null,
      "time_update" timestamp default current_timestamp not null
-)
+);
 
 CREATE TABLE university  (
     "id" serial primary key,
@@ -298,17 +298,16 @@ CREATE TABLE university  (
     "logo" TEXT,
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null
-)
+);
 
 CREATE TABLE payment(
     "id" serial primary key,
     "amout" VARCHAR (50) NOT NULL,
     "user_id" TEXT NOT NULL,
-    "type" varchar(20) not NULL
+    "type" varchar(20) not NULL,
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null
-)
-
+);
 CREATE TABLE admin(
     "id" serial primary key,
     "user_id" integer not null,
@@ -420,7 +419,7 @@ CREATE TABLE student_theme(
     "student_id" integer  NOT NULL,
     "theme_id" integer  NOT NULL,
     "complate" integer default 0  NOT NULL,
-    UNIQUE("theme_id","student_id")
+    UNIQUE("theme_id","student_id"),
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null   
 )
@@ -474,6 +473,6 @@ CREATE TABLE course_theme_comment(
     "text" varchar (50) not null,
     "subcomment"VARCHAR (50) not null,
     "user_id" varchar (50) not null,
-    "time_create" timestamp default current_timestamp not null
+    "time_create" timestamp default current_timestamp not null,
     "time_update" timestamp default current_timestamp not null 
-)
+);
