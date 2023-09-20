@@ -391,7 +391,7 @@ router.delete("/users/:id",ensureToken, (req, res) => {
 })
 
 // create new user
-router.post("/users",superTeacher, (req, res) => {
+router.post("/users",ensureTokenSuper, (req, res) => {
     const body = req.body;
     var imgName=""
     if(req.files && req.files.image){
