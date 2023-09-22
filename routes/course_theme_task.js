@@ -29,17 +29,17 @@ router.get('/course_theme_task/:id', (req, res) => {
 })
 
 
-router.post("/course_theme_task",ensureToken, (req, res) => {
+router.post("/course_theme_task", (req, res) => {
     const body = req.body;
     var imgName="";
     if(req.files){
         const imgFile = req.files.image
-         imgName = `https://${req.hostname}/`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+         imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
     }else{
         imgName=req.body.image
     }
         pool.query('INSERT INTO course_theme_task (content,course_theme,image) VALUES ($1,$2,$3) RETURNING *',
-        [body.content,body.course_theme,imgName],
+        [body.content,body.course_theme,req.protocol+"://"+req.hostname+"/"+imgName],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
@@ -53,12 +53,13 @@ router.post("/course_theme_task",ensureToken, (req, res) => {
         });
 });
 
-router.delete("/course_theme_task/:id",ensureToken, (req, res) => {
+router.delete("/course_theme_task/:id", (req, res) => {
     const id = req.params.id
     pool.query("SELECT * FROM course_theme_task where id=$1", [req.params.id], (err, result1) => {
         if (!err) {
             if(result1.rows[0].image){
-                 
+                fs.unlink(`./Images/${(result1.rows[0].image).slice((result1.rows[0].image).lastIndexOf('/')+1)}`,()=>{})   
+                console.log((result1.rows[0].image).slice((result1.rows[0].image).lastIndexOf('/')+1));
             }
             pool.query('DELETE FROM course_theme_task WHERE id = $1', [id], (err, result) => {
                 if (err) {
@@ -76,17 +77,13 @@ router.delete("/course_theme_task/:id",ensureToken, (req, res) => {
 
 
 })
-router.put("/course_theme_task/:id",ensureToken, (req, res) => {
+router.put("/course_theme_task/:id", (req, res) => {
     const id = req.params.id
     const body = req.body
     pool.query("SELECT * FROM course_theme_task where id=$1", [req.params.id], (err, result1) => {
         if (!err) {
-            if(result1.rows[0].image){
-                   
-              }
-              if(req.files){
-                const imgFile = req.files.image
-                 imgName = `https://${req.hostname}/`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+              if(req.files && req.files.image){
+                 imgName =result1.rows[0].image
             }else{
                 imgName=req.body.image
             }
@@ -99,7 +96,7 @@ router.put("/course_theme_task/:id",ensureToken, (req, res) => {
             } else {
                 if(req.files && req.files.image){
                     const imgFile = req.files.image
-                    imgFile.mv(`${__dirname}/Images/${imgName}`)
+                    imgFile.mv(`${__dirname}/Images/${imgName.slice(imgName.lastIndexOf('/'))}`)
                 }
                 res.status(200).send("Updated")
             }

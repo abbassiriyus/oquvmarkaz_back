@@ -35,12 +35,12 @@ router.post("/servis", (req, res) => {
     var imgName="";
     if(req.files){
         const imgFile = req.files.image
-         imgName = `https://${req.hostname}/`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+         imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
     }else{
         imgName=req.body.image
     }
         pool.query('INSERT INTO servis (title,deckription,image) VALUES ($1,$2,$3) RETURNING *',
-        [body.title,body.deckription,imgName],
+        [body.title,body.deckription,req.protocol+"://"+req.hostname+"/"+imgName],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
@@ -59,19 +59,9 @@ router.delete("/servis/:id",ensureToken, (req, res) => {
     pool.query("SELECT * FROM servis where id=$1", [req.params.id], (err, result1) => {
         if (!err) {
             if(result1.rows[0].image){
-                 
+                fs.unlink(`./Images/${(result1.rows[0].image).slice((result1.rows[0].image).lastIndexOf('/'))}`,()=>{})      
             }
-            pool.query('DELETE FROM servis WHERE id = $1', [id], (err, result) => {
-                if (err) {
-                    res.status(400).send(err)
-                } else {
-                    if(req.files){
-                        const imgFile = req.files.image
-                        imgFile.mv(`${__dirname}/Images/${imgName}`)
-                    }
-                    res.status(200).send("Deleted")
-                }
-            })
+            res.status(200).send("Deleted") 
         } else {
             res.status(400).send(err)
         }
@@ -89,9 +79,8 @@ router.put("/servis/:id",ensureToken, (req, res) => {
             if(result1.rows[0].image){
                    
               }
-              if(req.files){
-                const imgFile = req.files.image
-                 imgName = `https://${req.hostname}/`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+              if(req.files && result1.rows[0].image){
+                imgName = result1.rows[0].image
             }else{
                 imgName=req.body.image
             }
@@ -104,7 +93,7 @@ router.put("/servis/:id",ensureToken, (req, res) => {
             } else {
                 if(req.files){
                     const imgFile = req.files.image
-                   imgFile.mv(`${__dirname}/Images/${imgName}`)
+                   imgFile.mv(`${__dirname}/Images/${imgName.slice(imgName.lastIndexOf('/'))}`)
                     }
                 res.status(200).send("Updated")
             }

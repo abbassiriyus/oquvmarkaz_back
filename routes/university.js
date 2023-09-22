@@ -47,7 +47,7 @@ router.post("/university", (req, res) => {
     var imgName="";
     if(req.files &&req.files.image){
         const imgFile = req.files.image
-         imgName = `https://${req.hostname}/`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+         imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
     }else{
         imgName=req.body.image
     }
@@ -58,7 +58,7 @@ router.post("/university", (req, res) => {
         logoName=req.body.logo
     }
         pool.query('INSERT INTO university (title,deckription,image,logo) VALUES ($1,$2,$3,$4) RETURNING *',
-        [body.title,body.deckription,imgName,logoName],
+        [body.title,body.deckription,req.protocol+"://"+req.hostname+"/"+imgName,req.protocol+"://"+req.hostname+"/"+logoName],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
@@ -81,7 +81,8 @@ router.delete("/university/:id",ensureToken, (req, res) => {
     pool.query("SELECT * FROM university where id=$1", [req.params.id], (err, result1) => {
         if (!err) {
             if(result1.rows[0].image){
-                 
+                fs.unlink(`./Images/${(result1.rows[0].image).slice((result1.rows[0].image).lastIndexOf('/'))}`,()=>{})  
+                fs.unlink(`./Images/${(result1.rows[0].logo).slice((result1.rows[0].logo).lastIndexOf('/'))}`,()=>{})  
             }
             pool.query('DELETE FROM university WHERE id = $1', [id], (err, result) => {
                 if (err) {
@@ -113,13 +114,13 @@ router.put("/university/:id",ensureToken, (req, res) => {
               }
               if(req.files && req.files.image ){
                 const imgFile = req.files.image
-                 imgName = `https://${req.hostname}/`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+                 imgName =  result1.rows[0].image
             }else{
                 imgName=req.body.image
             }
             if(req.files && req.files.logo){
                 const logoFIle = req.files.logo
-                 logoName = `https://${req.hostname}/`+Date.now()+logoFIle.name.slice(logoFIle.name.lastIndexOf('.'))
+                 logoName = result1.rows[0].logo
             }else{
                 imgName=req.body.logo
             }
@@ -130,9 +131,13 @@ router.put("/university/:id",ensureToken, (req, res) => {
             if (err) {
                 res.status(400).send(err)
             } else {
-                if(req.files){
+                if(req.files && req.files.image){
                     const imgFile = req.files.image
-                   imgFile.mv(`${__dirname}/Images/${imgName}`)
+                   imgFile.mv(`${__dirname}/Images/${imgName.slice(imgName.lastIndexOf('/'))}`)
+                    }
+                    if(req.files && req.files.logo){
+                        const imgFile = req.files.logo
+                       imgFile.mv(`${__dirname}/Images/${logoName.slice(logoName.lastIndexOf('/'))}`)
                     }
                 res.status(200).send("Updated")
             }

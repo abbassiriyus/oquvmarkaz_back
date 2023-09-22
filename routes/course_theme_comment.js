@@ -118,17 +118,16 @@ router.post("/course_theme_comment", (req, res) => {
     var imgName="";
     if(req.files){
         const imgFile = req.files.image
-         imgName = `https://${req.hostname}/`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+         imgName=Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
     }else{
         imgName=req.body.image
     }
     pool.query('INSERT INTO course_theme_comment (theme,text,image,subcomment,user_id,task_commnet_id) VALUES ($1 ,$2 ,$3 ,$4 ,$5,$6 ) RETURNING *',
-        [body.theme,body.text,imgName,body.subcomment,body.user_id,body.task_commnet_id],
+        [body.theme,body.text,req.protocol+"://"+req.hostname+"/"+imgName,body.subcomment,body.user_id,body.task_commnet_id],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
             } else {
-            
                 if(req.files){
                     const imgFile = req.files.image
                     imgFile.mv(`${__dirname}/Images/${imgName}`)
@@ -143,7 +142,7 @@ router.delete("/course_theme_comment/:id", (req, res) => {
     pool.query("SELECT * FROM course_theme_comment where id=$1", [req.params.id], (err, result1) => {
      if (!err && result1.rows.length>0) {
             if(result1.rows[0] && result1.rows[0].image){
-                 
+                fs.unlink(`./Images/${(result1.rows[0].image).slice((result1.rows[0].image).lastIndexOf('/'))}`,()=>{})     
             }
             pool.query('DELETE FROM course_theme_comment WHERE id = $1', [id], (err, result) => {
                 if (err) {
@@ -168,12 +167,9 @@ router.put("/course_theme_comment/:id",ensureToken, (req, res) => {
     const body = req.body
     pool.query("SELECT * FROM course_theme_comment where id=$1", [req.params.id], (err, result1) => {
         if (!err) {
-            if(result1[0].image){
-                fs.unlink(`./Images/${result1[0].image}`,()=>{})   
-              }
-              if(req.files){
-                const imgFile = req.files.image
-                 imgName = `https://${req.hostname}/`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+         if(req.files){
+            const imgFile = req.files.image
+            imgName = result1.rows[0].image
             }else{
                 imgName=req.body.image
             }

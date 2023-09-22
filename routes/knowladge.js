@@ -34,12 +34,12 @@ router.post("/knowladge", (req, res) => {
     var imgName="";
     if(req.files){
     var imgFile = req.files.image
-    imgName = `https://${req.hostname}/`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+    imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
      }else{
       imgName=req.body.image
      }
         pool.query('INSERT INTO knowladge (name,description,image,link,base_theme) VALUES ($1,$2,$3,$4,$5) RETURNING *',
-        [body.name,body.description,imgName,body.link,body.base_theme],
+        [body.name,body.description,req.protocol+"://"+req.hostname+"/"+imgName,body.link,body.base_theme],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
@@ -69,13 +69,13 @@ router.put("/knowladge/:id",ensureTokenSuper, (req, res) => {
     var imgName="";
     if(req.files){
     var imgFile = req.files.image
-    imgName = `https://${req.hostname}/`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+     imgName=Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
      }else{
       imgName=req.body.image
      }
     pool.query(
         'UPDATE knowladge SET name=$1,description=$2,image=$3,link=$4,base_theme=$5   WHERE id = $6',
-        [body.name,body.description,imgName,body.link,body.base_theme,id ],
+        [body.name,body.description,req.protocol+"://"+req.hostname+"/"+imgName,body.link,body.base_theme,id ],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)

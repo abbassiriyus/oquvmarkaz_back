@@ -46,13 +46,13 @@ router.post("/course",superTeacher, (req, res) => {
     var imgName=""
   if(req.files){
     var imgFile = req.files.image
-     imgName = `https://${req.hostname}/`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+     imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
     }else{
         imgName=req.body.image
     }
     console.log("sdds");
     pool.query('INSERT INTO course (name,description,price,planned_time,course_type,author,image,homiy_id) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *',
-        [body.name,body.description,body.price,body.planned_time,body.course_type,body.author,imgName,body.homiy_id],
+        [body.name,body.description,body.price,body.planned_time,body.course_type,body.author,req.protocol+"://"+req.hostname+"/"+imgName,body.homiy_id],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
@@ -114,15 +114,13 @@ router.delete("/course/:id",superTeacher, (req, res) => {
 router.put("/course/:id",superTeacher, (req, res) => {
     var id = req.params.id
     var body = req.body
-    var imgFile = req.files.image
+    var imgName=""
     pool.query("SELECT * FROM course", (err, result) => {
-        if (!err) {
-            var a=result.rows.filter(item=>item.id==req.params.id) 
-            fs.unlink(`./Images/${a[0].image}`,()=>{})}})
-
-    var imgName = `https://${req.hostname}/`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+    if (!err) {
+    var a=result.rows.filter(item=>item.id==req.params.id) 
+     imgName = a[0].image}})
     pool.query(
-        'UPDATE course SET name=$1,description=$2,price=$3,planned_time=$4,course_type=$5,author=$6,image=$7,homiy_id=$8 WHERE id = $9',
+    'UPDATE course SET name=$1,description=$2,price=$3,planned_time=$4,course_type=$5,author=$6,image=$7,homiy_id=$8 WHERE id = $9',
         [body.name, body.description,body.price,body.planned_time,body.course_type,body.author,imgName,body.homiy_id,id ],
         (err, result) => {
             if (err) {
@@ -130,7 +128,7 @@ router.put("/course/:id",superTeacher, (req, res) => {
             } else {
                 if(req.files && req.files.image){
                     const imgFile = req.files.image
-                    imgFile.mv(`${__dirname}/Images/${imgName}`)
+                    imgFile.mv(`${__dirname}/Images/${imgName.slice(imgName.lastIndexOf('/'))}`)
                 }
                 res.status(200).send("Updated")
             }

@@ -35,12 +35,12 @@ router.post("/homiy", (req, res) => {
     var imgName="";
     if(req.files){
         const imgFile = req.files.image
-         imgName = `https://${req.hostname}/`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+         imgName =Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
     }else{
         imgName=req.body.image
     }
     pool.query('INSERT INTO homiy (title,deckription,image,admin_id) VALUES ($1,$2,$3,$4) RETURNING *',
-        [body.title,body.deckription,imgName,body.admin_id],
+        [body.title,body.deckription,req.protocol+"://"+req.hostname+"/"+imgName,body.admin_id],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
@@ -59,7 +59,7 @@ router.delete("/homiy/:id",ensureToken, (req, res) => {
     pool.query("SELECT * FROM homiy where id=$1", [req.params.id], (err, result1) => {
         if (!err) {
             if(result1.rows[0].image){
-                 
+                fs.unlink(`./Images/${(result1.rows[0].image).slice((result1.rows[0].image).lastIndexOf('/'))}`,()=>{})     
             }
             pool.query('DELETE FROM homiy WHERE id = $1', [id], (err, result) => {
                 if (err) {
@@ -86,12 +86,8 @@ router.put("/homiy/:id",ensureToken, (req, res) => {
     const body = req.body
     pool.query("SELECT * FROM homiy where id=$1", [req.params.id], (err, result1) => {
         if (!err) {
-            if(result1.rows[0].image){
-                   
-              }
               if(req.files){
-                const imgFile = req.files.image
-                 imgName = `https://${req.hostname}/`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+                 imgName = result1.rows[0].image
             }else{
                 imgName=req.body.image
             }
@@ -104,7 +100,7 @@ router.put("/homiy/:id",ensureToken, (req, res) => {
             } else {
                 if(req.files){
                     const imgFile = req.files.image
-                   imgFile.mv(`${__dirname}/Images/${imgName}`)
+                   imgFile.mv(`${__dirname}/Images/${imgName.slice(imgName.lastIndexOf('/'))}`)
                     }
                 res.status(200).send("Updated")
             }

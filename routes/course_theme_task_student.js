@@ -34,12 +34,12 @@ router.post("/course_theme_task_student",ensureToken, (req, res) => {
     var imgName="";
     if(req.files){
         const imgFile = req.files.image
-         imgName = `https://${req.hostname}/`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+         imgName =Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
     }else{
         imgName=req.body.image
     }
         pool.query('INSERT INTO course_theme_task_student (content,course_theme,image,feedback,mark) VALUES ($1,$2,$3,$4,$5) RETURNING *',
-        [body.content,body.course_theme,imgName,body.feedback,body.mark],
+        [body.content,body.course_theme,req.protocol+"://"+req.hostname+"/"+imgName,body.feedback,body.mark],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
@@ -57,8 +57,8 @@ router.delete("/course_theme_task_student/:id",ensureToken, (req, res) => {
     const id = req.params.id
     pool.query("SELECT * FROM course_theme_task_student where id=$1", [req.params.id], (err, result1) => {
         if (!err) {
-            if(result1.rows[0].image){
-                 
+        if(result1.rows[0].image){
+        fs.unlink(`./Images/${(result1.rows[0].image).slice((result1.rows[0].image).lastIndexOf('/'))}`,()=>{})     
             }
             pool.query('DELETE FROM course_theme_task_student WHERE id = $1', [id], (err, result) => {
                 if (err) {
@@ -85,8 +85,7 @@ router.put("/course_theme_task_student/:id",ensureToken, (req, res) => {
                    
               }
               if(req.files){
-                const imgFile = req.files.image
-                 imgName = `https://${req.hostname}/`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+                 imgName = result1.rows[0].image
             }else{
                 imgName=req.body.image
             }
@@ -97,9 +96,9 @@ router.put("/course_theme_task_student/:id",ensureToken, (req, res) => {
             if (err) {
                 res.status(400).send(err)
             } else {
-                if(req.files){
+                if(req.files && req.files.image){
                     const imgFile = req.files.image
-                    imgFile.mv(`${__dirname}/Images/${imgName}`)
+                    imgFile.mv(`${__dirname}/Images/${imgName.slice(imgName.lastIndexOf('/'))}`)
                 }
                 res.status(200).send("Updated")
             }

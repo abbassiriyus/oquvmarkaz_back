@@ -37,12 +37,12 @@ router.post("/company",ensureToken, (req, res) => {
     var imgName="";
     if(req.files){
         const imgFile = req.files.image
-         imgName = `https://${req.hostname}/`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+         imgName =Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
     }else{
         imgName=req.body.image
     }
         pool.query('INSERT INTO company (email,twiter,image,call_me,whatsapp,address) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *',
-        [body.email,body.twiter,imgName,body.call_me,body.whatsapp,body.address],
+        [body.email,body.twiter,req.protocol+"://"+req.hostname+"/"+imgName,body.call_me,body.whatsapp,body.address],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
@@ -61,7 +61,7 @@ router.delete("/company/:id",ensureToken, (req, res) => {
     pool.query("SELECT * FROM company where id=$1", [req.params.id], (err, result1) => {
         if (!err) {
             if(result1.rows[0].image){
-                 
+                fs.unlink(`./Images/${(result1.rows[0].image).slice((result1.rows[0].image).lastIndexOf('/'))}`,()=>{})   
             }
             pool.query('DELETE FROM company WHERE id = $1', [id], (err, result) => {
                 if (err) {
@@ -84,25 +84,21 @@ router.put("/company/:id",ensureToken, (req, res) => {
     const body = req.body
     pool.query("SELECT * FROM company where id=$1", [req.params.id], (err, result1) => {
         if (!err) {
-            if(result1.rows[0].image){
-                   
-              }
-              if(req.files){
-                const imgFile = req.files.image
-                 imgName = `https://${req.hostname}/`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+              if(req.files && result1.rows[0].image){
+                imgName = result1.rows[0].image
             }else{
                 imgName=req.body.image
             }
-    pool.query(
+       pool.query(
         'UPDATE company SET email=$1,twiter=$2,image=$3,call_me=$4,whatsapp=$5,address=$6 WHERE id=$7',
         [body.email,body.twiter,imgName,body.call_me,body.whatsapp,body.address,id],
         (err, result) => {
             if (err) {
                 res.status(400).send(err)
             } else {
-                if(req.files){
+                if(req.files && req.files.image){
                     const imgFile = req.files.image
-                    imgFile.mv(`${__dirname}/Images/${imgName}`)
+                    imgFile.mv(`${__dirname}/Images/${imgName.slice(imgName.lastIndexOf('/'))}`)
                 }
                 res.status(200).send("Updated")
             }

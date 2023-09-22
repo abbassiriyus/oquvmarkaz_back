@@ -34,19 +34,18 @@ router.post("/help",ensureTokenSuper, (req, res) => {
     if(req.files){
         const imgFile = req.files. 
         image
-         imgName = `https://${req.hostname}/`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+         imgName = Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
     }else{
         imgName=req.body.image
     }
         pool.query('INSERT INTO help (title,description,image) VALUES ($1,$2,$3) RETURNING *',
-        [body.title,body.description,imgName],
+        [body.title,body.description,req.protocol+"://"+req.hostname+"/"+imgName],
          (err, result) => {
             if (err) {
                 res.status(400).send(err);
             } else {
                 if(req.files){
                     const imgFile = req.files.image
-                    imgName = `https://${req.hostname}/`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
                     imgFile.mv(`${__dirname}/Images/${imgName}`)
                 }
                 res.status(201).send("Created");
@@ -59,7 +58,7 @@ router.delete("/help/:id",ensureTokenSuper, (req, res) => {
     pool.query("SELECT * FROM help where id=$1", [req.params.id], (err, result1) => {
         if (!err) {
             if(result1.rows[0].image){
-                 
+                fs.unlink(`./Images/${(result1.rows[0].image).slice((result1.rows[0].image).lastIndexOf('/'))}`,()=>{})  
             }
             pool.query('DELETE FROM help WHERE id = $1', [id], (err, result) => {
                 if (err) {
@@ -87,7 +86,7 @@ router.put("/help/:id",ensureTokenSuper, (req, res) => {
               }
               if(req.files){
                 const imgFile = req.files.image
-                 imgName = `https://${req.hostname}/`+Date.now()+imgFile.name.slice(imgFile.name.lastIndexOf('.'))
+                 imgName=result1.rows[0].image
             }else{
                 imgName=req.body.image
             }
@@ -98,6 +97,10 @@ router.put("/help/:id",ensureTokenSuper, (req, res) => {
             if (err) {
                 res.status(400).send(err)
             } else {
+                if(req.files && req.files.image){
+                    const imgFile = req.files.image
+                    imgFile.mv(`${__dirname}/Images/${imgName.slice(imgName.lastIndexOf('/'))}`)
+                }
                 res.status(200).send("Updated")
             }
         }
