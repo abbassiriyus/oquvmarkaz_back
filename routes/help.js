@@ -58,7 +58,7 @@ router.delete("/help/:id",ensureTokenSuper, (req, res) => {
     pool.query("SELECT * FROM help where id=$1", [req.params.id], (err, result1) => {
         if (!err) {
             if(result1.rows[0].image){
-                fs.unlink(`./Images/${(result1.rows[0].image).slice((result1.rows[0].image).lastIndexOf('/'))}`,()=>{})  
+                fs.unlink(`${__dirname}/Images/${(result1.rows[0].image).slice((result1.rows[0].image).lastIndexOf('/'))}`,()=>{})  
             }
             pool.query('DELETE FROM help WHERE id = $1', [id], (err, result) => {
                 if (err) {

@@ -41,7 +41,7 @@ router.get('/course/:id',ensureToken, (req, res) => {
         }
     })
 })
-router.post("/course",superTeacher, (req, res) => {
+router.post("/course", (req, res) => {
     var body = req.body;
     var imgName=""
   if(req.files){
@@ -50,7 +50,6 @@ router.post("/course",superTeacher, (req, res) => {
     }else{
         imgName=req.body.image
     }
-    console.log("sdds");
     pool.query('INSERT INTO course (name,description,price,planned_time,course_type,author,image,homiy_id) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *',
         [body.name,body.description,body.price,body.planned_time,body.course_type,body.author,req.protocol+"://"+req.hostname+"/"+imgName,body.homiy_id],
          (err, result) => {
@@ -92,13 +91,13 @@ var body=req.body
 })} else {
         res.status(491).send({err:err,message:"siz yuborayapgan user fanda aniqlanmagan"})
     }})});
-router.delete("/course/:id",superTeacher, (req, res) => {
+router.delete("/course/:id", (req, res) => {
     var id = req.params.id
     pool.query("SELECT * FROM course", (err, result) => {
         if (!err) {
             var a=result.rows.filter(item=>item.id==req.params.id) 
           if(a.length>0){
-            fs.unlink(`./Images/${a[0].image}`,()=>{})
+            fs.unlink(`${__dirname}/Images/${(a[0].image).slice((a[0].image).lastIndexOf('/')+1)}`,()=>{})
           }
     pool.query('DELETE FROM course WHERE id = $1', [id], (err, result) => {
         if (err) {

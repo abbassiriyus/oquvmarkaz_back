@@ -369,15 +369,13 @@ router.delete("/users/:id",ensureToken, (req, res) => {
     pool.query("SELECT * FROM users", (err, result) => {
         if (!err) {
             var a=result.rows.filter(item=>item.id==req.params.id) 
-            if(a[0].image){
-                fs.unlink(`./Images/${a[0].image}`,()=>{})
-            }
+            fs.unlink(`${__dirname}/Images/${(a[0].image).slice((a[0].image).lastIndexOf('/')+1)}`,()=>{})
             pool.query('DELETE FROM users WHERE id = $1', [id], (err, result) => {
         if (err) {
             res.status(400).send(err)
         } else {
             if(a[0].image){
-                fs.unlink(`./Images/${a[0].image}`,(err => {console.log('delete');}))
+                fs.unlink(`${__dirname}/Images/${(a[0].image).slice((a[0].image).lastIndexOf('/')+1)}`,()=>{})
             }
             res.status(200).send("Deleted")
         }

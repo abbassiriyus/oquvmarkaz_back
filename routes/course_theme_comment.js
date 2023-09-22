@@ -142,7 +142,7 @@ router.delete("/course_theme_comment/:id", (req, res) => {
     pool.query("SELECT * FROM course_theme_comment where id=$1", [req.params.id], (err, result1) => {
      if (!err && result1.rows.length>0) {
             if(result1.rows[0] && result1.rows[0].image){
-                fs.unlink(`./Images/${(result1.rows[0].image).slice((result1.rows[0].image).lastIndexOf('/'))}`,()=>{})     
+                fs.unlink(`${__dirname}/Images/${(result1.rows[0].image).slice((result1.rows[0].image).lastIndexOf('/'))}`,()=>{})     
             }
             pool.query('DELETE FROM course_theme_comment WHERE id = $1', [id], (err, result) => {
                 if (err) {

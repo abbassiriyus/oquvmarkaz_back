@@ -58,7 +58,7 @@ router.delete("/operator/:id",ensureToken, (req, res) => {
     pool.query("SELECT * FROM operator where id=$1", [req.params.id], (err, result1) => {
         if (!err) {
             if(result1.rows[0].image){
-                fs.unlink(`./Images/${(result1.rows[0].image).slice((result1.rows[0].image).lastIndexOf('/'))}`,()=>{})     
+                fs.unlink(`${__dirname}/Images/${(result1.rows[0].image).slice((result1.rows[0].image).lastIndexOf('/'))}`,()=>{})     
             }
             pool.query('DELETE FROM operator WHERE id = $1', [id], (err, result) => {
                 if (err) {

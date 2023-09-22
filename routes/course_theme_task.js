@@ -58,7 +58,7 @@ router.delete("/course_theme_task/:id", (req, res) => {
     pool.query("SELECT * FROM course_theme_task where id=$1", [req.params.id], (err, result1) => {
         if (!err) {
             if(result1.rows[0].image){
-                fs.unlink(`./Images/${(result1.rows[0].image).slice((result1.rows[0].image).lastIndexOf('/')+1)}`,()=>{})   
+                fs.unlink(`${__dirname}/Images/${(result1.rows[0].image).slice((result1.rows[0].image).lastIndexOf('/')+1)}`,()=>{})   
                 console.log((result1.rows[0].image).slice((result1.rows[0].image).lastIndexOf('/')+1));
             }
             pool.query('DELETE FROM course_theme_task WHERE id = $1', [id], (err, result) => {

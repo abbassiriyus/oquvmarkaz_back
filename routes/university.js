@@ -81,7 +81,7 @@ router.delete("/university/:id",ensureToken, (req, res) => {
     pool.query("SELECT * FROM university where id=$1", [req.params.id], (err, result1) => {
         if (!err) {
             if(result1.rows[0].image){
-                fs.unlink(`./Images/${(result1.rows[0].image).slice((result1.rows[0].image).lastIndexOf('/'))}`,()=>{})  
+                fs.unlink(`${__dirname}/Images/${(result1.rows[0].image).slice((result1.rows[0].image).lastIndexOf('/'))}`,()=>{})  
                 fs.unlink(`./Images/${(result1.rows[0].logo).slice((result1.rows[0].logo).lastIndexOf('/'))}`,()=>{})  
             }
             pool.query('DELETE FROM university WHERE id = $1', [id], (err, result) => {

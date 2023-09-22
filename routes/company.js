@@ -6,7 +6,6 @@ const pool = require("../db")
 var url = require('url');
 var { ensureToken }=require("../token/token.js")
 var fs=require("fs");
-const { hostname } = require('os');
 router.get("/company", (req, res) => {   
     console.log(req);
     pool.query("SELECT * FROM company", (err, result) => {
@@ -61,7 +60,7 @@ router.delete("/company/:id",ensureToken, (req, res) => {
     pool.query("SELECT * FROM company where id=$1", [req.params.id], (err, result1) => {
         if (!err) {
             if(result1.rows[0].image){
-                fs.unlink(`./Images/${(result1.rows[0].image).slice((result1.rows[0].image).lastIndexOf('/'))}`,()=>{})   
+                fs.unlink(`${__dirname}/Images/${(result1.rows[0].image).slice((result1.rows[0].image).lastIndexOf('/')+1)}`,()=>{})   
             }
             pool.query('DELETE FROM company WHERE id = $1', [id], (err, result) => {
                 if (err) {

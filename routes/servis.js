@@ -59,7 +59,7 @@ router.delete("/servis/:id",ensureToken, (req, res) => {
     pool.query("SELECT * FROM servis where id=$1", [req.params.id], (err, result1) => {
         if (!err) {
             if(result1.rows[0].image){
-                fs.unlink(`./Images/${(result1.rows[0].image).slice((result1.rows[0].image).lastIndexOf('/'))}`,()=>{})      
+                fs.unlink(`${__dirname}/Images/${(result1.rows[0].image).slice((result1.rows[0].image).lastIndexOf('/'))}`,()=>{})      
             }
             res.status(200).send("Deleted") 
         } else {
