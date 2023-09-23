@@ -476,3 +476,31 @@ CREATE TABLE course_theme_comment(
     "time_create" timestamp default current_timestamp not null,
     "time_update" timestamp default current_timestamp not null 
 );
+
+
+CREATE TABLE  mycard (
+ "id" serial primary key,
+"card_number" varchar(50) not null,
+"card_user" varchar(50) not null,
+"card_name" varchar(50) ,
+"card_time" varchar(50) not null,
+"teacher_id" integer not null,
+"time_create" timestamp default current_timestamp not null,
+"time_update" timestamp default current_timestamp not null 
+);
+
+
+CREATE TABLE getmoney(
+"id" serial primary key,
+"card_number" varchar(50) not null,
+"card_user" varchar(50) not null,
+"card_name" varchar(50) ,
+"card_time" varchar(50) not null,
+"money" integer not null,
+"status" integer default 0 not null,
+"teacher_id" integer not null,
+"time_create" timestamp default current_timestamp not null,
+"time_update" timestamp default current_timestamp not null 
+)
+
+
