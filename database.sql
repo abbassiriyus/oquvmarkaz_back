@@ -56,7 +56,7 @@ CREATE TABLE "verify"(
      UNIQUE ("users", "course"),
     "time_create" timestamp default current_timestamp NOT NULL,
 	"time_update" timestamp default current_timestamp NOT NULL   
- )
+ );
 CREATE TABLE course (
     "id" serial primary key,
     "name" VARCHAR (50) NOT NULL,
@@ -379,7 +379,6 @@ CREATE TABLE admin(
      "notification_delete" boolean default false not null,
      "notification_put" boolean default false not null,
      "get_pay" boolean default false not null,
-     
      "servis_get" boolean default false not null,
      "servis_post" boolean default false not null,
      "servis_delete" boolean default false not null,
@@ -396,7 +395,7 @@ CREATE TABLE admin(
      "pomish" boolean default false not null,
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null   
-)
+);
 CREATE TABLE servis(
    "id" serial primary key,
     "title" VARCHAR (50) NOT NULL,
@@ -404,7 +403,7 @@ CREATE TABLE servis(
     "image" text,
    "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null
-)
+);
 CREATE TABLE homiy(
    "id" serial primary key,
     "title" VARCHAR (50) NOT NULL,
@@ -413,7 +412,7 @@ CREATE TABLE homiy(
      "admin_id" integer,
    "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null
-)
+);
 CREATE TABLE student_theme(
     "id" serial primary key,
     "student_id" integer  NOT NULL,
@@ -422,7 +421,7 @@ CREATE TABLE student_theme(
     UNIQUE("theme_id","student_id"),
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null   
-)
+);
 
 
 
@@ -438,14 +437,14 @@ CREATE TABLE operator(
    "whatsapp" VARCHAR(50),
    "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null   
-)
+);
 CREATE TABLE operator_work(
     "id" serial primary key,
     "opertor_id" integer NOT NULL,
     "title" VARCHAR(50)  NOT NULL,
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null     
-)
+);
 CREATE TABLE company(
 "id" serial primary key,
      "image" TEXT,
@@ -456,7 +455,7 @@ CREATE TABLE company(
    "address" varchar (50),
     "time_create" timestamp default current_timestamp not null,
 	"time_update" timestamp default current_timestamp not null 
-)
+);
 
 
 CREATE TABLE language(
@@ -501,6 +500,6 @@ CREATE TABLE getmoney(
 "teacher_id" integer not null,
 "time_create" timestamp default current_timestamp not null,
 "time_update" timestamp default current_timestamp not null 
-)
+);
 
 
